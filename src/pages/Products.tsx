@@ -3,7 +3,8 @@ import Footer from "@/components/layout/Footer";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Car, Home, Building2, Key, Package } from "lucide-react";
+import { Car, Home, Building2, Key, Package, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
 
 const products = [
   {
@@ -52,21 +53,36 @@ const Products = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main className="flex-grow py-16 px-4 sm:px-6 lg:px-8 animate-fade-in">
+      <main className="flex-grow py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl font-bold text-center mb-12">Our Insurance Products</h1>
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-4xl font-bold text-center mb-12"
+          >
+            Our Insurance Products
+          </motion.h1>
           
           <div className="space-y-16">
-            {products.map((product) => (
-              <section key={product.id} id={product.id} className="scroll-mt-24">
-                <Card className="overflow-hidden">
+            {products.map((product, index) => (
+              <motion.section 
+                key={product.id} 
+                id={product.id} 
+                className="scroll-mt-24"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <Card className="overflow-hidden transform transition-all duration-300 hover:shadow-xl">
                   <div className="grid md:grid-cols-2 gap-8">
-                    <div className="relative h-64 md:h-full">
+                    <div className="relative h-64 md:h-full overflow-hidden">
                       <img
                         src={product.image}
                         alt={product.title}
-                        className="absolute inset-0 w-full h-full object-cover"
+                        className="absolute inset-0 w-full h-full object-cover transform transition-transform duration-500 hover:scale-110"
                       />
+                      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/50" />
                     </div>
                     <div className="p-8">
                       <div className="flex items-center gap-3 mb-4">
@@ -76,19 +92,28 @@ const Products = () => {
                       <p className="text-gray-600 mb-6">{product.description}</p>
                       <ul className="space-y-2 mb-8">
                         {product.features.map((feature, index) => (
-                          <li key={index} className="flex items-center gap-2">
+                          <motion.li 
+                            key={index} 
+                            className="flex items-center gap-2"
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.3, delay: index * 0.1 }}
+                          >
                             <div className="h-1.5 w-1.5 rounded-full bg-primary" />
                             {feature}
-                          </li>
+                          </motion.li>
                         ))}
                       </ul>
-                      <Button asChild className="w-full md:w-auto">
-                        <Link to="/quote">Get a Quote</Link>
+                      <Button asChild className="group">
+                        <Link to="/quote">
+                          Get a Quote
+                          <ArrowRight className="ml-2 h-4 w-4 transform transition-transform group-hover:translate-x-1" />
+                        </Link>
                       </Button>
                     </div>
                   </div>
                 </Card>
-              </section>
+              </motion.section>
             ))}
           </div>
         </div>
