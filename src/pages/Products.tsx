@@ -1,28 +1,50 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Card } from "@/components/ui/card";
-import { Shield, Home, Building2, Key } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+import { Car, Home, Building2, Key, Package } from "lucide-react";
 
 const products = [
   {
+    id: "auto",
     title: "Auto Insurance",
-    icon: Shield,
-    description: "Comprehensive auto coverage for personal and commercial vehicles.",
+    icon: Car,
+    description: "Comprehensive coverage for your vehicles with competitive rates and flexible payment options.",
+    features: ["Liability Coverage", "Collision Coverage", "Comprehensive Coverage", "Personal Injury Protection"],
+    image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=800",
   },
   {
+    id: "home",
     title: "Home Insurance",
     icon: Home,
-    description: "Protect your home and belongings with our comprehensive coverage options.",
+    description: "Protect your home and belongings with our comprehensive homeowners insurance policies.",
+    features: ["Dwelling Coverage", "Personal Property", "Liability Protection", "Additional Living Expenses"],
+    image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800",
   },
   {
+    id: "commercial",
     title: "Commercial Insurance",
     icon: Building2,
-    description: "Business insurance solutions tailored to your specific needs.",
+    description: "Business insurance solutions tailored to your specific industry needs.",
+    features: ["Property Coverage", "General Liability", "Workers Compensation", "Business Interruption"],
+    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800",
   },
   {
+    id: "bonds",
     title: "Surety Bonds",
     icon: Key,
-    description: "Various bond types to meet your business requirements.",
+    description: "Various bond types to meet your business requirements and obligations.",
+    features: ["Contract Bonds", "License Bonds", "Court Bonds", "Fidelity Bonds"],
+    image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800",
+  },
+  {
+    id: "additional",
+    title: "Additional Lines",
+    icon: Package,
+    description: "Specialized insurance solutions for unique needs and situations.",
+    features: ["Umbrella Insurance", "Motorcycle Insurance", "RV Insurance", "Boat Insurance"],
+    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800",
   },
 ];
 
@@ -30,23 +52,43 @@ const Products = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main className="flex-grow py-16 px-4 sm:px-6 lg:px-8">
+      <main className="flex-grow py-16 px-4 sm:px-6 lg:px-8 animate-fade-in">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl font-bold text-center mb-12">Our Products</h1>
+          <h1 className="text-4xl font-bold text-center mb-12">Our Insurance Products</h1>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="space-y-16">
             {products.map((product) => (
-              <Card key={product.title} className="p-6 hover:shadow-lg transition-shadow">
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                    <product.icon className="h-6 w-6 text-primary" />
+              <section key={product.id} id={product.id} className="scroll-mt-24">
+                <Card className="overflow-hidden">
+                  <div className="grid md:grid-cols-2 gap-8">
+                    <div className="relative h-64 md:h-full">
+                      <img
+                        src={product.image}
+                        alt={product.title}
+                        className="absolute inset-0 w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="p-8">
+                      <div className="flex items-center gap-3 mb-4">
+                        <product.icon className="h-8 w-8 text-primary" />
+                        <h2 className="text-2xl font-semibold">{product.title}</h2>
+                      </div>
+                      <p className="text-gray-600 mb-6">{product.description}</p>
+                      <ul className="space-y-2 mb-8">
+                        {product.features.map((feature, index) => (
+                          <li key={index} className="flex items-center gap-2">
+                            <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                      <Button asChild className="w-full md:w-auto">
+                        <Link to="/quote">Get a Quote</Link>
+                      </Button>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-xl font-semibold mb-2">{product.title}</h3>
-                    <p className="text-gray-600">{product.description}</p>
-                  </div>
-                </div>
-              </Card>
+                </Card>
+              </section>
             ))}
           </div>
         </div>
