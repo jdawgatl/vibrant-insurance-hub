@@ -13,17 +13,7 @@ const Navbar = () => {
 
   const navigation = [
     { name: "HOME", href: "/" },
-    {
-      name: "PRODUCTS",
-      href: "/products",
-      submenu: [
-        { name: "Auto Insurance", href: "/products#auto" },
-        { name: "Home Insurance", href: "/products#home" },
-        { name: "Commercial Insurance", href: "/products#commercial" },
-        { name: "Surety Bonds", href: "/products#bonds" },
-        { name: "Additional Lines", href: "/products#additional" },
-      ],
-    },
+    { name: "PRODUCTS", href: "/products" },
     { name: "SERVICE", href: "/service" },
     { name: "ABOUT", href: "/about" },
     { name: "CONTACT", href: "/contact" },
@@ -52,36 +42,15 @@ const Navbar = () => {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-8">
-            {navigation.map((item) =>
-              item.submenu ? (
-                <DropdownMenu key={item.name}>
-                  <DropdownMenuTrigger className="flex items-center space-x-1 text-gray-700 hover:text-primary transition-colors">
-                    <span>{item.name}</span>
-                    <ChevronDown className="h-4 w-4" />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    {item.submenu.map((subItem) => (
-                      <DropdownMenuItem key={subItem.name}>
-                        <Link
-                          to={subItem.href}
-                          className="w-full text-gray-700 hover:text-primary"
-                        >
-                          {subItem.name}
-                        </Link>
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              ) : (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className="text-gray-700 hover:text-primary transition-colors"
-                >
-                  {item.name}
-                </Link>
-              )
-            )}
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                to={item.href}
+                className="text-gray-700 hover:text-primary transition-colors"
+              >
+                {item.name}
+              </Link>
+            ))}
           </div>
 
           {/* Mobile menu button */}
@@ -100,34 +69,16 @@ const Navbar = () => {
       {isOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            {navigation.map((item) =>
-              item.submenu ? (
-                <div key={item.name} className="space-y-1">
-                  <div className="text-gray-700 px-3 py-2 font-medium">
-                    {item.name}
-                  </div>
-                  {item.submenu.map((subItem) => (
-                    <Link
-                      key={subItem.name}
-                      to={subItem.href}
-                      className="text-gray-600 hover:text-primary block px-3 py-2 text-sm"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      {subItem.name}
-                    </Link>
-                  ))}
-                </div>
-              ) : (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className="text-gray-700 hover:text-primary block px-3 py-2"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              )
-            )}
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                to={item.href}
+                className="text-gray-700 hover:text-primary block px-3 py-2"
+                onClick={() => setIsOpen(false)}
+              >
+                {item.name}
+              </Link>
+            ))}
           </div>
         </div>
       )}
