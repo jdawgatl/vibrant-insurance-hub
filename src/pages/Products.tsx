@@ -3,7 +3,7 @@ import Footer from "@/components/layout/Footer";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Car, Home, Building2, Key, Package, ArrowRight } from "lucide-react";
+import { Car, Home, Building2, Key, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 const products = [
@@ -14,6 +14,7 @@ const products = [
     description: "Comprehensive coverage for your vehicles with competitive rates and flexible payment options.",
     features: ["Liability Coverage", "Collision Coverage", "Comprehensive Coverage", "Personal Injury Protection"],
     image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=800",
+    link: "/products/auto"
   },
   {
     id: "home",
@@ -22,6 +23,7 @@ const products = [
     description: "Protect your home and belongings with our comprehensive homeowners insurance policies.",
     features: ["Dwelling Coverage", "Personal Property", "Liability Protection", "Additional Living Expenses"],
     image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800",
+    link: "/products/home"
   },
   {
     id: "commercial",
@@ -30,6 +32,7 @@ const products = [
     description: "Business insurance solutions tailored to your specific industry needs.",
     features: ["Property Coverage", "General Liability", "Workers Compensation", "Business Interruption"],
     image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800",
+    link: "/products/commercial"
   },
   {
     id: "bonds",
@@ -38,14 +41,7 @@ const products = [
     description: "Various bond types to meet your business requirements and obligations.",
     features: ["Contract Bonds", "License Bonds", "Court Bonds", "Fidelity Bonds"],
     image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800",
-  },
-  {
-    id: "additional",
-    title: "Additional Lines",
-    icon: Package,
-    description: "Specialized insurance solutions for unique needs and situations.",
-    features: ["Umbrella Insurance", "Motorcycle Insurance", "RV Insurance", "Boat Insurance"],
-    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800",
+    link: "/products/bonds"
   },
 ];
 
@@ -86,7 +82,7 @@ const Products = () => {
                     </div>
                     <div className="p-8">
                       <div className="flex items-center gap-3 mb-4">
-                        <product.icon className="h-8 w-8 text-primary" />
+                        <product.icon className="h-8 w-8 text-indigo-600" />
                         <h2 className="text-2xl font-semibold">{product.title}</h2>
                       </div>
                       <p className="text-gray-600 mb-6">{product.description}</p>
@@ -99,17 +95,22 @@ const Products = () => {
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.3, delay: index * 0.1 }}
                           >
-                            <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                            <div className="h-1.5 w-1.5 rounded-full bg-indigo-600" />
                             {feature}
                           </motion.li>
                         ))}
                       </ul>
-                      <Button asChild className="group">
-                        <Link to="/quote">
-                          Get a Quote
-                          <ArrowRight className="ml-2 h-4 w-4 transform transition-transform group-hover:translate-x-1" />
-                        </Link>
-                      </Button>
+                      <div className="space-x-4">
+                        <Button asChild variant="outline" className="group">
+                          <Link to={product.link}>
+                            Learn More
+                            <ArrowRight className="ml-2 h-4 w-4 transform transition-transform group-hover:translate-x-1" />
+                          </Link>
+                        </Button>
+                        <Button asChild>
+                          <Link to="/quote">Get a Quote</Link>
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </Card>
