@@ -3,7 +3,7 @@ import Footer from "@/components/layout/Footer";
 import ContactForm from "@/components/shared/ContactForm";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Building2, Key, Phone, Mail } from "lucide-react";
+import { Car, Building2, Key } from "lucide-react";
 import { motion } from "framer-motion";
 
 const Quote = () => {
@@ -21,12 +21,39 @@ const Quote = () => {
             Get Your Insurance Quote
           </motion.h1>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-            {/* Business Insurance Card */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            {/* Auto Insurance Card */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              <Card className="p-6 h-full transform transition-all duration-300 hover:shadow-xl">
+                <div className="flex flex-col h-full">
+                  <div className="mb-4">
+                    <Car className="h-12 w-12 text-primary mb-4" />
+                    <h2 className="text-2xl font-semibold mb-2">Auto Insurance</h2>
+                    <p className="text-gray-600 mb-4">
+                      Get competitive auto insurance rates through Safeway Insurance.
+                    </p>
+                  </div>
+                  <div className="mt-auto">
+                    <Button 
+                      className="w-full"
+                      onClick={() => window.open('https://www.safewayinsurance.com/', '_blank')}
+                    >
+                      Get Auto Quote
+                    </Button>
+                  </div>
+                </div>
+              </Card>
+            </motion.div>
+
+            {/* Business Insurance Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
             >
               <Card className="p-6 h-full transform transition-all duration-300 hover:shadow-xl">
                 <div className="flex flex-col h-full">
@@ -53,7 +80,7 @@ const Quote = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
             >
               <Card className="p-6 h-full transform transition-all duration-300 hover:shadow-xl">
                 <div className="flex flex-col h-full">
@@ -75,44 +102,6 @@ const Quote = () => {
                 </div>
               </Card>
             </motion.div>
-
-            {/* Contact Card */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-            >
-              <Card className="p-6 h-full transform transition-all duration-300 hover:shadow-xl">
-                <div className="flex flex-col h-full">
-                  <div className="mb-4">
-                    <div className="flex space-x-4 mb-4">
-                      <Phone className="h-12 w-12 text-primary" />
-                      <Mail className="h-12 w-12 text-primary" />
-                    </div>
-                    <h2 className="text-2xl font-semibold mb-2">Contact Us</h2>
-                    <p className="text-gray-600 mb-4">
-                      Speak with our insurance experts or send us a message.
-                    </p>
-                    <div className="space-y-4">
-                      <a 
-                        href="tel:+17709977999"
-                        className="flex items-center text-primary hover:text-primary-600 transition-colors"
-                      >
-                        <Phone className="h-5 w-5 mr-2" />
-                        (770) 997-7999
-                      </a>
-                      <a 
-                        href="mailto:info@standardfinancialgroup.com"
-                        className="flex items-center text-primary hover:text-primary-600 transition-colors"
-                      >
-                        <Mail className="h-5 w-5 mr-2" />
-                        Email Us
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </Card>
-            </motion.div>
           </div>
 
           {/* Contact Form Section */}
@@ -122,7 +111,10 @@ const Quote = () => {
             transition={{ duration: 0.5, delay: 0.4 }}
           >
             <Card className="p-8">
-              <h2 className="text-2xl font-bold mb-6">Request a Quote</h2>
+              <h2 className="text-2xl font-bold mb-4">Request a Quote</h2>
+              <p className="text-gray-600 mb-6">
+                Complete the form below to get quotes from additional carriers or for other lines of insurance not listed above.
+              </p>
               <ContactForm />
             </Card>
           </motion.div>
