@@ -67,7 +67,7 @@ const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <Link
-                  to="/products#auto"
+                  to="/products/auto"
                   className="hover:text-primary-300 transition-colors"
                 >
                   Auto Insurance
@@ -75,7 +75,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/products#home"
+                  to="/products"
                   className="hover:text-primary-300 transition-colors"
                 >
                   Home Insurance
@@ -83,7 +83,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/products#commercial"
+                  to="/products/commercial"
                   className="hover:text-primary-300 transition-colors"
                 >
                   Commercial Insurance
@@ -91,7 +91,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/products#bonds"
+                  to="/products/bonds"
                   className="hover:text-primary-300 transition-colors"
                 >
                   Surety Bonds
