@@ -31,14 +31,14 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/" className="hover:text-primary-300 transition-colors">
+                <Link to="/" className="hover:text-indigo-300 transition-colors">
                   Home
                 </Link>
               </li>
               <li>
                 <Link
                   to="/about"
-                  className="hover:text-primary-300 transition-colors"
+                  className="hover:text-indigo-300 transition-colors"
                 >
                   About Us
                 </Link>
@@ -46,7 +46,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/products"
-                  className="hover:text-primary-300 transition-colors"
+                  className="hover:text-indigo-300 transition-colors"
                 >
                   Products
                 </Link>
@@ -54,7 +54,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/service"
-                  className="hover:text-primary-300 transition-colors"
+                  className="hover:text-indigo-300 transition-colors"
                 >
                   Service
                 </Link>
@@ -68,15 +68,15 @@ const Footer = () => {
               <li>
                 <Link
                   to="/products/auto"
-                  className="hover:text-primary-300 transition-colors"
+                  className="hover:text-indigo-300 transition-colors"
                 >
                   Auto Insurance
                 </Link>
               </li>
               <li>
                 <Link
-                  to="/products"
-                  className="hover:text-primary-300 transition-colors"
+                  to="/products/home"
+                  className="hover:text-indigo-300 transition-colors"
                 >
                   Home Insurance
                 </Link>
@@ -84,7 +84,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/products/commercial"
-                  className="hover:text-primary-300 transition-colors"
+                  className="hover:text-indigo-300 transition-colors"
                 >
                   Commercial Insurance
                 </Link>
@@ -92,7 +92,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/products/bonds"
-                  className="hover:text-primary-300 transition-colors"
+                  className="hover:text-indigo-300 transition-colors"
                 >
                   Surety Bonds
                 </Link>
@@ -107,7 +107,7 @@ const Footer = () => {
             </p>
             <Button
               asChild
-              className="w-full bg-primary hover:bg-primary-600 text-white"
+              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white"
             >
               <Link to="/quote">Get A Quote</Link>
             </Button>
@@ -123,14 +123,14 @@ const Footer = () => {
             <div className="mt-2">
               <Link
                 to="/privacy"
-                className="hover:text-primary-300 transition-colors"
+                className="hover:text-indigo-300 transition-colors"
               >
                 Privacy Policy
               </Link>
               {" | "}
               <Link
                 to="/blog"
-                className="hover:text-primary-300 transition-colors"
+                className="hover:text-indigo-300 transition-colors"
               >
                 Blog
               </Link>

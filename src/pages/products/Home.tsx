@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { Shield, Home as HomeIcon, Umbrella, DollarSign } from "lucide-react";
 
 const Home = () => {
   return (
@@ -35,24 +36,36 @@ const Home = () => {
               </h2>
               <p className="text-lg text-gray-600">
                 Our comprehensive home insurance policies protect your most valuable
-                asset and everything inside it. We offer coverage for:
+                asset and everything inside it. We offer coverage options tailored to your needs:
               </p>
               <ul className="space-y-4">
-                <li className="flex items-center gap-2">
-                  <div className="h-2 w-2 rounded-full bg-indigo-600" />
-                  Dwelling Coverage
+                <li className="flex items-center gap-3">
+                  <HomeIcon className="h-6 w-6 text-indigo-600" />
+                  <div>
+                    <h3 className="font-semibold">Dwelling Coverage</h3>
+                    <p className="text-gray-600">Protection for your home's structure</p>
+                  </div>
                 </li>
-                <li className="flex items-center gap-2">
-                  <div className="h-2 w-2 rounded-full bg-indigo-600" />
-                  Personal Property Protection
+                <li className="flex items-center gap-3">
+                  <Umbrella className="h-6 w-6 text-indigo-600" />
+                  <div>
+                    <h3 className="font-semibold">Personal Property Protection</h3>
+                    <p className="text-gray-600">Coverage for your belongings</p>
+                  </div>
                 </li>
-                <li className="flex items-center gap-2">
-                  <div className="h-2 w-2 rounded-full bg-indigo-600" />
-                  Liability Coverage
+                <li className="flex items-center gap-3">
+                  <Shield className="h-6 w-6 text-indigo-600" />
+                  <div>
+                    <h3 className="font-semibold">Liability Coverage</h3>
+                    <p className="text-gray-600">Protection against lawsuits</p>
+                  </div>
                 </li>
-                <li className="flex items-center gap-2">
-                  <div className="h-2 w-2 rounded-full bg-indigo-600" />
-                  Additional Living Expenses
+                <li className="flex items-center gap-3">
+                  <DollarSign className="h-6 w-6 text-indigo-600" />
+                  <div>
+                    <h3 className="font-semibold">Additional Living Expenses</h3>
+                    <p className="text-gray-600">Coverage for temporary housing</p>
+                  </div>
                 </li>
               </ul>
               <Button asChild size="lg" className="mt-6">
@@ -65,6 +78,27 @@ const Home = () => {
                 alt="Home Insurance Coverage"
                 className="rounded-lg shadow-lg"
               />
+              <div className="bg-indigo-50 p-6 rounded-lg">
+                <h3 className="text-xl font-semibold mb-3">Why Choose Our Home Insurance?</h3>
+                <ul className="space-y-2">
+                  <li className="flex items-center gap-2">
+                    <div className="h-2 w-2 rounded-full bg-indigo-600" />
+                    Competitive rates and flexible payment options
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="h-2 w-2 rounded-full bg-indigo-600" />
+                    24/7 claims service
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="h-2 w-2 rounded-full bg-indigo-600" />
+                    Multiple discount opportunities
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="h-2 w-2 rounded-full bg-indigo-600" />
+                    Experienced local agents
+                  </li>
+                </ul>
+              </div>
             </div>
           </motion.div>
         </div>

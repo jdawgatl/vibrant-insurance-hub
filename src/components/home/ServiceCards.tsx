@@ -21,7 +21,7 @@ const services = [
     title: "Home Insurance",
     description: "Protect your most valuable asset",
     icon: Home,
-    href: "/products",
+    href: "/products/home",
     image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&q=80",
   },
   {
