@@ -1,8 +1,7 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Card } from "@/components/ui/card";
-import { ExternalLink, Phone } from "lucide-react";
-import { motion } from "framer-motion";
+import { ExternalLink } from "lucide-react";
 
 const carriers = [
   {
@@ -62,77 +61,63 @@ const Service = () => {
       <Navbar />
       <main className="flex-grow py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="relative h-[300px] mb-16 rounded-xl overflow-hidden">
-            <img
-              src="https://images.unsplash.com/photo-1485833077593-4278bba3f11f?auto=format&fit=crop&q=80"
-              alt="Insurance Service"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-              <h1 className="text-4xl font-bold text-white text-center">
-                Trusted Insurance Carriers - Contact Information
-              </h1>
-            </div>
-          </div>
-
+          <h1 className="text-4xl font-bold text-center mb-4">
+            Trusted Insurance Carriers - Contact Information
+          </h1>
           <p className="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
             For your convenience, we have compiled the contact information for the
             insurance carriers we represent. Please use the details below to reach out to
-            the appropriate company for policy service or claims inquiries.
+            the appropriate company for policy service or claims inquiries. For general
+            questions or quote requests, please do not hesitate to contact Standard
+            Financial Group directly.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {carriers.map((carrier, index) => (
-              <motion.div
+            {carriers.map((carrier) => (
+              <Card
                 key={carrier.name}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="p-6 hover:shadow-lg transition-shadow bg-white"
               >
-                <Card className="p-6 hover:shadow-xl transition-all duration-300 bg-white group">
-                  <div className="flex flex-col items-center text-center space-y-4">
-                    <div className="w-32 h-12 flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <img
-                        src={carrier.logo}
-                        alt={carrier.name}
-                        className="h-8 object-contain"
-                      />
-                    </div>
-                    <h3 className="text-xl font-semibold">{carrier.name}</h3>
-                    <div className="space-y-2 w-full">
-                      <div className="hover:bg-gray-50 p-2 rounded-lg transition-colors">
-                        <p className="text-gray-600">Customer Service:</p>
-                        <a
-                          href={`tel:${carrier.customerService}`}
-                          className="text-indigo-600 hover:text-indigo-800 flex items-center justify-center gap-2"
-                        >
-                          <Phone className="h-4 w-4" />
-                          {carrier.customerService}
-                        </a>
-                      </div>
-                      <div className="hover:bg-gray-50 p-2 rounded-lg transition-colors">
-                        <p className="text-gray-600">Claims:</p>
-                        <a
-                          href={`tel:${carrier.claims}`}
-                          className="text-indigo-600 hover:text-indigo-800 flex items-center justify-center gap-2"
-                        >
-                          <Phone className="h-4 w-4" />
-                          {carrier.claims}
-                        </a>
-                      </div>
-                    </div>
-                    <a
-                      href={carrier.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors gap-2 w-full"
-                    >
-                      Visit Website
-                      <ExternalLink className="h-4 w-4" />
-                    </a>
+                <div className="flex flex-col items-center text-center space-y-4">
+                  <div className="w-32 h-12 flex items-center justify-center">
+                    <img
+                      src={carrier.logo}
+                      alt={carrier.name}
+                      className="h-8 object-contain"
+                    />
                   </div>
-                </Card>
-              </motion.div>
+                  <h3 className="text-xl font-semibold">{carrier.name}</h3>
+                  <div className="space-y-2 w-full">
+                    <div>
+                      <p className="text-gray-600">Customer Service:</p>
+                      <a
+                        href={`tel:${carrier.customerService}`}
+                        className="text-indigo-600 hover:text-indigo-800"
+                      >
+                        {carrier.customerService}
+                      </a>
+                    </div>
+                    <div>
+                      <p className="text-gray-600">Claims:</p>
+                      <a
+                        href={`tel:${carrier.claims}`}
+                        className="text-indigo-600 hover:text-indigo-800"
+                      >
+                        {carrier.claims}
+                      </a>
+                    </div>
+                  </div>
+                  <a
+                    href={carrier.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors gap-2"
+                  >
+                    Visit Website
+                    <ExternalLink className="h-4 w-4" />
+                  </a>
+                </div>
+              </Card>
             ))}
           </div>
         </div>
