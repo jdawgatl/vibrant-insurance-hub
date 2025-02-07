@@ -32,7 +32,7 @@ serve(async (req) => {
     console.log("Attempting to send email to:", notificationEmail);
 
     const emailResponse = await resend.emails.send({
-      from: "Standard Financial Group <onboarding@resend.dev>",
+      from: "Standard Financial Group <quotes@sfg-ins.com>",
       to: notificationEmail,
       subject: "New Contact Form Submission",
       html: `
