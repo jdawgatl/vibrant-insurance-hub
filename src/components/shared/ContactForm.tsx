@@ -46,10 +46,25 @@ const ContactForm = () => {
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     try {
+      // Transform the data to match database column names
+      const dbData = {
+        first_name: data.firstName,
+        last_name: data.lastName,
+        email: data.email,
+        phone: data.phone,
+        address: data.address,
+        city: data.city,
+        state: data.state,
+        zip: data.zip,
+        insurance_type: data.insuranceType,
+        message: data.message,
+        consent: data.consent,
+      };
+
       // Save to Supabase
       const { error: supabaseError } = await supabase
         .from("contact_submissions")
-        .insert([data]);
+        .insert(dbData);
 
       if (supabaseError) throw supabaseError;
 
