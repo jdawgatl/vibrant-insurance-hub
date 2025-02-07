@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
@@ -13,7 +12,6 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/components/ui/use-toast";
-import { supabase } from "@/integrations/supabase/client";
 
 type FormData = {
   firstName: string;
@@ -31,81 +29,21 @@ type FormData = {
 
 const ContactForm = () => {
   const { toast } = useToast();
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-    setValue,
-    watch,
   } = useForm<FormData>();
 
-  const insuranceType = watch("insuranceType");
-
   const onSubmit = async (data: FormData) => {
-    setIsSubmitting(true);
-    try {
-      // Transform the data to match database column names
-      const dbData = {
-        first_name: data.firstName,
-        last_name: data.lastName,
-        email: data.email,
-        phone: data.phone,
-        address: data.address,
-        city: data.city,
-        state: data.state,
-        zip: data.zip,
-        insurance_type: data.insuranceType,
-        message: data.message,
-        consent: data.consent,
-      };
-
-      // Save to Supabase
-      const { error: supabaseError } = await supabase
-        .from("contact_submissions")
-        .insert(dbData);
-
-      if (supabaseError) throw supabaseError;
-
-      console.log("Sending email notification...");
-      // Send email notification
-      const { data: emailResponse, error: emailError } = await supabase.functions.invoke(
-        "send-contact-notification",
-        {
-          body: {
-            firstName: data.firstName,
-            lastName: data.lastName,
-            email: data.email,
-            phone: data.phone,
-            message: data.message,
-            insuranceType: data.insuranceType,
-          },
-        }
-      );
-
-      console.log("Email response:", emailResponse);
-      
-      if (emailError) {
-        console.error("Email error:", emailError);
-        throw emailError;
-      }
-
-      toast({
-        title: "Form submitted successfully!",
-        description: "We'll get back to you as soon as possible.",
-      });
-      reset();
-    } catch (error: any) {
-      console.error("Error submitting form:", error);
-      toast({
-        title: "Error submitting form",
-        description: error.message || "Please try again later.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+    // Here you would typically send the data to your backend
+    console.log(data);
+    toast({
+      title: "Form submitted successfully!",
+      description: "We'll get back to you as soon as possible.",
+    });
+    reset();
   };
 
   return (
@@ -167,10 +105,7 @@ const ContactForm = () => {
             defaultValue="GA"
           />
           <Input placeholder="ZIP" {...register("zip", { required: true })} />
-          <Select
-            value={insuranceType}
-            onValueChange={(value) => setValue("insuranceType", value)}
-          >
+          <Select>
             <SelectTrigger>
               <SelectValue placeholder="Insurance Type" />
             </SelectTrigger>
@@ -192,11 +127,7 @@ const ContactForm = () => {
       />
 
       <div className="flex items-center space-x-2">
-        <Checkbox
-          id="consent"
-          onCheckedChange={(checked) => setValue("consent", checked as boolean)}
-          required
-        />
+        <Checkbox id="consent" required />
         <label
           htmlFor="consent"
           className="text-sm text-gray-600 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -207,8 +138,8 @@ const ContactForm = () => {
         </label>
       </div>
 
-      <Button type="submit" className="w-full" disabled={isSubmitting}>
-        {isSubmitting ? "Submitting..." : "Submit"}
+      <Button type="submit" className="w-full">
+        Submit
       </Button>
     </form>
   );
