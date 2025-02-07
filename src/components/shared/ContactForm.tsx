@@ -68,8 +68,9 @@ const ContactForm = () => {
 
       if (supabaseError) throw supabaseError;
 
+      console.log("Sending email notification...");
       // Send email notification
-      const { error: emailError } = await supabase.functions.invoke(
+      const { data: emailResponse, error: emailError } = await supabase.functions.invoke(
         "send-contact-notification",
         {
           body: {
@@ -83,7 +84,12 @@ const ContactForm = () => {
         }
       );
 
-      if (emailError) throw emailError;
+      console.log("Email response:", emailResponse);
+      
+      if (emailError) {
+        console.error("Email error:", emailError);
+        throw emailError;
+      }
 
       toast({
         title: "Form submitted successfully!",
@@ -94,7 +100,7 @@ const ContactForm = () => {
       console.error("Error submitting form:", error);
       toast({
         title: "Error submitting form",
-        description: "Please try again later.",
+        description: error.message || "Please try again later.",
         variant: "destructive",
       });
     } finally {

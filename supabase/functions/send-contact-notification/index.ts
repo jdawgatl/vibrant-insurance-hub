@@ -11,17 +11,29 @@ const corsHeaders = {
 };
 
 serve(async (req) => {
+  console.log("Received request to send-contact-notification");
+
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { firstName, lastName, email, phone, message, insuranceType } = await req.json();
+    const body = await req.json();
+    console.log("Received form data:", body);
+
+    if (!notificationEmail) {
+      console.error("NOTIFICATION_EMAIL environment variable is not set");
+      throw new Error("Notification email is not configured");
+    }
+
+    const { firstName, lastName, email, phone, message, insuranceType } = body;
+
+    console.log("Attempting to send email to:", notificationEmail);
 
     const emailResponse = await resend.emails.send({
       from: "Standard Financial Group <onboarding@resend.dev>",
-      to: notificationEmail!,
+      to: notificationEmail,
       subject: "New Contact Form Submission",
       html: `
         <h1>New Contact Form Submission</h1>
@@ -33,7 +45,7 @@ serve(async (req) => {
       `,
     });
 
-    console.log("Email notification sent successfully:", emailResponse);
+    console.log("Email sent successfully:", emailResponse);
 
     return new Response(JSON.stringify(emailResponse), {
       headers: { 'Content-Type': 'application/json', ...corsHeaders },
