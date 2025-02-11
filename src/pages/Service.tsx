@@ -1,4 +1,3 @@
-
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Card } from "@/components/ui/card";
@@ -109,17 +108,14 @@ const whyChooseSection = [
   {
     title: "Local Expertise",
     description: "We understand your community's unique needs and can provide personalized coverage recommendations.",
-    image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80"
   },
   {
     title: "Personal Relationship",
     description: "Build a lasting relationship with an agent who knows you and your family's needs.",
-    image: "https://images.unsplash.com/photo-1573497620053-ea5300f94f21?auto=format&fit=crop&q=80"
   },
   {
     title: "Dedicated Support",
     description: "Get direct access to an experienced agent who will advocate for you during claims.",
-    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80"
   }
 ];
 
@@ -136,13 +132,6 @@ const Service = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
               {whyChooseSection.map((item, index) => (
                 <Card key={index} className="overflow-hidden">
-                  <div className="h-48 relative">
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
                   <div className="p-6">
                     <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
                     <p className="text-gray-600">{item.description}</p>
