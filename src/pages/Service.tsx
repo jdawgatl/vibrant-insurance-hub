@@ -104,21 +104,6 @@ const carriers = [
   },
 ];
 
-const whyChooseSection = [
-  {
-    title: "Local Expertise",
-    description: "We understand your community's unique needs and can provide personalized coverage recommendations.",
-  },
-  {
-    title: "Personal Relationship",
-    description: "Build a lasting relationship with an agent who knows you and your family's needs.",
-  },
-  {
-    title: "Dedicated Support",
-    description: "Get direct access to an experienced agent who will advocate for you during claims.",
-  }
-];
-
 const Service = () => {
   return (
     <div className="min-h-screen flex flex-col">
@@ -126,20 +111,6 @@ const Service = () => {
       <main className="flex-grow">
         <div className="py-16 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 className="text-4xl font-bold text-center mb-4">
-              Why Choose a Local Agent?
-            </h1>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-              {whyChooseSection.map((item, index) => (
-                <Card key={index} className="overflow-hidden">
-                  <div className="p-6">
-                    <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-                    <p className="text-gray-600">{item.description}</p>
-                  </div>
-                </Card>
-              ))}
-            </div>
-
             <h2 className="text-4xl font-bold text-center mb-4">
               Trusted Insurance Carriers - Contact Information
             </h2>
