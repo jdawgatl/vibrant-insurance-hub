@@ -1,9 +1,10 @@
+
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ContactForm from "@/components/shared/ContactForm";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Car, Building2, Key } from "lucide-react";
+import { Key } from "lucide-react";
 import { motion } from "framer-motion";
 
 const Quote = () => {
@@ -31,7 +32,11 @@ const Quote = () => {
               <Card className="p-6 h-full transform transition-all duration-300 hover:shadow-xl">
                 <div className="flex flex-col h-full">
                   <div className="mb-4">
-                    <Car className="h-12 w-12 text-primary mb-4" />
+                    <img 
+                      src="/lovable-uploads/7bb46239-644e-4af1-b267-4bcac8a8b9e4.png"
+                      alt="Safeway Insurance"
+                      className="h-12 w-auto mb-4 mx-auto"
+                    />
                     <h2 className="text-2xl font-semibold mb-2">Auto Insurance</h2>
                     <p className="text-gray-600 mb-4">
                       Get competitive auto insurance rates through Safeway Insurance.
@@ -58,7 +63,11 @@ const Quote = () => {
               <Card className="p-6 h-full transform transition-all duration-300 hover:shadow-xl">
                 <div className="flex flex-col h-full">
                   <div className="mb-4">
-                    <Building2 className="h-12 w-12 text-primary mb-4" />
+                    <img 
+                      src="/lovable-uploads/49404d50-f5af-47b0-bc6f-079e2f6964e6.png"
+                      alt="Next Insurance"
+                      className="h-12 w-auto mb-4 mx-auto"
+                    />
                     <h2 className="text-2xl font-semibold mb-2">Business Insurance</h2>
                     <p className="text-gray-600 mb-4">
                       Get comprehensive coverage for your business through our partner, Next Insurance.
@@ -85,7 +94,7 @@ const Quote = () => {
               <Card className="p-6 h-full transform transition-all duration-300 hover:shadow-xl">
                 <div className="flex flex-col h-full">
                   <div className="mb-4">
-                    <Key className="h-12 w-12 text-primary mb-4" />
+                    <Key className="h-12 w-12 text-primary mb-4 mx-auto" />
                     <h2 className="text-2xl font-semibold mb-2">Surety Bonds</h2>
                     <p className="text-gray-600 mb-4">
                       Quick and easy surety bond solutions for your business needs.
