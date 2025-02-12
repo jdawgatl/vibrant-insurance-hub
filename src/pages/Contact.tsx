@@ -13,7 +13,7 @@ const contactInfo = [
   {
     icon: Clock,
     title: "Business Hours",
-    content: "Monday - Friday: 9 AM - 5 PM",
+    content: "Monday - Friday: 9 AM - 4 PM",
   },
   {
     icon: Phone,

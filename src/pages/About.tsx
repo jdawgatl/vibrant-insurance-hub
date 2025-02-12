@@ -7,12 +7,12 @@ const teamMembers = [
   {
     name: "Jason Standard",
     role: "Owner/Agent",
-    experience: "26 years experience",
+    experience: "26+ years experience",
   },
   {
     name: "Jessica Dover",
     role: "Licensed Agent",
-    experience: "5 years experience",
+    experience: "5+ years experience",
   },
 ];
 
