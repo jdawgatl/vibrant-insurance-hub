@@ -43,7 +43,7 @@ const services = [
 
 const ServiceCards = () => {
   return (
-    <div className="py-16 bg-gray-50">
+    <div className="py-16 bg-gradient-to-b from-gray-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -70,7 +70,7 @@ const ServiceCards = () => {
                 to={service.href}
                 className="block transform hover:scale-105 transition-all duration-300"
               >
-                <Card className="h-full overflow-hidden">
+                <Card className="h-full overflow-hidden shadow-lg hover:shadow-2xl transition-shadow">
                   <div className="relative h-48 overflow-hidden">
                     <img
                       src={service.image}
@@ -87,9 +87,9 @@ const ServiceCards = () => {
                   </div>
                   <CardContent className="p-6">
                     <p className="text-gray-600">{service.description}</p>
-                    <div className="mt-4 flex items-center text-primary font-medium">
+                    <div className="mt-4 flex items-center text-primary-600 font-medium group">
                       Learn More
-                      <ArrowRight className="ml-2 h-4 w-4" />
+                      <ArrowRight className="ml-2 h-4 w-4 transform group-hover:translate-x-1 transition-transform" />
                     </div>
                   </CardContent>
                 </Card>
