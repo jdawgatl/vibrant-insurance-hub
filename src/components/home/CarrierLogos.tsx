@@ -1,4 +1,13 @@
 
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { Card } from "@/components/ui/card";
+
 const carriers = [
   { name: "American Modern", logo: "/lovable-uploads/2f0bfea4-aaf3-4978-829c-98543600dffb.png" },
   { name: "Berkshire Hathaway", logo: "/lovable-uploads/766072cf-b18a-4e4e-9c24-311224645190.png" },
@@ -18,26 +27,39 @@ const carriers = [
 
 const CarrierLogos = () => {
   return (
-    <div className="py-16 bg-white overflow-hidden">
+    <div className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-2xl font-bold text-center text-gray-900 mb-12">
           Our Trusted Insurance Partners
         </h2>
-        <div className="relative">
-          <div className="flex space-x-16 animate-[slide-in_40s_linear_infinite]">
-            {[...carriers, ...carriers].map((carrier, index) => (
-              <div
-                key={index}
-                className="flex-shrink-0 h-20 w-48 flex items-center justify-center"
-              >
-                <img
-                  src={carrier.logo}
-                  alt={carrier.name}
-                  className="h-16 object-contain"
-                />
-              </div>
-            ))}
-          </div>
+        <div className="relative px-8">
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-1">
+              {carriers.map((carrier, index) => (
+                <CarouselItem key={index} className="pl-1 basis-1/2 sm:basis-1/3 lg:basis-1/4">
+                  <div className="p-1">
+                    <Card className="p-6">
+                      <div className="aspect-square relative flex items-center justify-center p-2">
+                        <img
+                          src={carrier.logo}
+                          alt={carrier.name}
+                          className="object-contain max-w-full max-h-full"
+                        />
+                      </div>
+                    </Card>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="hidden sm:flex" />
+            <CarouselNext className="hidden sm:flex" />
+          </Carousel>
         </div>
       </div>
     </div>
