@@ -15,8 +15,18 @@ import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
 import { menuItems } from "./menuItems";
 
+type Submission = {
+  id: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone: string;
+  insurance_type: string | null;
+  created_at: string;
+};
+
 export const AdminDashboard = () => {
-  const [submissions, setSubmissions] = useState([]);
+  const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -25,15 +35,18 @@ export const AdminDashboard = () => {
 
   const fetchSubmissions = async () => {
     try {
+      setLoading(true);
       const { data, error } = await supabase
-        .from("contact_submissions")  // Changed from "contact_form_submissions" to match types
+        .from("contact_submissions")
         .select("*")
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false })
+        .limit(10);
 
       if (error) {
         console.error("Supabase error:", error);
         throw error;
       }
+
       console.log("Fetched submissions:", data);
       setSubmissions(data || []);
     } catch (error) {
