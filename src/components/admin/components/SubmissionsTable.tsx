@@ -14,6 +14,7 @@ import {
 import { Submission, ActionStatus } from "../types/submission";
 import { useState } from "react";
 import { updateSubmissionStatus } from "../services/submissionService";
+import { toast } from "sonner";
 
 interface SubmissionsTableProps {
   submissions: Submission[];
@@ -30,31 +31,53 @@ export const SubmissionsTable = ({ submissions, isLoading, onUpdate }: Submissio
     field: keyof ActionStatus, 
     checked: boolean
   ) => {
-    const submission = submissions.find(s => s.id === submissionId);
-    const currentStatus = submission?.action_status || {};
-    
-    await updateSubmissionStatus(submissionId, {
-      ...currentStatus,
-      [field]: checked,
-    });
-    
-    onUpdate();
+    try {
+      const submission = submissions.find(s => s.id === submissionId);
+      const currentStatus = submission?.action_status || {
+        contacted: false,
+        quoted: false,
+        unreachable: false,
+        notes: ""
+      };
+      
+      await updateSubmissionStatus(submissionId, {
+        ...currentStatus,
+        [field]: checked,
+      });
+      
+      toast.success(`Successfully updated ${field} status`);
+      onUpdate();
+    } catch (error) {
+      console.error("Error updating status:", error);
+      toast.error("Failed to update status");
+    }
   };
 
   const handleNotesSubmit = async (submissionId: string) => {
     if (!editingNotes.trim()) return;
     
-    const submission = submissions.find(s => s.id === submissionId);
-    const currentStatus = submission?.action_status || {};
-    
-    await updateSubmissionStatus(submissionId, {
-      ...currentStatus,
-      notes: editingNotes,
-    });
-    
-    setEditingNotes("");
-    setEditingId(null);
-    onUpdate();
+    try {
+      const submission = submissions.find(s => s.id === submissionId);
+      const currentStatus = submission?.action_status || {
+        contacted: false,
+        quoted: false,
+        unreachable: false,
+        notes: ""
+      };
+      
+      await updateSubmissionStatus(submissionId, {
+        ...currentStatus,
+        notes: editingNotes,
+      });
+      
+      toast.success("Notes saved successfully");
+      setEditingNotes("");
+      setEditingId(null);
+      onUpdate();
+    } catch (error) {
+      console.error("Error saving notes:", error);
+      toast.error("Failed to save notes");
+    }
   };
 
   if (isLoading) {
@@ -76,6 +99,14 @@ export const SubmissionsTable = ({ submissions, isLoading, onUpdate }: Submissio
       </TableRow>
     );
   }
+
+  const formatDate = (date: string) => {
+    try {
+      return format(new Date(date), 'PPpp');
+    } catch (error) {
+      return 'Invalid date';
+    }
+  };
 
   return (
     <>
@@ -107,7 +138,7 @@ export const SubmissionsTable = ({ submissions, isLoading, onUpdate }: Submissio
             </div>
           </TableCell>
           <TableCell>
-            {new Date(submission.created_at).toLocaleDateString()}
+            {formatDate(submission.created_at)}
           </TableCell>
           <TableCell>
             <div className="space-y-4">
@@ -119,11 +150,7 @@ export const SubmissionsTable = ({ submissions, isLoading, onUpdate }: Submissio
                 ].map(({ id, label }) => (
                   <div 
                     key={id} 
-                    className="flex items-center space-x-2"
-                    title={submission.action_status?.[id as keyof ActionStatus] ? 
-                      `Updated on ${format(new Date(submission.action_status.lastUpdated!), 'PPpp')} by ${submission.action_status.updatedBy}` 
-                      : undefined
-                    }
+                    className="flex items-center space-x-2 group relative"
                   >
                     <Checkbox
                       id={`${id}-${submission.id}`}
@@ -138,6 +165,11 @@ export const SubmissionsTable = ({ submissions, isLoading, onUpdate }: Submissio
                     >
                       {label}
                     </label>
+                    {submission.action_status?.[id as keyof ActionStatus] && submission.action_status?.lastUpdated && (
+                      <div className="absolute left-0 -top-8 bg-black text-white text-xs rounded p-2 hidden group-hover:block z-50">
+                        Updated on {formatDate(submission.action_status.lastUpdated)} by {submission.action_status.updatedBy}
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -172,12 +204,16 @@ export const SubmissionsTable = ({ submissions, isLoading, onUpdate }: Submissio
                 ) : (
                   <>
                     {submission.action_status?.notes && (
-                      <p 
-                        className="text-sm text-gray-600"
-                        title={`Updated on ${format(new Date(submission.action_status.lastUpdated!), 'PPpp')} by ${submission.action_status.updatedBy}`}
-                      >
-                        {submission.action_status.notes}
-                      </p>
+                      <div className="group relative">
+                        <p className="text-sm text-gray-600">
+                          {submission.action_status.notes}
+                        </p>
+                        {submission.action_status.lastUpdated && (
+                          <div className="absolute left-0 -top-8 bg-black text-white text-xs rounded p-2 hidden group-hover:block z-50">
+                            Updated on {formatDate(submission.action_status.lastUpdated)} by {submission.action_status.updatedBy}
+                          </div>
+                        )}
+                      </div>
                     )}
                     <Button 
                       size="sm" 

@@ -37,8 +37,15 @@ export const updateSubmissionStatus = async (
   const { data: { session } } = await supabase.auth.getSession();
   if (!session) throw new Error("No authenticated session found");
 
+  const { data: currentSubmission } = await supabase
+    .from('contact_submissions')
+    .select('action_status')
+    .eq('id', submissionId)
+    .single();
+
   const timestamp = new Date().toISOString();
   const updatedStatus = {
+    ...((currentSubmission?.action_status as ActionStatus) || {}),
     ...status,
     lastUpdated: timestamp,
     updatedBy: session.user.email
@@ -48,7 +55,7 @@ export const updateSubmissionStatus = async (
     .from('contact_submissions')
     .update({ 
       action_status: updatedStatus 
-    } as unknown as SubmissionBase)
+    })
     .eq('id', submissionId);
 
   if (error) throw error;
