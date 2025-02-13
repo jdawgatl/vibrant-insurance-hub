@@ -54,6 +54,7 @@ export const AdminDashboard = () => {
                 <TableHead>Location</TableHead>
                 <TableHead>Insurance</TableHead>
                 <TableHead>Date</TableHead>
+                <TableHead>Notes History</TableHead>
                 <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>

@@ -39,6 +39,7 @@ export const ActionCheckbox = ({
         id={`${id}-${submissionId}`}
         checked={isChecked}
         onCheckedChange={(checked) => onStatusChange(submissionId, field, checked)}
+        className="data-[state=checked]:bg-primary"
       />
       <label
         htmlFor={`${id}-${submissionId}`}

@@ -43,6 +43,22 @@ export const SubmissionRow = ({
         {formatDate(submission.created_at)}
       </TableCell>
       <TableCell>
+        {submission.action_status?.notes && (
+          <div className="text-sm">
+            <p className="font-medium">Latest Note:</p>
+            <p className="text-gray-600">{submission.action_status.notes}</p>
+            {submission.action_status.lastUpdated && (
+              <p className="text-xs text-gray-500 mt-1">
+                Updated: {formatDate(submission.action_status.lastUpdated)}
+                {submission.action_status.updatedBy && (
+                  <span> by {submission.action_status.updatedBy}</span>
+                )}
+              </p>
+            )}
+          </div>
+        )}
+      </TableCell>
+      <TableCell>
         <div className="space-y-4">
           <div className="space-y-2">
             {[
@@ -56,7 +72,7 @@ export const SubmissionRow = ({
                 label={label}
                 submissionId={submission.id}
                 field={id as keyof ActionStatus}
-                isChecked={Boolean(submission.action_status?.[id as keyof ActionStatus])}
+                isChecked={submission.action_status?.[id as keyof ActionStatus] || false}
                 lastUpdated={submission.action_status?.lastUpdated}
                 updatedBy={submission.action_status?.updatedBy}
                 onStatusChange={onStatusChange}
