@@ -28,6 +28,14 @@ export const SubmissionRow = ({
     }
   };
 
+  // Helper function to ensure boolean values
+  const getBooleanValue = (value: any): boolean => {
+    if (typeof value === 'string') {
+      return value.toLowerCase() === 'true';
+    }
+    return Boolean(value);
+  };
+
   return (
     <TableRow>
       <TableCell>
@@ -72,7 +80,7 @@ export const SubmissionRow = ({
                 label={label}
                 submissionId={submission.id}
                 field={id as keyof ActionStatus}
-                isChecked={submission.action_status?.[id as keyof ActionStatus] || false}
+                isChecked={getBooleanValue(submission.action_status?.[id as keyof ActionStatus])}
                 lastUpdated={submission.action_status?.lastUpdated}
                 updatedBy={submission.action_status?.updatedBy}
                 onStatusChange={onStatusChange}
