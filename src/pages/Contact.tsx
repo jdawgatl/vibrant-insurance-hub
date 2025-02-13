@@ -1,57 +1,75 @@
+
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ContactForm from "@/components/shared/ContactForm";
 import { Card } from "@/components/ui/card";
 import { MapPin, Clock, Phone, Mail } from "lucide-react";
-
-const contactInfo = [
-  {
-    icon: MapPin,
-    title: "Address",
-    content: "490 Bradley Dr Ste A, Fayetteville GA 30214",
-  },
-  {
-    icon: Clock,
-    title: "Business Hours",
-    content: "Monday - Friday: 9 AM - 4 PM",
-  },
-  {
-    icon: Phone,
-    title: "Phone",
-    content: "(770) 997-7999",
-  },
-  {
-    icon: Mail,
-    title: "Email",
-    content: "info@standardfinancialgroup.com",
-  },
-];
+import { Helmet } from "react-helmet-async";
 
 const Contact = () => {
   return (
     <div className="min-h-screen flex flex-col">
+      <Helmet>
+        <title>Contact Us | Standard Financial Group | Insurance Agency in Fayetteville, GA</title>
+        <meta name="description" content="Contact Standard Financial Group for all your insurance needs. Visit our office in Fayetteville, GA, call us at (770) 997-7999, or send us a message. Expert insurance solutions since 1989." />
+        <meta name="keywords" content="insurance agency Fayetteville GA, Standard Financial Group, contact insurance agent, insurance quotes Georgia" />
+        <meta property="og:title" content="Contact Standard Financial Group | Insurance Agency in Fayetteville, GA" />
+        <meta property="og:description" content="Contact Standard Financial Group for all your insurance needs. Visit our office in Fayetteville, GA, call us at (770) 997-7999, or send us a message." />
+        <link rel="canonical" href="https://standardfinancialgroup.com/contact" />
+      </Helmet>
+
       <Navbar />
       <main className="flex-grow py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <h1 className="text-4xl font-bold text-center mb-12">Contact Us</h1>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
-                {contactInfo.map((info) => (
-                  <Card key={info.title} className="p-6">
-                    <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                        <info.icon className="h-6 w-6 text-primary" />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold mb-1">{info.title}</h3>
-                        <p className="text-gray-600">{info.content}</p>
-                      </div>
+            <div className="space-y-8">
+              <Card className="p-6">
+                <div className="space-y-6">
+                  <div className="flex items-start space-x-4">
+                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                      <MapPin className="h-6 w-6 text-primary" />
                     </div>
-                  </Card>
-                ))}
-              </div>
+                    <div>
+                      <h3 className="font-semibold mb-1">Visit Us</h3>
+                      <p className="text-gray-600">490 Bradley Dr Ste A</p>
+                      <p className="text-gray-600">Fayetteville, GA 30214</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start space-x-4">
+                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                      <Clock className="h-6 w-6 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold mb-1">Business Hours</h3>
+                      <p className="text-gray-600">Monday - Friday: 9 AM - 4 PM</p>
+                      <p className="text-gray-600">Saturday - Sunday: Closed</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start space-x-4">
+                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                      <Phone className="h-6 w-6 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold mb-1">Phone</h3>
+                      <a href="tel:+17709977999" className="text-gray-600 hover:text-primary transition-colors">(770) 997-7999</a>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start space-x-4">
+                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                      <Mail className="h-6 w-6 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold mb-1">Email</h3>
+                      <a href="mailto:info@standardfinancialgroup.com" className="text-gray-600 hover:text-primary transition-colors">info@standardfinancialgroup.com</a>
+                    </div>
+                  </div>
+                </div>
+              </Card>
               
               <Card className="p-6">
                 <iframe
