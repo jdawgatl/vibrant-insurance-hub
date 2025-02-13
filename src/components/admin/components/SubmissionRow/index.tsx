@@ -51,13 +51,12 @@ export const SubmissionRow = ({
       <TableCell>
         {formatDate(submission.created_at)}
       </TableCell>
-      <TableCell className="max-w-[300px]">
+      <TableCell className="max-w-[200px]">
         <ScrollArea className="h-[100px]">
-          {submission.action_status?.notes ? (
-            <div className="text-sm space-y-2 p-2">
-              <div className="space-y-1">
-                <p className="font-medium">Latest Note:</p>
-                <p className="text-gray-600">{submission.action_status.notes}</p>
+          <div className="text-sm space-y-2 p-2">
+            {submission.action_status?.notes ? (
+              <>
+                <p className="text-gray-600 whitespace-pre-wrap">{submission.action_status.notes}</p>
                 {submission.action_status.lastUpdated && (
                   <p className="text-xs text-gray-500">
                     Updated: {formatDate(submission.action_status.lastUpdated)}
@@ -66,11 +65,11 @@ export const SubmissionRow = ({
                     )}
                   </p>
                 )}
-              </div>
-            </div>
-          ) : (
-            <p className="text-sm text-gray-500 p-2">No notes yet</p>
-          )}
+              </>
+            ) : (
+              <p className="text-gray-500">No notes yet</p>
+            )}
+          </div>
         </ScrollArea>
       </TableCell>
       <TableCell>
