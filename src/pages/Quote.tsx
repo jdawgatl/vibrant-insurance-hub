@@ -44,7 +44,7 @@ const Quote = () => {
                   </div>
                   <div className="mt-auto">
                     <Button 
-                      className="w-full"
+                      className="w-full bg-sky-600 hover:bg-sky-700"
                       onClick={() => window.open('https://www.safewayinsurance.com/', '_blank')}
                     >
                       Get Auto Quote
@@ -75,7 +75,7 @@ const Quote = () => {
                   </div>
                   <div className="mt-auto">
                     <Button 
-                      className="w-full"
+                      className="w-full bg-sky-600 hover:bg-sky-700"
                       onClick={() => window.open('https://www.nextinsurance.com/', '_blank')}
                     >
                       Get Business Coverage
@@ -94,7 +94,7 @@ const Quote = () => {
               <Card className="p-6 h-full transform transition-all duration-300 hover:shadow-xl">
                 <div className="flex flex-col h-full">
                   <div className="mb-4">
-                    <Key className="h-12 w-12 text-primary mb-4 mx-auto" />
+                    <Key className="h-12 w-12 text-sky-600 mb-4 mx-auto" />
                     <h2 className="text-2xl font-semibold mb-2">Surety Bonds</h2>
                     <p className="text-gray-600 mb-4">
                       Quick and easy surety bond solutions for your business needs.
@@ -102,7 +102,7 @@ const Quote = () => {
                   </div>
                   <div className="mt-auto">
                     <Button 
-                      className="w-full"
+                      className="w-full bg-sky-600 hover:bg-sky-700"
                       onClick={() => window.open('https://www.suretybonds.com/', '_blank')}
                     >
                       Purchase Surety Bond

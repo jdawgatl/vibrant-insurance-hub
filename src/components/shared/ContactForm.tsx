@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
@@ -46,7 +45,6 @@ const ContactForm = () => {
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     try {
-      // Transform the data to match database column names
       const dbData = {
         first_name: data.firstName,
         last_name: data.lastName,
@@ -61,7 +59,6 @@ const ContactForm = () => {
         consent: data.consent,
       };
 
-      // Save to Supabase
       const { error: supabaseError } = await supabase
         .from("contact_submissions")
         .insert(dbData);
@@ -69,7 +66,6 @@ const ContactForm = () => {
       if (supabaseError) throw supabaseError;
 
       console.log("Sending email notification...");
-      // Send email notification
       const { data: emailResponse, error: emailError } = await supabase.functions.invoke(
         "send-contact-notification",
         {
@@ -207,7 +203,7 @@ const ContactForm = () => {
         </label>
       </div>
 
-      <Button type="submit" className="w-full" disabled={isSubmitting}>
+      <Button type="submit" className="w-full bg-sky-600 hover:bg-sky-700" disabled={isSubmitting}>
         {isSubmitting ? "Submitting..." : "Submit"}
       </Button>
     </form>
