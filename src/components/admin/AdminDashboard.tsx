@@ -1,4 +1,3 @@
-
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -28,7 +27,7 @@ type ActionStatus = {
   updatedBy?: string;
 };
 
-type Submission = {
+type SubmissionBase = {
   id: string;
   first_name: string;
   last_name: string;
@@ -42,6 +41,9 @@ type Submission = {
   message: string | null;
   created_at: string;
   consent: boolean;
+};
+
+type Submission = SubmissionBase & {
   action_status?: ActionStatus;
 };
 
@@ -54,17 +56,18 @@ const fetchSubmissions = async (): Promise<Submission[]> => {
 
   const { data, error } = await supabase
     .from('contact_submissions')
-    .select()
+    .select('*')
     .order('created_at', { ascending: false });
 
   if (error) throw error;
   if (!data) return [];
 
-  // Filter out submissions with no activity in last 5 days
+  const submissions = data as unknown as Submission[];
+
   const fiveDaysAgo = new Date();
   fiveDaysAgo.setDate(fiveDaysAgo.getDate() - 5);
 
-  return data.filter(submission => {
+  return submissions.filter(submission => {
     const lastActivity = submission.action_status?.lastUpdated 
       ? new Date(submission.action_status.lastUpdated)
       : new Date(submission.created_at);
@@ -88,7 +91,9 @@ const updateSubmissionStatus = async (
 
   const { error } = await supabase
     .from('contact_submissions')
-    .update({ action_status: updatedStatus })
+    .update({ 
+      action_status: updatedStatus 
+    } as unknown as SubmissionBase)
     .eq('id', submissionId);
 
   if (error) throw error;
@@ -112,14 +117,14 @@ export const AdminDashboard = () => {
   const handleStatusChange = async (
     submissionId: string, 
     field: keyof ActionStatus, 
-    value: boolean | string
+    checked: boolean
   ) => {
     const submission = submissions.find(s => s.id === submissionId);
     const currentStatus = submission?.action_status || {};
     
     await updateSubmissionStatus(submissionId, {
       ...currentStatus,
-      [field]: value,
+      [field]: checked,
     });
     
     refetch();
@@ -128,9 +133,17 @@ export const AdminDashboard = () => {
   const handleNotesSubmit = async (submissionId: string) => {
     if (!editingNotes.trim()) return;
     
-    await handleStatusChange(submissionId, 'notes', editingNotes);
+    const submission = submissions.find(s => s.id === submissionId);
+    const currentStatus = submission?.action_status || {};
+    
+    await updateSubmissionStatus(submissionId, {
+      ...currentStatus,
+      notes: editingNotes,
+    });
+    
     setEditingNotes("");
     setEditingId(null);
+    refetch();
   };
 
   if (error) {
@@ -242,7 +255,7 @@ export const AdminDashboard = () => {
                                 id={`${id}-${submission.id}`}
                                 checked={submission.action_status?.[id as keyof ActionStatus] || false}
                                 onCheckedChange={(checked) => 
-                                  handleStatusChange(submission.id, id as keyof ActionStatus, !!checked)
+                                  handleStatusChange(submission.id, id as keyof ActionStatus, checked === true)
                                 }
                               />
                               <label 
