@@ -21,14 +21,14 @@ type Submission = {
   last_name: string;
   email: string;
   phone: string;
+  address: string;
+  city: string;
+  state: string;
+  zip: string;
   insurance_type: string | null;
+  message: string | null;
   created_at: string;
-  address?: string;
-  city?: string;
-  state?: string;
-  zip?: string;
-  message?: string | null;
-  consent?: boolean;
+  consent: boolean;
 };
 
 const fetchSubmissions = async (): Promise<Submission[]> => {
@@ -46,7 +46,7 @@ const fetchSubmissions = async (): Promise<Submission[]> => {
     // First, try to get the total count to verify we can access the table
     const { count, error: countError } = await supabase
       .from('contact_submissions')
-      .select('*', { count: 'exact', head: true });
+      .select('id, first_name, last_name, email, phone, address, city, state, zip, insurance_type, message, created_at, consent', { count: 'exact', head: true });
 
     if (countError) {
       console.error("Error checking table access:", countError);
@@ -58,7 +58,7 @@ const fetchSubmissions = async (): Promise<Submission[]> => {
     // Now fetch the actual data
     const { data, error } = await supabase
       .from('contact_submissions')
-      .select('*')
+      .select('id, first_name, last_name, email, phone, address, city, state, zip, insurance_type, message, created_at, consent')
       .order('created_at', { ascending: false });
 
     if (error) {
@@ -137,38 +137,52 @@ export const AdminDashboard = () => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Name</TableHead>
+                <TableHead>ID</TableHead>
+                <TableHead>First Name</TableHead>
+                <TableHead>Last Name</TableHead>
                 <TableHead>Email</TableHead>
                 <TableHead>Phone</TableHead>
+                <TableHead>Address</TableHead>
+                <TableHead>City</TableHead>
+                <TableHead>State</TableHead>
+                <TableHead>Zip</TableHead>
                 <TableHead>Insurance Type</TableHead>
-                <TableHead>Date</TableHead>
+                <TableHead>Message</TableHead>
+                <TableHead>Created At</TableHead>
+                <TableHead>Consent</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {isLoading ? (
                 <TableRow>
-                  <TableCell colSpan={5} className="text-center py-4">
+                  <TableCell colSpan={13} className="text-center py-4">
                     Loading...
                   </TableCell>
                 </TableRow>
               ) : submissions.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={5} className="text-center py-4">
+                  <TableCell colSpan={13} className="text-center py-4">
                     No submissions yet
                   </TableCell>
                 </TableRow>
               ) : (
                 submissions.map((submission) => (
                   <TableRow key={submission.id}>
-                    <TableCell>
-                      {submission.first_name} {submission.last_name}
-                    </TableCell>
+                    <TableCell>{submission.id}</TableCell>
+                    <TableCell>{submission.first_name}</TableCell>
+                    <TableCell>{submission.last_name}</TableCell>
                     <TableCell>{submission.email}</TableCell>
                     <TableCell>{submission.phone}</TableCell>
+                    <TableCell>{submission.address}</TableCell>
+                    <TableCell>{submission.city}</TableCell>
+                    <TableCell>{submission.state}</TableCell>
+                    <TableCell>{submission.zip}</TableCell>
                     <TableCell>{submission.insurance_type || "N/A"}</TableCell>
+                    <TableCell>{submission.message || "N/A"}</TableCell>
                     <TableCell>
                       {new Date(submission.created_at).toLocaleDateString()}
                     </TableCell>
+                    <TableCell>{submission.consent ? "Yes" : "No"}</TableCell>
                   </TableRow>
                 ))
               )}
