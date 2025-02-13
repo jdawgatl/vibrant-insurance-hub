@@ -48,10 +48,13 @@ export const updateSubmissionStatus = async (
     updatedBy: session.user.email || 'unknown'
   };
 
-  const { error } = await supabase.rpc('update_submission_status', {
-    submission_id: submissionId,
-    status: updatedStatus
-  } as UpdateSubmissionStatusParams);
+  const { error } = await supabase.rpc(
+    'update_submission_status',
+    {
+      p_submission_id: submissionId,
+      p_status: updatedStatus
+    }
+  );
 
   if (error) throw error;
 };
