@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { supabase } from "@/integrations/supabase/client";
 import { Card } from "@/components/ui/card";
@@ -13,7 +13,16 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { LogOut, Users, FileText, ChevronRight } from "lucide-react";
+import { 
+  LogOut, 
+  Users, 
+  FileText, 
+  DollarSign, 
+  BookOpen,
+  ChevronRight,
+  UserPlus,
+  FileText as QuoteIcon
+} from "lucide-react";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -37,7 +46,7 @@ const Admin = () => {
       const { data, error } = await supabase
         .from("contact_submissions")
         .select("*")
-        .order("created_at", { ascending: false });
+        .order('created_at', { ascending: false });
 
       if (error) throw error;
       setSubmissions(data || []);
@@ -53,6 +62,33 @@ const Admin = () => {
     navigate("/agent-login");
   };
 
+  const menuItems = [
+    { 
+      icon: Users, 
+      label: "Clients & Prospects", 
+      path: "/admin/clients",
+      description: "Manage client and prospect information"
+    },
+    { 
+      icon: QuoteIcon, 
+      label: "Quotes", 
+      path: "/admin/quotes",
+      description: "Create and manage insurance quotes"
+    },
+    { 
+      icon: DollarSign, 
+      label: "Payments", 
+      path: "/admin/payments",
+      description: "Process and track payments"
+    },
+    { 
+      icon: BookOpen, 
+      label: "Underwriting Manuals", 
+      path: "/admin/manuals",
+      description: "Access underwriting guidelines and documents"
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Helmet>
@@ -67,9 +103,22 @@ const Admin = () => {
             <h1 className="text-xl font-bold text-gray-800">Admin Dashboard</h1>
           </div>
           <nav className="mt-6">
+            {menuItems.map((item) => (
+              <Button
+                key={item.label}
+                variant="ghost"
+                className="w-full justify-start px-6 py-3 text-left"
+                asChild
+              >
+                <Link to={item.path}>
+                  <item.icon className="mr-2 h-4 w-4" />
+                  {item.label}
+                </Link>
+              </Button>
+            ))}
             <Button
               variant="ghost"
-              className="w-full justify-start px-6 py-3 text-left"
+              className="w-full justify-start px-6 py-3 text-left text-red-600 hover:text-red-700 hover:bg-red-50"
               onClick={handleLogout}
             >
               <LogOut className="mr-2 h-4 w-4" />
@@ -81,51 +130,33 @@ const Admin = () => {
         {/* Main content */}
         <div className="flex-1 overflow-auto">
           <div className="p-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-              <Card className="p-6">
-                <div className="flex items-center">
-                  <div className="p-3 bg-sky-600/10 rounded-full">
-                    <Users className="h-6 w-6 text-sky-600" />
-                  </div>
-                  <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-600">
-                      Total Submissions
-                    </p>
-                    <h3 className="text-2xl font-bold text-gray-900">
-                      {submissions.length}
-                    </h3>
-                  </div>
-                </div>
-              </Card>
-
-              <Card className="p-6">
-                <div className="flex items-center">
-                  <div className="p-3 bg-sky-600/10 rounded-full">
-                    <FileText className="h-6 w-6 text-sky-600" />
-                  </div>
-                  <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-600">
-                      Recent Submissions
-                    </p>
-                    <h3 className="text-2xl font-bold text-gray-900">
-                      {submissions.filter(sub => {
-                        const date = new Date(sub.created_at);
-                        const now = new Date();
-                        const diffTime = Math.abs(now.getTime() - date.getTime());
-                        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                        return diffDays <= 7;
-                      }).length}
-                    </h3>
-                  </div>
-                </div>
-              </Card>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+              {menuItems.map((item) => (
+                <Link key={item.label} to={item.path}>
+                  <Card className="p-6 hover:shadow-lg transition-shadow">
+                    <div className="flex items-center">
+                      <div className="p-3 bg-sky-600/10 rounded-full">
+                        <item.icon className="h-6 w-6 text-sky-600" />
+                      </div>
+                      <div className="ml-4 flex-1">
+                        <h3 className="font-semibold text-gray-900">{item.label}</h3>
+                        <p className="text-sm text-gray-500">{item.description}</p>
+                      </div>
+                      <ChevronRight className="h-5 w-5 text-gray-400" />
+                    </div>
+                  </Card>
+                </Link>
+              ))}
             </div>
 
             <Card className="overflow-hidden">
-              <div className="p-6 border-b border-gray-200">
+              <div className="p-6 border-b border-gray-200 flex justify-between items-center">
                 <h2 className="text-lg font-semibold text-gray-900">
                   Recent Contact Form Submissions
                 </h2>
+                <Button variant="outline" size="sm" onClick={fetchSubmissions}>
+                  Refresh
+                </Button>
               </div>
               <div className="overflow-x-auto">
                 <Table>
