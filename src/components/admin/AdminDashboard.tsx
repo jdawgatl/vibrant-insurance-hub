@@ -26,7 +26,7 @@ export const AdminDashboard = () => {
   const fetchSubmissions = async () => {
     try {
       const { data, error } = await supabase
-        .from("contact_form_submissions")
+        .from("contact_submissions")  // Changed from "contact_form_submissions" to match types
         .select("*")
         .order('created_at', { ascending: false });
 
