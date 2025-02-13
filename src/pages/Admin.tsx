@@ -13,7 +13,7 @@ const Admin = () => {
     <QueryProvider>
       <Routes>
         <Route element={<AdminLayout />}>
-          <Route index element={<AdminDashboard />} />
+          <Route path="*" element={<AdminDashboard />} />
           <Route path="clients" element={<ClientsSection />} />
           <Route path="quotes" element={<QuotesSection />} />
           <Route path="payments" element={<PaymentsSection />} />

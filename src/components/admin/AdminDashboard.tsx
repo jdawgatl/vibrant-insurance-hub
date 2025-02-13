@@ -32,50 +32,49 @@ type Submission = {
 };
 
 const fetchSubmissions = async (): Promise<Submission[]> => {
-  try {
-    const { data: { session } } = await supabase.auth.getSession();
+  const { data: { session } } = await supabase.auth.getSession();
     
-    if (!session) {
-      console.error("No authenticated session found");
-      return [];
-    }
-
-    // Log the session info for debugging
-    console.log("Current session:", session);
-
-    // First, let's try a simple select to get all data
-    const { data, error } = await supabase
-      .from('contact_submissions')
-      .select();
-
-    if (error) {
-      console.error("Supabase error:", error);
-      throw error; // Let's throw the error to see it in the console
-    }
-
-    if (!data) {
-      console.log("No data returned from Supabase");
-      return [];
-    }
-
-    // Log raw response
-    console.log("Raw Supabase response:", { data, error });
-    
-    // Try to find specific submission
-    console.log("Looking for submission with ID e1a8424b-d4e6-47d7-8ba4-9d47c8dc4e6b");
-    const specificSubmission = data.find(sub => sub.id === "e1a8424b-d4e6-47d7-8ba4-9d47c8dc4e6b");
-    console.log("Found specific submission:", specificSubmission);
-
-    // Log table structure
-    if (data.length > 0) {
-      console.log("First row structure:", Object.keys(data[0]));
-    }
-
-    return data;
-  } catch (error) {
-    console.error("Unexpected error in fetchSubmissions:", error);
-    throw error; // Let's throw the error to see it in the console
+  if (!session) {
+    throw new Error("No authenticated session found");
   }
+
+  // Let's try to explicitly set the Authorization header
+  supabase.auth.setSession({
+    access_token: session.access_token,
+    refresh_token: session.refresh_token,
+  });
+
+  // Fetch data with explicit schema typing
+  const { data, error } = await supabase
+    .from('contact_submissions')
+    .select(`
+      id,
+      first_name,
+      last_name,
+      email,
+      phone,
+      address,
+      city,
+      state,
+      zip,
+      insurance_type,
+      message,
+      created_at,
+      consent
+    `)
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error("Supabase error:", error);
+    throw error;
+  }
+
+  if (!data) {
+    return [];
+  }
+
+  console.log("Fetched submissions:", data);
+  return data;
 };
 
 export const AdminDashboard = () => {
@@ -87,22 +86,12 @@ export const AdminDashboard = () => {
   } = useQuery({
     queryKey: ['submissions'],
     queryFn: fetchSubmissions,
-    retry: 2,
-    refetchOnWindowFocus: false,
+    retry: 1,
   });
 
-  // Additional error logging
   if (error) {
-    console.error("Query error details:", error);
+    console.error("Query error:", error);
   }
-
-  // Log current state
-  console.log("Current submissions state:", { 
-    isLoading, 
-    error, 
-    submissionsLength: submissions.length,
-    submissions 
-  });
 
   return (
     <div className="p-8">
