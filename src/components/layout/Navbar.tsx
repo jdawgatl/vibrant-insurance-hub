@@ -27,8 +27,13 @@ const Navbar = () => {
           <div className="flex items-center">
             <Link to="/" className="flex-shrink-0">
               <div className="text-center">
-                <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-sky-700 to-sky-500 bg-clip-text text-transparent animate-fade-in">
-                  Standard Financial Group
+                <h1 className="text-2xl md:text-3xl font-bold animate-fade-in">
+                  <span className="bg-gradient-to-r from-sky-700 to-sky-500 bg-clip-text text-transparent">
+                    Standard
+                  </span>
+                  <span className="text-[80%] text-gray-600 ml-2">
+                    Financial Group
+                  </span>
                 </h1>
                 <a
                   href="tel:+17709977999"
