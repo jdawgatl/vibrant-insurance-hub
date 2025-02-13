@@ -46,7 +46,7 @@ const Service = () => {
                         <p className="text-gray-600">Customer Service:</p>
                         <a
                           href={`tel:${carrier.customerService}`}
-                          className="text-indigo-600 hover:text-indigo-800"
+                          className="text-sky-600 hover:text-sky-800"
                         >
                           {carrier.customerService}
                         </a>
@@ -55,7 +55,7 @@ const Service = () => {
                         <p className="text-gray-600">Claims:</p>
                         <a
                           href={`tel:${carrier.claims}`}
-                          className="text-indigo-600 hover:text-indigo-800"
+                          className="text-sky-600 hover:text-sky-800"
                         >
                           {carrier.claims}
                         </a>
@@ -65,7 +65,7 @@ const Service = () => {
                       href={carrier.website}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors gap-2"
+                      className="inline-flex items-center justify-center px-4 py-2 bg-sky-600 text-white rounded-md hover:bg-sky-700 transition-colors gap-2"
                     >
                       Visit Website
                       <ExternalLink className="h-4 w-4" />

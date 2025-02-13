@@ -1,4 +1,3 @@
-
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ContactForm from "@/components/shared/ContactForm";
@@ -28,8 +27,8 @@ const Contact = () => {
               <Card className="p-6">
                 <div className="space-y-6">
                   <div className="flex items-start space-x-4">
-                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                      <MapPin className="h-6 w-6 text-primary" />
+                    <div className="w-12 h-12 bg-sky-600/10 rounded-full flex items-center justify-center">
+                      <MapPin className="h-6 w-6 text-sky-600" />
                     </div>
                     <div>
                       <h3 className="font-semibold mb-1">Visit Us</h3>
@@ -39,8 +38,8 @@ const Contact = () => {
                   </div>
 
                   <div className="flex items-start space-x-4">
-                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                      <Clock className="h-6 w-6 text-primary" />
+                    <div className="w-12 h-12 bg-sky-600/10 rounded-full flex items-center justify-center">
+                      <Clock className="h-6 w-6 text-sky-600" />
                     </div>
                     <div>
                       <h3 className="font-semibold mb-1">Business Hours</h3>
@@ -50,22 +49,22 @@ const Contact = () => {
                   </div>
 
                   <div className="flex items-start space-x-4">
-                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                      <Phone className="h-6 w-6 text-primary" />
+                    <div className="w-12 h-12 bg-sky-600/10 rounded-full flex items-center justify-center">
+                      <Phone className="h-6 w-6 text-sky-600" />
                     </div>
                     <div>
                       <h3 className="font-semibold mb-1">Phone</h3>
-                      <a href="tel:+17709977999" className="text-gray-600 hover:text-primary transition-colors">(770) 997-7999</a>
+                      <a href="tel:+17709977999" className="text-gray-600 hover:text-sky-600 transition-colors">(770) 997-7999</a>
                     </div>
                   </div>
 
                   <div className="flex items-start space-x-4">
-                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                      <Mail className="h-6 w-6 text-primary" />
+                    <div className="w-12 h-12 bg-sky-600/10 rounded-full flex items-center justify-center">
+                      <Mail className="h-6 w-6 text-sky-600" />
                     </div>
                     <div>
                       <h3 className="font-semibold mb-1">Email</h3>
-                      <a href="mailto:info@standardfinancialgroup.com" className="text-gray-600 hover:text-primary transition-colors">info@standardfinancialgroup.com</a>
+                      <a href="mailto:info@standardfinancialgroup.com" className="text-gray-600 hover:text-sky-600 transition-colors">info@standardfinancialgroup.com</a>
                     </div>
                   </div>
                 </div>
