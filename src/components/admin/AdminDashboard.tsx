@@ -31,11 +31,12 @@ type Submission = {
   consent?: boolean;
 };
 
-const fetchSubmissions = async () => {
+const fetchSubmissions = async (): Promise<Submission[]> => {
   const { data: { session } } = await supabase.auth.getSession();
       
   if (!session) {
-    throw new Error("No authenticated session found");
+    console.error("No authenticated session found");
+    return [];
   }
 
   const { data, error } = await supabase
@@ -44,7 +45,8 @@ const fetchSubmissions = async () => {
     .order('created_at', { ascending: false });
 
   if (error) {
-    throw error;
+    console.error("Supabase error:", error);
+    return [];
   }
 
   console.log("Raw data from Supabase:", data);
@@ -52,9 +54,14 @@ const fetchSubmissions = async () => {
 };
 
 export const AdminDashboard = () => {
-  const { data: submissions = [], isLoading, refetch } = useQuery({
+  const { 
+    data: submissions = [], 
+    isLoading,
+    refetch 
+  } = useQuery({
     queryKey: ['submissions'],
-    queryFn: fetchSubmissions
+    queryFn: fetchSubmissions,
+    initialData: [],
   });
 
   console.log("Current submissions state:", submissions);
@@ -114,7 +121,7 @@ export const AdminDashboard = () => {
                   </TableCell>
                 </TableRow>
               ) : (
-                submissions.map((submission: Submission) => (
+                submissions.map((submission) => (
                   <TableRow key={submission.id}>
                     <TableCell>
                       {submission.first_name} {submission.last_name}
