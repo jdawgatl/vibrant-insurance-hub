@@ -12,8 +12,21 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Textarea } from "@/components/ui/textarea";
 import { ChevronRight } from "lucide-react";
 import { menuItems } from "./menuItems";
+import { useState } from "react";
+import { format } from "date-fns";
+
+type ActionStatus = {
+  contacted: boolean;
+  quoted: boolean;
+  unreachable: boolean;
+  notes: string;
+  lastUpdated?: string;
+  updatedBy?: string;
+};
 
 type Submission = {
   id: string;
@@ -29,6 +42,7 @@ type Submission = {
   message: string | null;
   created_at: string;
   consent: boolean;
+  action_status?: ActionStatus;
 };
 
 const fetchSubmissions = async (): Promise<Submission[]> => {
@@ -38,46 +52,52 @@ const fetchSubmissions = async (): Promise<Submission[]> => {
     throw new Error("No authenticated session found");
   }
 
-  // Let's try to explicitly set the Authorization header
-  supabase.auth.setSession({
-    access_token: session.access_token,
-    refresh_token: session.refresh_token,
-  });
-
-  // Fetch data with explicit schema typing
   const { data, error } = await supabase
     .from('contact_submissions')
-    .select(`
-      id,
-      first_name,
-      last_name,
-      email,
-      phone,
-      address,
-      city,
-      state,
-      zip,
-      insurance_type,
-      message,
-      created_at,
-      consent
-    `)
+    .select()
     .order('created_at', { ascending: false });
 
-  if (error) {
-    console.error("Supabase error:", error);
-    throw error;
-  }
+  if (error) throw error;
+  if (!data) return [];
 
-  if (!data) {
-    return [];
-  }
+  // Filter out submissions with no activity in last 5 days
+  const fiveDaysAgo = new Date();
+  fiveDaysAgo.setDate(fiveDaysAgo.getDate() - 5);
 
-  console.log("Fetched submissions:", data);
-  return data;
+  return data.filter(submission => {
+    const lastActivity = submission.action_status?.lastUpdated 
+      ? new Date(submission.action_status.lastUpdated)
+      : new Date(submission.created_at);
+    return lastActivity > fiveDaysAgo;
+  });
+};
+
+const updateSubmissionStatus = async (
+  submissionId: string, 
+  status: Partial<ActionStatus>
+) => {
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session) throw new Error("No authenticated session found");
+
+  const timestamp = new Date().toISOString();
+  const updatedStatus = {
+    ...status,
+    lastUpdated: timestamp,
+    updatedBy: session.user.email
+  };
+
+  const { error } = await supabase
+    .from('contact_submissions')
+    .update({ action_status: updatedStatus })
+    .eq('id', submissionId);
+
+  if (error) throw error;
 };
 
 export const AdminDashboard = () => {
+  const [editingNotes, setEditingNotes] = useState<string>("");
+  const [editingId, setEditingId] = useState<string | null>(null);
+
   const { 
     data: submissions = [], 
     isLoading,
@@ -88,6 +108,30 @@ export const AdminDashboard = () => {
     queryFn: fetchSubmissions,
     retry: 1,
   });
+
+  const handleStatusChange = async (
+    submissionId: string, 
+    field: keyof ActionStatus, 
+    value: boolean | string
+  ) => {
+    const submission = submissions.find(s => s.id === submissionId);
+    const currentStatus = submission?.action_status || {};
+    
+    await updateSubmissionStatus(submissionId, {
+      ...currentStatus,
+      [field]: value,
+    });
+    
+    refetch();
+  };
+
+  const handleNotesSubmit = async (submissionId: string) => {
+    if (!editingNotes.trim()) return;
+    
+    await handleStatusChange(submissionId, 'notes', editingNotes);
+    setEditingNotes("");
+    setEditingId(null);
+  };
 
   if (error) {
     console.error("Query error:", error);
@@ -127,52 +171,142 @@ export const AdminDashboard = () => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>ID</TableHead>
-                <TableHead>First Name</TableHead>
-                <TableHead>Last Name</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Phone</TableHead>
-                <TableHead>Address</TableHead>
-                <TableHead>City</TableHead>
-                <TableHead>State</TableHead>
-                <TableHead>Zip</TableHead>
-                <TableHead>Insurance Type</TableHead>
-                <TableHead>Message</TableHead>
-                <TableHead>Created At</TableHead>
-                <TableHead>Consent</TableHead>
+                <TableHead>Contact Info</TableHead>
+                <TableHead>Location</TableHead>
+                <TableHead>Insurance</TableHead>
+                <TableHead>Date</TableHead>
+                <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {isLoading ? (
                 <TableRow>
-                  <TableCell colSpan={13} className="text-center py-4">
+                  <TableCell colSpan={5} className="text-center py-4">
                     Loading...
                   </TableCell>
                 </TableRow>
               ) : submissions.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={13} className="text-center py-4">
+                  <TableCell colSpan={5} className="text-center py-4">
                     No submissions yet
                   </TableCell>
                 </TableRow>
               ) : (
                 submissions.map((submission) => (
                   <TableRow key={submission.id}>
-                    <TableCell>{submission.id}</TableCell>
-                    <TableCell>{submission.first_name}</TableCell>
-                    <TableCell>{submission.last_name}</TableCell>
-                    <TableCell>{submission.email}</TableCell>
-                    <TableCell>{submission.phone}</TableCell>
-                    <TableCell>{submission.address}</TableCell>
-                    <TableCell>{submission.city}</TableCell>
-                    <TableCell>{submission.state}</TableCell>
-                    <TableCell>{submission.zip}</TableCell>
-                    <TableCell>{submission.insurance_type || "N/A"}</TableCell>
-                    <TableCell>{submission.message || "N/A"}</TableCell>
+                    <TableCell>
+                      <div className="space-y-1">
+                        <p className="font-medium">
+                          {submission.first_name} {submission.last_name}
+                        </p>
+                        <p className="text-sm text-gray-500">{submission.email}</p>
+                        <p className="text-sm text-gray-500">{submission.phone}</p>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="space-y-1">
+                        <p className="text-sm">{submission.address}</p>
+                        <p className="text-sm text-gray-500">
+                          {submission.city}, {submission.state} {submission.zip}
+                        </p>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="space-y-1">
+                        <p className="text-sm">{submission.insurance_type || "N/A"}</p>
+                        {submission.message && (
+                          <p className="text-sm text-gray-500">{submission.message}</p>
+                        )}
+                      </div>
+                    </TableCell>
                     <TableCell>
                       {new Date(submission.created_at).toLocaleDateString()}
                     </TableCell>
-                    <TableCell>{submission.consent ? "Yes" : "No"}</TableCell>
+                    <TableCell>
+                      <div className="space-y-4">
+                        <div className="space-y-2">
+                          {[
+                            { id: 'contacted', label: 'Contacted' },
+                            { id: 'quoted', label: 'Quoted' },
+                            { id: 'unreachable', label: 'Unable to reach' }
+                          ].map(({ id, label }) => (
+                            <div 
+                              key={id} 
+                              className="flex items-center space-x-2"
+                              title={submission.action_status?.[id as keyof ActionStatus] ? 
+                                `Updated on ${format(new Date(submission.action_status.lastUpdated!), 'PPpp')} by ${submission.action_status.updatedBy}` 
+                                : undefined
+                              }
+                            >
+                              <Checkbox
+                                id={`${id}-${submission.id}`}
+                                checked={submission.action_status?.[id as keyof ActionStatus] || false}
+                                onCheckedChange={(checked) => 
+                                  handleStatusChange(submission.id, id as keyof ActionStatus, !!checked)
+                                }
+                              />
+                              <label 
+                                htmlFor={`${id}-${submission.id}`}
+                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              >
+                                {label}
+                              </label>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="space-y-2">
+                          {editingId === submission.id ? (
+                            <>
+                              <Textarea
+                                value={editingNotes}
+                                onChange={(e) => setEditingNotes(e.target.value)}
+                                placeholder="Enter notes..."
+                                className="min-h-[60px]"
+                              />
+                              <div className="flex space-x-2">
+                                <Button 
+                                  size="sm" 
+                                  onClick={() => handleNotesSubmit(submission.id)}
+                                >
+                                  Save
+                                </Button>
+                                <Button 
+                                  size="sm"
+                                  variant="outline" 
+                                  onClick={() => {
+                                    setEditingId(null);
+                                    setEditingNotes("");
+                                  }}
+                                >
+                                  Cancel
+                                </Button>
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              {submission.action_status?.notes && (
+                                <p 
+                                  className="text-sm text-gray-600"
+                                  title={`Updated on ${format(new Date(submission.action_status.lastUpdated!), 'PPpp')} by ${submission.action_status.updatedBy}`}
+                                >
+                                  {submission.action_status.notes}
+                                </p>
+                              )}
+                              <Button 
+                                size="sm" 
+                                variant="outline"
+                                onClick={() => {
+                                  setEditingId(submission.id);
+                                  setEditingNotes(submission.action_status?.notes || "");
+                                }}
+                              >
+                                {submission.action_status?.notes ? "Edit Notes" : "Add Notes"}
+                              </Button>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    </TableCell>
                   </TableRow>
                 ))
               )}
