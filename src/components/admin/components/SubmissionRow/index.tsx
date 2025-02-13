@@ -1,0 +1,79 @@
+
+import { TableCell, TableRow } from "@/components/ui/table";
+import { Submission, ActionStatus } from "../../types/submission";
+import { format } from "date-fns";
+import { type CheckedState } from "@radix-ui/react-checkbox";
+import { ContactInfo } from "./ContactInfo";
+import { LocationInfo } from "./LocationInfo";
+import { InsuranceInfo } from "./InsuranceInfo";
+import { ActionCheckbox } from "./ActionCheckbox";
+import { NotesSection } from "./NotesSection";
+
+interface SubmissionRowProps {
+  submission: Submission;
+  onStatusChange: (submissionId: string, field: keyof ActionStatus, checked: CheckedState) => Promise<void>;
+  onSaveNotes: (submissionId: string, notes: string) => Promise<void>;
+}
+
+export const SubmissionRow = ({
+  submission,
+  onStatusChange,
+  onSaveNotes,
+}: SubmissionRowProps) => {
+  const formatDate = (date: string) => {
+    try {
+      return format(new Date(date), 'PPpp');
+    } catch (error) {
+      return 'Invalid date';
+    }
+  };
+
+  return (
+    <TableRow>
+      <TableCell>
+        <ContactInfo submission={submission} />
+      </TableCell>
+      <TableCell>
+        <LocationInfo submission={submission} />
+      </TableCell>
+      <TableCell>
+        <InsuranceInfo submission={submission} />
+      </TableCell>
+      <TableCell>
+        {formatDate(submission.created_at)}
+      </TableCell>
+      <TableCell>
+        <div className="space-y-4">
+          <div className="space-y-2">
+            {[
+              { id: 'contacted', label: 'Contacted' },
+              { id: 'quoted', label: 'Quoted' },
+              { id: 'unreachable', label: 'Unable to reach' }
+            ].map(({ id, label }) => (
+              <ActionCheckbox
+                key={id}
+                id={id}
+                label={label}
+                submissionId={submission.id}
+                field={id as keyof ActionStatus}
+                isChecked={submission.action_status?.[id as keyof ActionStatus] || false}
+                lastUpdated={submission.action_status?.lastUpdated}
+                updatedBy={submission.action_status?.updatedBy}
+                onStatusChange={onStatusChange}
+              />
+            ))}
+          </div>
+          <div className="space-y-2">
+            <NotesSection
+              submissionId={submission.id}
+              currentNotes={submission.action_status?.notes}
+              lastUpdated={submission.action_status?.lastUpdated}
+              updatedBy={submission.action_status?.updatedBy}
+              onSaveNotes={onSaveNotes}
+            />
+          </div>
+        </div>
+      </TableCell>
+    </TableRow>
+  );
+};
