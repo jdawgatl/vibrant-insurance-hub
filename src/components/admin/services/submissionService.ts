@@ -3,7 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { ActionStatus, Submission } from "../types/submission";
 
 export const fetchSubmissions = async (): Promise<Submission[]> => {
-  const { data: { session } } = await supabase.auth.getSession();
+  const session = await supabase.auth.getSession().then(res => res.data.session);
     
   if (!session) {
     throw new Error("No authenticated session found");
@@ -39,7 +39,7 @@ export const updateSubmissionStatus = async (
   submissionId: string, 
   status: Partial<ActionStatus>
 ): Promise<void> => {
-  const { data: { session } } = await supabase.auth.getSession();
+  const session = await supabase.auth.getSession().then(res => res.data.session);
   if (!session) throw new Error("No authenticated session found");
 
   const timestamp = new Date().toISOString();
@@ -53,13 +53,14 @@ export const updateSubmissionStatus = async (
     updatedBy: session.user.email || 'unknown'
   };
 
-  const { error } = await supabase.rpc(
-    'update_submission_status',
-    {
-      submission_id: submissionId,
-      action_status: updatedStatus
-    } as UpdateSubmissionStatusRpcParams
-  );
+  const rpcParams: UpdateSubmissionStatusRpcParams = {
+    submission_id: submissionId,
+    action_status: updatedStatus
+  };
+
+  const { error } = await supabase.functions.invoke('update_submission_status', {
+    body: rpcParams
+  });
 
   if (error) throw error;
 };
