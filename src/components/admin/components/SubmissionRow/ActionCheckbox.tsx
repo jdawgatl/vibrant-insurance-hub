@@ -36,15 +36,22 @@ export const ActionCheckbox = ({
 
   return (
     <div className="flex items-center space-x-2 group relative">
-      <Checkbox
-        id={`${id}-${submissionId}`}
-        checked={isChecked}
-        onCheckedChange={(checked) => onStatusChange(submissionId, field, checked)}
-        className="h-5 w-5 border-2 rounded bg-white data-[state=checked]:bg-blue-500 data-[state=checked]:border-blue-500"
-      />
+      <div className="relative">
+        <Checkbox
+          id={`${id}-${submissionId}`}
+          checked={isChecked}
+          onCheckedChange={(checked) => onStatusChange(submissionId, field, checked)}
+          className="h-4 w-4 rounded border border-gray-300 bg-white"
+        >
+          <Check 
+            className={`h-3 w-3 text-white ${isChecked ? 'opacity-100' : 'opacity-0'}`}
+            strokeWidth={3}
+          />
+        </Checkbox>
+      </div>
       <label
         htmlFor={`${id}-${submissionId}`}
-        className={`text-sm font-medium leading-none ${isChecked ? 'text-blue-500' : ''}`}
+        className={`text-sm font-medium leading-none ${isChecked ? 'text-blue-500' : 'text-gray-700'}`}
       >
         {label}
       </label>

@@ -51,14 +51,9 @@ export const updateSubmissionStatus = async (
     updatedBy: session.user.email || 'unknown'
   };
 
-  // Cast the update object to Partial<SubmissionBase> to match the expected type
-  const updateData = {
-    action_status: updatedStatus
-  } as Partial<SubmissionBase>;
-
   const { error } = await supabase
     .from('contact_submissions')
-    .update(updateData)
+    .update({ action_status: updatedStatus })
     .eq('id', submissionId);
 
   if (error) throw error;
