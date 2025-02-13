@@ -15,6 +15,7 @@ import { Submission, ActionStatus } from "../types/submission";
 import { useState } from "react";
 import { updateSubmissionStatus } from "../services/submissionService";
 import { toast } from "sonner";
+import { type CheckedState } from "@radix-ui/react-checkbox";
 
 interface SubmissionsTableProps {
   submissions: Submission[];
@@ -29,7 +30,7 @@ export const SubmissionsTable = ({ submissions, isLoading, onUpdate }: Submissio
   const handleStatusChange = async (
     submissionId: string, 
     field: keyof ActionStatus, 
-    checked: boolean | "indeterminate"
+    checked: CheckedState
   ) => {
     try {
       const submission = submissions.find(s => s.id === submissionId);
@@ -156,7 +157,7 @@ export const SubmissionsTable = ({ submissions, isLoading, onUpdate }: Submissio
                       id={`${id}-${submission.id}`}
                       checked={submission.action_status?.[id as keyof ActionStatus] || false}
                       onCheckedChange={(checked) => 
-                        handleStatusChange(submission.id, id as keyof ActionStatus, checked as boolean)
+                        handleStatusChange(submission.id, id as keyof ActionStatus, checked)
                       }
                     />
                     <label 
