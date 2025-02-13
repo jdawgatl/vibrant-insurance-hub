@@ -43,27 +43,14 @@ const fetchSubmissions = async (): Promise<Submission[]> => {
     // Log the session info for debugging
     console.log("Current session:", session);
 
-    // First, try to get the total count to verify we can access the table
-    const { count, error: countError } = await supabase
-      .from('contact_submissions')
-      .select('id, first_name, last_name, email, phone, address, city, state, zip, insurance_type, message, created_at, consent', { count: 'exact', head: true });
-
-    if (countError) {
-      console.error("Error checking table access:", countError);
-      return [];
-    }
-
-    console.log("Total submissions count:", count);
-
-    // Now fetch the actual data
+    // First, let's try a simple select to get all data
     const { data, error } = await supabase
       .from('contact_submissions')
-      .select('id, first_name, last_name, email, phone, address, city, state, zip, insurance_type, message, created_at, consent')
-      .order('created_at', { ascending: false });
+      .select();
 
     if (error) {
       console.error("Supabase error:", error);
-      return [];
+      throw error; // Let's throw the error to see it in the console
     }
 
     if (!data) {
@@ -71,18 +58,23 @@ const fetchSubmissions = async (): Promise<Submission[]> => {
       return [];
     }
 
-    console.log("Raw data from Supabase:", data);
-    console.log("Number of submissions fetched:", data.length);
+    // Log raw response
+    console.log("Raw Supabase response:", { data, error });
     
-    // Log a sample submission if available
+    // Try to find specific submission
+    console.log("Looking for submission with ID e1a8424b-d4e6-47d7-8ba4-9d47c8dc4e6b");
+    const specificSubmission = data.find(sub => sub.id === "e1a8424b-d4e6-47d7-8ba4-9d47c8dc4e6b");
+    console.log("Found specific submission:", specificSubmission);
+
+    // Log table structure
     if (data.length > 0) {
-      console.log("Sample submission:", data[0]);
+      console.log("First row structure:", Object.keys(data[0]));
     }
 
     return data;
   } catch (error) {
     console.error("Unexpected error in fetchSubmissions:", error);
-    return [];
+    throw error; // Let's throw the error to see it in the console
   }
 };
 
@@ -97,11 +89,20 @@ export const AdminDashboard = () => {
     queryFn: fetchSubmissions,
     retry: 2,
     refetchOnWindowFocus: false,
-    initialData: [],
   });
 
-  console.log("Current submissions state:", submissions);
-  if (error) console.error("Query error:", error);
+  // Additional error logging
+  if (error) {
+    console.error("Query error details:", error);
+  }
+
+  // Log current state
+  console.log("Current submissions state:", { 
+    isLoading, 
+    error, 
+    submissionsLength: submissions.length,
+    submissions 
+  });
 
   return (
     <div className="p-8">
