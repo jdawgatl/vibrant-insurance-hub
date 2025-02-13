@@ -23,6 +23,12 @@ type Submission = {
   phone: string;
   insurance_type: string | null;
   created_at: string;
+  address: string;
+  city: string;
+  state: string;
+  zip: string;
+  message: string | null;
+  consent: boolean;
 };
 
 export const AdminDashboard = () => {
@@ -38,7 +44,7 @@ export const AdminDashboard = () => {
       setLoading(true);
       const { data, error } = await supabase
         .from("contact_submissions")
-        .select("*")
+        .select("id, first_name, last_name, email, phone, insurance_type, created_at")
         .order('created_at', { ascending: false })
         .limit(10);
 
