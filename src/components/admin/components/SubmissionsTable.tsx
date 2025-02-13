@@ -43,7 +43,7 @@ export const SubmissionsTable = ({ submissions, isLoading, onUpdate }: Submissio
       
       await updateSubmissionStatus(submissionId, {
         ...currentStatus,
-        [field]: checked === true,
+        [field]: checked === true
       });
       
       toast.success(`Successfully updated ${field} status`);
@@ -156,7 +156,7 @@ export const SubmissionsTable = ({ submissions, isLoading, onUpdate }: Submissio
                     <Checkbox
                       id={`${id}-${submission.id}`}
                       checked={submission.action_status?.[id as keyof ActionStatus] || false}
-                      onCheckedChange={(checked) => 
+                      onCheckedChange={(checked: CheckedState) => 
                         handleStatusChange(submission.id, id as keyof ActionStatus, checked)
                       }
                     />

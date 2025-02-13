@@ -27,3 +27,9 @@ export type SubmissionBase = {
 export type Submission = SubmissionBase & {
   action_status?: ActionStatus;
 };
+
+// Add RPC types
+export type UpdateSubmissionStatusParams = {
+  submission_id: string;
+  status: ActionStatus;
+};

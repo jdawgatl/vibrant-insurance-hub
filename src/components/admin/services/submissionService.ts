@@ -1,6 +1,6 @@
 
 import { supabase } from "@/integrations/supabase/client";
-import { ActionStatus, Submission } from "../types/submission";
+import { ActionStatus, Submission, UpdateSubmissionStatusParams } from "../types/submission";
 
 export const fetchSubmissions = async (): Promise<Submission[]> => {
   const { data: { session } } = await supabase.auth.getSession();
@@ -38,16 +38,22 @@ export const updateSubmissionStatus = async (
   if (!session) throw new Error("No authenticated session found");
 
   const timestamp = new Date().toISOString();
-  const updatedStatus = {
+  const updatedStatus: ActionStatus = {
+    contacted: false,
+    quoted: false,
+    unreachable: false,
+    notes: "",
     ...status,
     lastUpdated: timestamp,
-    updatedBy: session.user.email
+    updatedBy: session.user.email || 'unknown'
   };
 
-  const { error } = await supabase.rpc('update_submission_status', {
+  const params: UpdateSubmissionStatusParams = {
     submission_id: submissionId,
     status: updatedStatus
-  });
+  };
+
+  const { error } = await supabase.rpc('update_submission_status', params);
 
   if (error) throw error;
 };
