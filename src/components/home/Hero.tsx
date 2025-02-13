@@ -24,7 +24,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <div className="relative bg-gradient-to-r from-sky-900 to-sky-700 text-white min-h-[80vh] flex items-center overflow-hidden">
+    <div className="relative bg-gradient-to-r from-sky-900 to-sky-700 text-white min-h-[60vh] md:min-h-[50vh] flex items-center overflow-hidden">
       <div className="absolute inset-0 bg-black/40 z-10"></div>
       
       {/* Background Images with Transition */}
@@ -40,7 +40,7 @@ const Hero = () => {
         />
       ))}
 
-      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
+      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -48,7 +48,7 @@ const Hero = () => {
           className="text-center"
         >
           <motion.h1 
-            className="text-4xl md:text-6xl font-bold mb-6 leading-tight"
+            className="text-3xl md:text-5xl font-bold mb-4 leading-tight"
             initial={{ scale: 0.5, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{
@@ -76,7 +76,7 @@ const Hero = () => {
           </motion.h1>
           
           <motion.p 
-            className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto text-gray-200"
+            className="text-lg md:text-xl mb-6 max-w-2xl mx-auto text-gray-200"
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 1, duration: 0.8 }}
@@ -108,13 +108,13 @@ const Hero = () => {
 
           {/* Decorative elements */}
           <motion.div
-            className="absolute left-10 top-1/4 w-20 h-20 border-t-2 border-l-2 border-white/20"
+            className="absolute left-6 md:left-10 top-1/4 w-12 md:w-20 h-12 md:h-20 border-t-2 border-l-2 border-white/20"
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1, rotate: 45 }}
             transition={{ delay: 1.5, duration: 1 }}
           />
           <motion.div
-            className="absolute right-10 bottom-1/4 w-20 h-20 border-b-2 border-r-2 border-white/20"
+            className="absolute right-6 md:right-10 bottom-1/4 w-12 md:w-20 h-12 md:h-20 border-b-2 border-r-2 border-white/20"
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1, rotate: 45 }}
             transition={{ delay: 1.5, duration: 1 }}
