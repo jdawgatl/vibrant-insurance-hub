@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Card } from "@/components/ui/card";
@@ -31,54 +31,32 @@ type Submission = {
   consent?: boolean;
 };
 
+const fetchSubmissions = async () => {
+  const { data: { session } } = await supabase.auth.getSession();
+      
+  if (!session) {
+    throw new Error("No authenticated session found");
+  }
+
+  const { data, error } = await supabase
+    .from("contact_submissions")
+    .select("*")
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    throw error;
+  }
+
+  console.log("Raw data from Supabase:", data);
+  return data || [];
+};
+
 export const AdminDashboard = () => {
-  const [submissions, setSubmissions] = useState<Submission[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { data: submissions = [], isLoading, refetch } = useQuery({
+    queryKey: ['submissions'],
+    queryFn: fetchSubmissions
+  });
 
-  useEffect(() => {
-    fetchSubmissions();
-  }, []);
-
-  const fetchSubmissions = async () => {
-    try {
-      setLoading(true);
-      
-      // First check if we have an authenticated session
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (!session) {
-        console.error("No authenticated session found");
-        return;
-      }
-
-      const { data, error } = await supabase
-        .from("contact_submissions")
-        .select("*")
-        .order('created_at', { ascending: false });
-
-      if (error) {
-        console.error("Supabase error:", error);
-        throw error;
-      }
-
-      // Add debugging logs
-      console.log("Raw data from Supabase:", data);
-      
-      if (Array.isArray(data) && data.length > 0) {
-        setSubmissions(data);
-      } else {
-        console.log("No submissions found in the response");
-        setSubmissions([]);
-      }
-    } catch (error) {
-      console.error("Error fetching submissions:", error);
-      setSubmissions([]); // Ensure submissions is empty on error
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Add debugging log for submissions state
   console.log("Current submissions state:", submissions);
 
   return (
@@ -107,7 +85,7 @@ export const AdminDashboard = () => {
           <h2 className="text-lg font-semibold text-gray-900">
             Recent Contact Form Submissions
           </h2>
-          <Button variant="outline" size="sm" onClick={fetchSubmissions}>
+          <Button variant="outline" size="sm" onClick={() => refetch()}>
             Refresh
           </Button>
         </div>
@@ -123,20 +101,20 @@ export const AdminDashboard = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {loading ? (
+              {isLoading ? (
                 <TableRow>
                   <TableCell colSpan={5} className="text-center py-4">
                     Loading...
                   </TableCell>
                 </TableRow>
-              ) : !Array.isArray(submissions) || submissions.length === 0 ? (
+              ) : submissions.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={5} className="text-center py-4">
                     No submissions yet
                   </TableCell>
                 </TableRow>
               ) : (
-                submissions.map((submission) => (
+                submissions.map((submission: Submission) => (
                   <TableRow key={submission.id}>
                     <TableCell>
                       {submission.first_name} {submission.last_name}
