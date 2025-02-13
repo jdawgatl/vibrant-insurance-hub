@@ -29,7 +29,7 @@ const Navbar = () => {
               <div className="text-center">
                 <h1 className="text-2xl md:text-3xl font-bold animate-fade-in">
                   <span className="bg-gradient-to-r from-sky-700 to-sky-500 bg-clip-text text-transparent">
-                    Standard
+                    STANDARD
                   </span>
                   <span className="text-[80%] text-gray-600 ml-2">
                     Financial Group
