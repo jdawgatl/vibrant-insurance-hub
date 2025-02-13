@@ -87,7 +87,7 @@ const ServiceCards = () => {
                   </div>
                   <CardContent className="p-6">
                     <p className="text-gray-600">{service.description}</p>
-                    <div className="mt-4 flex items-center text-primary-600 font-medium group">
+                    <div className="mt-4 flex items-center text-sky-600 font-medium group">
                       Learn More
                       <ArrowRight className="ml-2 h-4 w-4 transform group-hover:translate-x-1 transition-transform" />
                     </div>

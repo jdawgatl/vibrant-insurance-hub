@@ -27,12 +27,12 @@ const Navbar = () => {
           <div className="flex items-center">
             <Link to="/" className="flex-shrink-0">
               <div className="text-center">
-                <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary-700 to-primary-500 bg-clip-text text-transparent animate-fade-in">
+                <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-sky-700 to-sky-500 bg-clip-text text-transparent animate-fade-in">
                   Standard Financial Group
                 </h1>
                 <a
                   href="tel:+17709977999"
-                  className="flex items-center justify-center text-lg text-primary-600 hover:text-primary-700 transition-colors mt-1 group"
+                  className="flex items-center justify-center text-lg text-sky-600 hover:text-sky-700 transition-colors mt-1 group"
                 >
                   <Phone className="h-4 w-4 mr-1 group-hover:scale-110 transition-transform" />
                   (770) 997-7999
@@ -47,7 +47,7 @@ const Navbar = () => {
               <Link
                 key={item.name}
                 to={item.href}
-                className="relative text-gray-700 hover:text-primary-600 transition-colors py-2 after:content-[''] after:absolute after:w-full after:h-0.5 after:bg-primary-600 after:left-0 after:bottom-0 after:scale-x-0 after:transition-transform after:duration-300 hover:after:scale-x-100"
+                className="relative text-gray-700 hover:text-sky-600 transition-colors py-2 after:content-[''] after:absolute after:w-full after:h-0.5 after:bg-sky-600 after:left-0 after:bottom-0 after:scale-x-0 after:transition-transform after:duration-300 hover:after:scale-x-100"
               >
                 {item.name}
               </Link>
@@ -58,7 +58,7 @@ const Navbar = () => {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-700 hover:text-primary-600 transition-colors"
+              className="text-gray-700 hover:text-sky-600 transition-colors"
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -74,7 +74,7 @@ const Navbar = () => {
               <Link
                 key={item.name}
                 to={item.href}
-                className="text-gray-700 hover:text-primary-600 transition-colors block px-3 py-2 hover:bg-gray-50"
+                className="text-gray-700 hover:text-sky-600 transition-colors block px-3 py-2 hover:bg-gray-50"
                 onClick={() => setIsOpen(false)}
               >
                 {item.name}

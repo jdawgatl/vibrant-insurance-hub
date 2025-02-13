@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 const Hero = () => {
   return (
-    <div className="relative bg-gradient-to-r from-primary-900 to-primary-700 text-white min-h-[80vh] flex items-center">
+    <div className="relative bg-gradient-to-r from-sky-900 to-sky-700 text-white min-h-[80vh] flex items-center">
       <div className="absolute inset-0 bg-black/40 z-10"></div>
       <div
         className="absolute inset-0 bg-cover bg-center bg-fixed"
@@ -23,7 +23,7 @@ const Hero = () => {
         >
           <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
             Your Trusted Insurance Partner
-            <span className="block text-secondary-300">Since 1989</span>
+            <span className="block text-sky-300">Since 1989</span>
           </h1>
           <p className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto text-gray-200">
             Protecting what matters most with comprehensive insurance solutions
@@ -37,7 +37,7 @@ const Hero = () => {
             <Button
               asChild
               size="lg"
-              className="bg-secondary hover:bg-secondary-600 text-white transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+              className="bg-sky-600 hover:bg-sky-700 text-white transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
             >
               <Link to="/quote">Get A Quote</Link>
             </Button>
