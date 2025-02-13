@@ -23,12 +23,12 @@ type Submission = {
   phone: string;
   insurance_type: string | null;
   created_at: string;
-  address: string;
-  city: string;
-  state: string;
-  zip: string;
-  message: string | null;
-  consent: boolean;
+  address?: string;
+  city?: string;
+  state?: string;
+  zip?: string;
+  message?: string | null;
+  consent?: boolean;
 };
 
 export const AdminDashboard = () => {
