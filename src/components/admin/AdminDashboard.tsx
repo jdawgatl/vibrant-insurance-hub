@@ -42,11 +42,19 @@ export const AdminDashboard = () => {
   const fetchSubmissions = async () => {
     try {
       setLoading(true);
+      
+      // First check if we have an authenticated session
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!session) {
+        console.error("No authenticated session found");
+        return;
+      }
+
       const { data, error } = await supabase
         .from("contact_submissions")
-        .select("id, first_name, last_name, email, phone, insurance_type, created_at")
-        .order('created_at', { ascending: false })
-        .limit(10);
+        .select("*")
+        .order('created_at', { ascending: false });
 
       if (error) {
         console.error("Supabase error:", error);
