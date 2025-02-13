@@ -29,7 +29,7 @@ export const SubmissionsTable = ({ submissions, isLoading, onUpdate }: Submissio
   const handleStatusChange = async (
     submissionId: string, 
     field: keyof ActionStatus, 
-    checked: boolean
+    checked: boolean | "indeterminate"
   ) => {
     try {
       const submission = submissions.find(s => s.id === submissionId);
@@ -42,7 +42,7 @@ export const SubmissionsTable = ({ submissions, isLoading, onUpdate }: Submissio
       
       await updateSubmissionStatus(submissionId, {
         ...currentStatus,
-        [field]: checked,
+        [field]: checked === true,
       });
       
       toast.success(`Successfully updated ${field} status`);
@@ -156,7 +156,7 @@ export const SubmissionsTable = ({ submissions, isLoading, onUpdate }: Submissio
                       id={`${id}-${submission.id}`}
                       checked={submission.action_status?.[id as keyof ActionStatus] || false}
                       onCheckedChange={(checked) => 
-                        handleStatusChange(submission.id, id as keyof ActionStatus, checked === true)
+                        handleStatusChange(submission.id, id as keyof ActionStatus, checked as boolean)
                       }
                     />
                     <label 
