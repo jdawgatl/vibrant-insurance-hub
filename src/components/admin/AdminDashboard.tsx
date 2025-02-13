@@ -23,11 +23,16 @@ export const AdminDashboard = () => {
     queryKey: ['submissions'],
     queryFn: fetchSubmissions,
     retry: 1,
+    refetchOnWindowFocus: false,
   });
 
   if (error) {
     console.error("Query error:", error);
   }
+
+  const handleRefresh = async () => {
+    await refetch();
+  };
 
   return (
     <div className="p-8">
@@ -37,7 +42,7 @@ export const AdminDashboard = () => {
           <h2 className="text-lg font-semibold text-gray-900">
             Recent Contact Form Submissions
           </h2>
-          <Button variant="outline" size="sm" onClick={() => refetch()}>
+          <Button variant="outline" size="sm" onClick={handleRefresh}>
             Refresh
           </Button>
         </div>
@@ -56,7 +61,7 @@ export const AdminDashboard = () => {
               <SubmissionsTable 
                 submissions={submissions}
                 isLoading={isLoading}
-                onUpdate={refetch}
+                onUpdate={handleRefresh}
               />
             </TableBody>
           </Table>

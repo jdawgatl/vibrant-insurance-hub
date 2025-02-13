@@ -46,7 +46,7 @@ export const SubmissionsTable = ({ submissions, isLoading, onUpdate }: Submissio
       });
       
       toast.success(`Successfully updated ${field} status`);
-      onUpdate();
+      await onUpdate();
     } catch (error) {
       console.error("Error updating status:", error);
       toast.error("Failed to update status");
@@ -73,10 +73,18 @@ export const SubmissionsTable = ({ submissions, isLoading, onUpdate }: Submissio
       toast.success("Notes saved successfully");
       setEditingNotes("");
       setEditingId(null);
-      onUpdate();
+      await onUpdate();
     } catch (error) {
       console.error("Error saving notes:", error);
       toast.error("Failed to save notes");
+    }
+  };
+
+  const formatDate = (date: string) => {
+    try {
+      return format(new Date(date), 'PPpp');
+    } catch (error) {
+      return 'Invalid date';
     }
   };
 
@@ -99,14 +107,6 @@ export const SubmissionsTable = ({ submissions, isLoading, onUpdate }: Submissio
       </TableRow>
     );
   }
-
-  const formatDate = (date: string) => {
-    try {
-      return format(new Date(date), 'PPpp');
-    } catch (error) {
-      return 'Invalid date';
-    }
-  };
 
   return (
     <>
