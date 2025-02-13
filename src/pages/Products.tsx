@@ -1,3 +1,4 @@
+
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Card } from "@/components/ui/card";
@@ -82,7 +83,7 @@ const Products = () => {
                     </div>
                     <div className="p-8">
                       <div className="flex items-center gap-3 mb-4">
-                        <product.icon className="h-8 w-8 text-indigo-600" />
+                        <product.icon className="h-8 w-8 text-sky-600" />
                         <h2 className="text-2xl font-semibold">{product.title}</h2>
                       </div>
                       <p className="text-gray-600 mb-6">{product.description}</p>
@@ -95,7 +96,7 @@ const Products = () => {
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.3, delay: index * 0.1 }}
                           >
-                            <div className="h-1.5 w-1.5 rounded-full bg-indigo-600" />
+                            <div className="h-1.5 w-1.5 rounded-full bg-sky-600" />
                             {feature}
                           </motion.li>
                         ))}
