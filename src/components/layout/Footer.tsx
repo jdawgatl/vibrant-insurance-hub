@@ -1,6 +1,6 @@
 
 import { Link } from "react-router-dom";
-import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Footer = () => {
@@ -134,6 +134,14 @@ const Footer = () => {
                 className="hover:text-sky-300 transition-colors"
               >
                 Blog
+              </Link>
+              {" | "}
+              <Link
+                to="/agent-login"
+                className="hover:text-sky-300 transition-colors flex items-center justify-center gap-1 opacity-50 hover:opacity-100 inline-flex"
+              >
+                <Lock className="h-3 w-3" />
+                <span>Agent</span>
               </Link>
             </div>
           </div>
