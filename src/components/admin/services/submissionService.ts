@@ -1,6 +1,6 @@
 
 import { supabase } from "@/integrations/supabase/client";
-import { ActionStatus, Submission, UpdateSubmissionStatusParams } from "../types/submission";
+import { ActionStatus, Submission } from "../types/submission";
 
 export const fetchSubmissions = async (): Promise<Submission[]> => {
   const { data: { session } } = await supabase.auth.getSession();
@@ -30,6 +30,11 @@ export const fetchSubmissions = async (): Promise<Submission[]> => {
   });
 };
 
+interface UpdateSubmissionStatusRpcParams {
+  submission_id: string;
+  action_status: ActionStatus;
+}
+
 export const updateSubmissionStatus = async (
   submissionId: string, 
   status: Partial<ActionStatus>
@@ -51,9 +56,9 @@ export const updateSubmissionStatus = async (
   const { error } = await supabase.rpc(
     'update_submission_status',
     {
-      p_submission_id: submissionId,
-      p_status: updatedStatus
-    }
+      submission_id: submissionId,
+      action_status: updatedStatus
+    } as UpdateSubmissionStatusRpcParams
   );
 
   if (error) throw error;
