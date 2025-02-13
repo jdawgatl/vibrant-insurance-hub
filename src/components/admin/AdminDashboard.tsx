@@ -61,14 +61,25 @@ export const AdminDashboard = () => {
         throw error;
       }
 
-      console.log("Fetched submissions:", data);
-      setSubmissions(data || []);
+      // Add debugging logs
+      console.log("Raw data from Supabase:", data);
+      
+      if (Array.isArray(data) && data.length > 0) {
+        setSubmissions(data);
+      } else {
+        console.log("No submissions found in the response");
+        setSubmissions([]);
+      }
     } catch (error) {
       console.error("Error fetching submissions:", error);
+      setSubmissions([]); // Ensure submissions is empty on error
     } finally {
       setLoading(false);
     }
   };
+
+  // Add debugging log for submissions state
+  console.log("Current submissions state:", submissions);
 
   return (
     <div className="p-8">
@@ -118,7 +129,7 @@ export const AdminDashboard = () => {
                     Loading...
                   </TableCell>
                 </TableRow>
-              ) : submissions.length === 0 ? (
+              ) : !Array.isArray(submissions) || submissions.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={5} className="text-center py-4">
                     No submissions yet
