@@ -108,7 +108,7 @@ const Products = () => {
                             <ArrowRight className="ml-2 h-4 w-4 transform transition-transform group-hover:translate-x-1" />
                           </Link>
                         </Button>
-                        <Button asChild>
+                        <Button asChild className="bg-sky-600 hover:bg-sky-700">
                           <Link to="/quote">Get a Quote</Link>
                         </Button>
                       </div>
