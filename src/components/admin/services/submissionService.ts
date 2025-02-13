@@ -1,6 +1,6 @@
 
 import { supabase } from "@/integrations/supabase/client";
-import { ActionStatus, Submission } from "../types/submission";
+import { ActionStatus, Submission, SubmissionBase } from "../types/submission";
 
 export const fetchSubmissions = async (): Promise<Submission[]> => {
   const { data } = await supabase.auth.getSession();
@@ -51,9 +51,14 @@ export const updateSubmissionStatus = async (
     updatedBy: session.user.email || 'unknown'
   };
 
+  // Cast the update object to Partial<SubmissionBase> to match the expected type
+  const updateData = {
+    action_status: updatedStatus
+  } as Partial<SubmissionBase>;
+
   const { error } = await supabase
     .from('contact_submissions')
-    .update({ action_status: updatedStatus })
+    .update(updateData)
     .eq('id', submissionId);
 
   if (error) throw error;

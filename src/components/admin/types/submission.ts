@@ -22,13 +22,13 @@ export type SubmissionBase = {
   message: string | null;
   created_at: string;
   consent: boolean;
+  action_status?: ActionStatus; // Add this to match the database schema
 };
 
 export type Submission = SubmissionBase & {
   action_status?: ActionStatus;
 };
 
-// Add RPC types
 export type UpdateSubmissionStatusParams = {
   submission_id: string;
   status: ActionStatus;
