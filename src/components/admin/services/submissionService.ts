@@ -31,11 +31,6 @@ export const fetchSubmissions = async (): Promise<Submission[]> => {
   });
 };
 
-interface UpdateSubmissionStatusRpcParams {
-  submission_id: string;
-  action_status: ActionStatus;
-}
-
 export const updateSubmissionStatus = async (
   submissionId: string, 
   status: Partial<ActionStatus>
@@ -56,14 +51,10 @@ export const updateSubmissionStatus = async (
     updatedBy: session.user.email || 'unknown'
   };
 
-  const rpcParams: UpdateSubmissionStatusRpcParams = {
-    submission_id: submissionId,
-    action_status: updatedStatus
-  };
-
-  const { error } = await supabase.functions.invoke('update_submission_status', {
-    body: rpcParams
-  });
+  const { error } = await supabase
+    .from('contact_submissions')
+    .update({ action_status: updatedStatus })
+    .eq('id', submissionId);
 
   if (error) throw error;
 };
