@@ -28,7 +28,7 @@ const Navbar = () => {
             <Link to="/" className="flex-shrink-0">
               <div className="text-center">
                 <h1 className="text-2xl md:text-3xl font-bold animate-fade-in">
-                  <span className="bg-gradient-to-r from-sky-800 to-sky-500 bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-sky-800 to-sky-500 bg-clip-text text-transparent border-2 border-sky-600 px-2 py-1 rounded-md">
                     STANDARD
                   </span>
                   <span className="text-[80%] text-gray-600 ml-2">
