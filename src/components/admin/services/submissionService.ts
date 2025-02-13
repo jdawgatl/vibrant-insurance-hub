@@ -51,9 +51,12 @@ export const updateSubmissionStatus = async (
     updatedBy: session.user.email || 'unknown'
   };
 
+  // Use a type assertion to allow the action_status column
   const { error } = await supabase
     .from('contact_submissions')
-    .update({ action_status: updatedStatus })
+    .update({ 
+      action_status: updatedStatus 
+    } as any)
     .eq('id', submissionId);
 
   if (error) throw error;
