@@ -8,6 +8,7 @@ import { LocationInfo } from "./LocationInfo";
 import { InsuranceInfo } from "./InsuranceInfo";
 import { ActionCheckbox } from "./ActionCheckbox";
 import { NotesSection } from "./NotesSection";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface SubmissionRowProps {
   submission: Submission;
@@ -50,21 +51,27 @@ export const SubmissionRow = ({
       <TableCell>
         {formatDate(submission.created_at)}
       </TableCell>
-      <TableCell>
-        {submission.action_status?.notes && (
-          <div className="text-sm">
-            <p className="font-medium">Latest Note:</p>
-            <p className="text-gray-600">{submission.action_status.notes}</p>
-            {submission.action_status.lastUpdated && (
-              <p className="text-xs text-gray-500 mt-1">
-                Updated: {formatDate(submission.action_status.lastUpdated)}
-                {submission.action_status.updatedBy && (
-                  <span> by {submission.action_status.updatedBy}</span>
+      <TableCell className="max-w-[300px]">
+        <ScrollArea className="h-[100px]">
+          {submission.action_status?.notes ? (
+            <div className="text-sm space-y-2 p-2">
+              <div className="space-y-1">
+                <p className="font-medium">Latest Note:</p>
+                <p className="text-gray-600">{submission.action_status.notes}</p>
+                {submission.action_status.lastUpdated && (
+                  <p className="text-xs text-gray-500">
+                    Updated: {formatDate(submission.action_status.lastUpdated)}
+                    {submission.action_status.updatedBy && (
+                      <span> by {submission.action_status.updatedBy}</span>
+                    )}
+                  </p>
                 )}
-              </p>
-            )}
-          </div>
-        )}
+              </div>
+            </div>
+          ) : (
+            <p className="text-sm text-gray-500 p-2">No notes yet</p>
+          )}
+        </ScrollArea>
       </TableCell>
       <TableCell>
         <div className="space-y-4">

@@ -1,10 +1,6 @@
 
 import {
-  Table,
-  TableBody,
   TableCell,
-  TableHead,
-  TableHeader,
   TableRow,
 } from "@/components/ui/table";
 import { Submission, ActionStatus } from "../types/submission";
@@ -12,6 +8,7 @@ import { updateSubmissionStatus } from "../services/submissionService";
 import { toast } from "sonner";
 import { type CheckedState } from "@radix-ui/react-checkbox";
 import { SubmissionRow } from "./SubmissionRow";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface SubmissionsTableProps {
   submissions: Submission[];
@@ -20,6 +17,8 @@ interface SubmissionsTableProps {
 }
 
 export const SubmissionsTable = ({ submissions, isLoading, onUpdate }: SubmissionsTableProps) => {
+  const queryClient = useQueryClient();
+
   const handleStatusChange = async (
     submissionId: string, 
     field: keyof ActionStatus, 
@@ -40,7 +39,8 @@ export const SubmissionsTable = ({ submissions, isLoading, onUpdate }: Submissio
       });
       
       toast.success(`Successfully updated ${field} status`);
-      await onUpdate();
+      await queryClient.invalidateQueries({ queryKey: ['submissions'] });
+      onUpdate();
     } catch (error) {
       console.error("Error updating status:", error);
       toast.error("Failed to update status");
@@ -63,7 +63,8 @@ export const SubmissionsTable = ({ submissions, isLoading, onUpdate }: Submissio
       });
       
       toast.success("Notes saved successfully");
-      await onUpdate();
+      await queryClient.invalidateQueries({ queryKey: ['submissions'] });
+      onUpdate();
     } catch (error) {
       console.error("Error saving notes:", error);
       toast.error("Failed to save notes");
@@ -73,7 +74,7 @@ export const SubmissionsTable = ({ submissions, isLoading, onUpdate }: Submissio
   if (isLoading) {
     return (
       <TableRow>
-        <TableCell colSpan={5} className="text-center py-4">
+        <TableCell colSpan={6} className="text-center py-4">
           Loading...
         </TableCell>
       </TableRow>
@@ -83,7 +84,7 @@ export const SubmissionsTable = ({ submissions, isLoading, onUpdate }: Submissio
   if (submissions.length === 0) {
     return (
       <TableRow>
-        <TableCell colSpan={5} className="text-center py-4">
+        <TableCell colSpan={6} className="text-center py-4">
           No submissions yet
         </TableCell>
       </TableRow>
