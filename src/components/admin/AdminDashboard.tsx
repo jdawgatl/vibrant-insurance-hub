@@ -32,39 +32,76 @@ type Submission = {
 };
 
 const fetchSubmissions = async (): Promise<Submission[]> => {
-  const { data: { session } } = await supabase.auth.getSession();
-      
-  if (!session) {
-    console.error("No authenticated session found");
+  try {
+    const { data: { session } } = await supabase.auth.getSession();
+    
+    if (!session) {
+      console.error("No authenticated session found");
+      return [];
+    }
+
+    // Log the session info for debugging
+    console.log("Current session:", session);
+
+    // First, try to get the total count to verify we can access the table
+    const { count, error: countError } = await supabase
+      .from('contact_submissions')
+      .select('*', { count: 'exact', head: true });
+
+    if (countError) {
+      console.error("Error checking table access:", countError);
+      return [];
+    }
+
+    console.log("Total submissions count:", count);
+
+    // Now fetch the actual data
+    const { data, error } = await supabase
+      .from('contact_submissions')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error("Supabase error:", error);
+      return [];
+    }
+
+    if (!data) {
+      console.log("No data returned from Supabase");
+      return [];
+    }
+
+    console.log("Raw data from Supabase:", data);
+    console.log("Number of submissions fetched:", data.length);
+    
+    // Log a sample submission if available
+    if (data.length > 0) {
+      console.log("Sample submission:", data[0]);
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Unexpected error in fetchSubmissions:", error);
     return [];
   }
-
-  const { data, error } = await supabase
-    .from("contact_submissions")
-    .select("*")
-    .order('created_at', { ascending: false });
-
-  if (error) {
-    console.error("Supabase error:", error);
-    return [];
-  }
-
-  console.log("Raw data from Supabase:", data);
-  return data || [];
 };
 
 export const AdminDashboard = () => {
   const { 
     data: submissions = [], 
     isLoading,
+    error,
     refetch 
   } = useQuery({
     queryKey: ['submissions'],
     queryFn: fetchSubmissions,
+    retry: 2,
+    refetchOnWindowFocus: false,
     initialData: [],
   });
 
   console.log("Current submissions state:", submissions);
+  if (error) console.error("Query error:", error);
 
   return (
     <div className="p-8">
