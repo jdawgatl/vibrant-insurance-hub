@@ -29,7 +29,6 @@ export const SubmissionRow = ({
     }
   };
 
-  // Helper function to ensure boolean values
   const getBooleanValue = (value: any): boolean => {
     if (typeof value === 'string') {
       return value.toLowerCase() === 'true';
@@ -38,8 +37,8 @@ export const SubmissionRow = ({
   };
 
   return (
-    <TableRow>
-      <TableCell>
+    <TableRow className="transition-colors hover:bg-gray-50">
+      <TableCell className="border-l-2 border-l-transparent hover:border-l-primary">
         <ContactInfo submission={submission} />
       </TableCell>
       <TableCell>
@@ -48,11 +47,11 @@ export const SubmissionRow = ({
       <TableCell>
         <InsuranceInfo submission={submission} />
       </TableCell>
-      <TableCell>
+      <TableCell className="text-sm text-gray-600">
         {formatDate(submission.created_at)}
       </TableCell>
       <TableCell className="max-w-[200px]">
-        <ScrollArea className="h-[100px]">
+        <ScrollArea className="h-[100px] rounded-md border border-gray-100 bg-gray-50">
           <div className="text-sm space-y-2 p-2">
             {submission.action_status?.notes ? (
               <>
@@ -61,13 +60,13 @@ export const SubmissionRow = ({
                   <p className="text-xs text-gray-500">
                     Updated: {formatDate(submission.action_status.lastUpdated)}
                     {submission.action_status.updatedBy && (
-                      <span> by {submission.action_status.updatedBy}</span>
+                      <span className="font-medium text-primary"> by {submission.action_status.updatedBy}</span>
                     )}
                   </p>
                 )}
               </>
             ) : (
-              <p className="text-gray-500">No notes yet</p>
+              <p className="text-gray-500 italic">No notes yet</p>
             )}
           </div>
         </ScrollArea>
