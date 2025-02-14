@@ -3,7 +3,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { format } from "date-fns";
 import { type CheckedState } from "@radix-ui/react-checkbox";
 import { ActionStatus } from "../../types/submission";
-import { Check } from "lucide-react";
 
 interface ActionCheckboxProps {
   id: string;
@@ -36,23 +35,19 @@ export const ActionCheckbox = ({
 
   return (
     <div className="flex items-center space-x-2 group relative">
-      <div className="relative inline-flex items-center justify-center">
-        <Checkbox
-          id={`${id}-${submissionId}`}
-          checked={isChecked}
-          onCheckedChange={(checked) => onStatusChange(submissionId, field, checked)}
-          className="h-4 w-4 rounded border-2 border-gray-300 bg-white"
-        />
-        {isChecked && (
-          <Check 
-            className="h-3 w-3 text-white absolute"
-            strokeWidth={3}
-          />
-        )}
-      </div>
+      <Checkbox
+        id={`${id}-${submissionId}`}
+        checked={isChecked}
+        onCheckedChange={(checked) => onStatusChange(submissionId, field, checked)}
+        className={`h-4 w-4 rounded border-2 border-gray-300 ${
+          isChecked ? 'bg-primary border-primary' : 'bg-white'
+        }`}
+      />
       <label
         htmlFor={`${id}-${submissionId}`}
-        className={`text-sm font-medium leading-none ${isChecked ? 'text-blue-500' : 'text-gray-700'}`}
+        className={`text-sm font-medium leading-none ${
+          isChecked ? 'text-blue-500' : 'text-gray-700'
+        }`}
       >
         {label}
       </label>
