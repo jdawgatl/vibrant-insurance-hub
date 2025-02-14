@@ -37,15 +37,15 @@ const Quote = () => {
                       alt="Safeway Insurance"
                       className="h-12 w-auto mb-4 mx-auto"
                     />
-                    <h2 className="text-2xl font-semibold mb-2">Auto Insurance</h2>
+                    <h2 className="text-2xl font-semibold mb-2 text-center">Auto Insurance</h2>
                     <p className="text-gray-600 mb-4">
-                      Get competitive auto insurance rates through Safeway Insurance.
+                      Get an instant car insurance quote through our partner, Safeway Insurance.
                     </p>
                   </div>
                   <div className="mt-auto">
                     <Button 
                       className="w-full bg-sky-600 hover:bg-sky-700"
-                      onClick={() => window.open('https://www.safewayinsurance.com/', '_blank')}
+                      onClick={() => window.open('https://www.safewayxchange.com/SafewayDirect/Token/AgencyQuote?QuotingId=72650486', '_blank')}
                     >
                       Get Auto Quote
                     </Button>
@@ -68,7 +68,7 @@ const Quote = () => {
                       alt="Next Insurance"
                       className="h-12 w-auto mb-4 mx-auto"
                     />
-                    <h2 className="text-2xl font-semibold mb-2">Business Insurance</h2>
+                    <h2 className="text-2xl font-semibold mb-2 text-center">Business Insurance</h2>
                     <p className="text-gray-600 mb-4">
                       Get comprehensive coverage for your business through our partner, Next Insurance.
                     </p>
@@ -76,7 +76,7 @@ const Quote = () => {
                   <div className="mt-auto">
                     <Button 
                       className="w-full bg-sky-600 hover:bg-sky-700"
-                      onClick={() => window.open('https://www.nextinsurance.com/', '_blank')}
+                      onClick={() => window.open('https://track.nextinsurance.com/links?agent_affiliation=Sqh6ZajqLANkIHy2&serial=992855993&channel=affiliation', '_blank')}
                     >
                       Get Business Coverage
                     </Button>
@@ -95,15 +95,15 @@ const Quote = () => {
                 <div className="flex flex-col h-full">
                   <div className="mb-4">
                     <Key className="h-12 w-12 text-sky-600 mb-4 mx-auto" />
-                    <h2 className="text-2xl font-semibold mb-2">Surety Bonds</h2>
+                    <h2 className="text-2xl font-semibold mb-2 text-center">Surety Bonds</h2>
                     <p className="text-gray-600 mb-4">
-                      Quick and easy surety bond solutions for your business needs.
+                      Quote and issue title bonds, probate bonds, and more through our partner, RLI.
                     </p>
                   </div>
                   <div className="mt-auto">
                     <Button 
                       className="w-full bg-sky-600 hover:bg-sky-700"
-                      onClick={() => window.open('https://www.suretybonds.com/', '_blank')}
+                      onClick={() => window.open('https://www.mybondapp.com/23196952', '_blank')}
                     >
                       Purchase Surety Bond
                     </Button>

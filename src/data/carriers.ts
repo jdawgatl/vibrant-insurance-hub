@@ -12,8 +12,8 @@ export const carriers: Carrier[] = [
     name: "Progressive",
     logo: "/lovable-uploads/3af76832-0ae0-4af4-8708-da12430b65a0.png",
     customerService: "1-800-776-4737",
-    claims: "1-800-776-2778",
-    website: "https://www.progressive.com",
+    claims: "1-800-776-4737",
+    website: "https://www.progressive.com/contact-us/",
   },
   {
     name: "Travelers",
@@ -32,8 +32,8 @@ export const carriers: Carrier[] = [
   {
     name: "Safeway",
     logo: "/lovable-uploads/7bb46239-644e-4af1-b267-4bcac8a8b9e4.png",
-    customerService: "1-800-334-1990",
-    claims: "1-800-334-1991",
+    customerService: "1-888-203-4964",
+    claims: "1-888-203-5129",
     website: "https://www.safewayinsurance.com",
   },
   {
