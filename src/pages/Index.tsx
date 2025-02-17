@@ -11,17 +11,17 @@ const benefits = [
   {
     title: "Expert Guidance",
     description: "Our experienced agents provide personalized advice to help you make informed decisions.",
-    image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80"
+    image: "/images/expert-guidance-card.avif"
   },
   {
     title: "Comprehensive Coverage",
     description: "Access to multiple carriers ensures you get the best coverage at competitive rates.",
-    image: "https://images.unsplash.com/photo-1573497620053-ea5300f94f21?auto=format&fit=crop&q=80"
+    image: "/images/comprehensive-coverage-card.avif"
   },
   {
     title: "Local Service",
     description: "We're your neighbors, providing friendly, face-to-face service when you need it most.",
-    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80"
+    image: "public/images/local-service-card.avif"
   },
 ];
 
