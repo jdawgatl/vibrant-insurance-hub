@@ -5,9 +5,9 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 const backgroundImages = [
-  "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1920",
-  "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1920",
-  "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1920",
+  "public/images/hero-background1.avif",
+  "public/images/hero-background2.avif",
+  "public/images/hero-background3.avif",
 ];
 
 const Hero = () => {
