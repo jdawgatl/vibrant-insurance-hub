@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 const backgroundImages = [
-  "images/hero-background1.avif",
+  "/images/hero-background1.avif",
   "/images/hero-background2.avif",
   "/images/hero-background3.avif",
 ];
