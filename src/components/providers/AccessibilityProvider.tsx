@@ -1,9 +1,8 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { Accessibility, Eye, Moon, Sun, Type, Volume2, Grid, Keyboard } from "lucide-react";
+import { Accessibility, Eye, Moon, Sun, Type, Volume2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Slider } from "@/components/ui/slider";
 
 interface AccessibilityContextType {
@@ -67,7 +66,6 @@ export function AccessibilityProvider({ children }: { children: React.ReactNode 
   );
 }
 
-// Changed to export the AccessibilityControls component
 export function AccessibilityControls({ 
   isOpen, 
   setIsOpen 
@@ -80,62 +78,33 @@ export function AccessibilityControls({
 
   const features = [
     {
-      title: "Navigation Adjustment",
-      items: [
-        {
-          icon: Volume2,
-          label: "Screen Reader",
-          action: context.toggleLargeText,
-          active: context.largeText
-        },
-        {
-          icon: Keyboard,
-          label: "Keyboard Navigation",
-          action: () => {},
-          active: false
-        },
-        {
-          icon: Grid,
-          label: "Mouse Grid",
-          action: () => {},
-          active: false
-        }
-      ]
+      icon: Volume2,
+      label: "Screen Reader",
+      action: context.toggleLargeText,
+      active: context.largeText,
+      description: "Enable screen reader support"
     },
     {
-      title: "Color Adjustment",
-      items: [
-        {
-          icon: Eye,
-          label: "High Contrast",
-          action: context.toggleHighContrast,
-          active: context.highContrast
-        },
-        {
-          icon: Moon,
-          label: "Dark Mode",
-          action: context.toggleDarkMode,
-          active: context.darkMode
-        },
-        {
-          icon: Sun,
-          label: "Light Mode",
-          action: () => context.toggleDarkMode(),
-          active: !context.darkMode
-        }
-      ]
+      icon: Eye,
+      label: "High Contrast",
+      action: context.toggleHighContrast,
+      active: context.highContrast,
+      description: "Increase contrast for better visibility"
     },
     {
-      title: "Content Adjustment",
-      items: [
-        {
-          icon: Type,
-          label: "Font Size",
-          slider: true,
-          value: context.fontSize,
-          onChange: (value: number[]) => context.setFontSize(value[0])
-        }
-      ]
+      icon: Moon,
+      label: "Dark Mode",
+      action: context.toggleDarkMode,
+      active: context.darkMode,
+      description: "Switch between light and dark themes"
+    },
+    {
+      icon: Type,
+      label: "Font Size",
+      slider: true,
+      value: context.fontSize,
+      onChange: (value: number[]) => context.setFontSize(value[0]),
+      description: "Adjust text size"
     }
   ];
 
@@ -143,7 +112,7 @@ export function AccessibilityControls({
     <>
       <Button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-4 left-4 z-50 rounded-full w-12 h-12 bg-purple-700 hover:bg-purple-800 text-white shadow-lg"
+        className="fixed bottom-4 left-4 z-50 rounded-full w-12 h-12 bg-blue-600 hover:bg-blue-700 text-white shadow-lg"
         size="icon"
         aria-label="Accessibility Options"
       >
@@ -151,58 +120,51 @@ export function AccessibilityControls({
       </Button>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto bg-white dark:bg-gray-900">
+        <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto bg-white dark:bg-gray-900">
           <DialogHeader>
-            <DialogTitle className="text-2xl text-purple-700 dark:text-purple-400">
-              Accessibility
+            <DialogTitle className="text-2xl text-blue-600 dark:text-blue-400">
+              Accessibility Options
             </DialogTitle>
           </DialogHeader>
 
-          <Accordion type="single" collapsible className="w-full">
-            {features.map((section) => (
-              <AccordionItem key={section.title} value={section.title}>
-                <AccordionTrigger className="text-lg text-purple-700 dark:text-purple-400">
-                  {section.title}
-                </AccordionTrigger>
-                <AccordionContent>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
-                    {section.items.map((item) => (
-                      <div
-                        key={item.label}
-                        className="p-4 border rounded-lg hover:border-purple-500 transition-colors"
-                      >
-                        {item.slider ? (
-                          <div className="space-y-4">
-                            <div className="flex items-center gap-2">
-                              <item.icon className="h-6 w-6 text-purple-700" />
-                              <span className="font-medium">{item.label}</span>
-                            </div>
-                            <Slider
-                              value={[item.value]}
-                              onValueChange={item.onChange}
-                              min={50}
-                              max={200}
-                              step={10}
-                              className="w-full"
-                            />
-                          </div>
-                        ) : (
-                          <Button
-                            variant={item.active ? "default" : "outline"}
-                            className="w-full h-full flex flex-col items-center gap-2 p-4"
-                            onClick={item.action}
-                          >
-                            <item.icon className="h-6 w-6" />
-                            <span className="font-medium">{item.label}</span>
-                          </Button>
-                        )}
-                      </div>
-                    ))}
+          <div className="space-y-6 p-4">
+            {features.map((feature) => (
+              <div
+                key={feature.label}
+                className="p-4 border dark:border-gray-700 rounded-lg hover:border-blue-500 transition-colors"
+              >
+                {feature.slider ? (
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-2">
+                      <feature.icon className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                      <span className="font-medium text-gray-900 dark:text-gray-100">{feature.label}</span>
+                    </div>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">{feature.description}</p>
+                    <Slider
+                      value={[feature.value]}
+                      onValueChange={feature.onChange}
+                      min={50}
+                      max={200}
+                      step={10}
+                      className="w-full"
+                    />
                   </div>
-                </AccordionContent>
-              </AccordionItem>
+                ) : (
+                  <Button
+                    variant={feature.active ? "default" : "outline"}
+                    className="w-full h-full flex items-center gap-3 p-4 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800"
+                    onClick={feature.action}
+                  >
+                    <feature.icon className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                    <div className="text-left">
+                      <div className="font-medium text-gray-900 dark:text-gray-100">{feature.label}</div>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">{feature.description}</p>
+                    </div>
+                  </Button>
+                )}
+              </div>
             ))}
-          </Accordion>
+          </div>
         </DialogContent>
       </Dialog>
     </>
