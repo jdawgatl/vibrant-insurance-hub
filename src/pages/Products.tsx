@@ -41,7 +41,7 @@ const products = [
     icon: Key,
     description: "Various bond types to meet your business requirements and obligations.",
     features: ["Contract Bonds", "License Bonds", "Court Bonds", "Fidelity Bonds"],
-    image: "public/images/products-surety-card.avif",
+    image: "/images/products-surety-card.avif",
     link: "/products/bonds"
   },
 ];
