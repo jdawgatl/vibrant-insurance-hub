@@ -26,7 +26,7 @@ const queryClient = new QueryClient();
 
 const SEOWrapper = () => {
   const location = useLocation();
-  const baseUrl = "https://standardfinancialgroup.com";
+  const baseUrl = "https://sfg-ins.com";
   const currentUrl = `${baseUrl}${location.pathname}`;
 
   const structuredData = {

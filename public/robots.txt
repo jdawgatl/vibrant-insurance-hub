@@ -4,4 +4,4 @@ Disallow: /admin
 Disallow: /agent-login
 Allow: /
 
-Sitemap: https://standardfinancialgroup.com/sitemap.xml
+Sitemap: https://sfg-ins.com/sitemap.xml
