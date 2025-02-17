@@ -19,7 +19,7 @@ const blogPosts = [
     4. Personal Injury Protection: Covers medical expenses regardless of fault
     
     Understanding these coverages helps you make informed decisions about your insurance needs.`,
-    image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=800",
+    image: "/images/blog1.avif",
     author: "Sarah Johnson",
     readTime: "5 min read"
   },
@@ -37,7 +37,7 @@ const blogPosts = [
     • Bundle your home and auto insurance for savings
     
     Remember, the cheapest policy isn't always the best—focus on comprehensive coverage that meets your needs.`,
-    image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800",
+    image: "/images/blog2.avif",
     author: "Michael Chen",
     readTime: "6 min read"
   },
@@ -55,7 +55,7 @@ const blogPosts = [
     • Business Interruption Insurance: Covers lost income during disasters
     
     Don't wait for an incident to occur—protect your business today with comprehensive coverage.`,
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800",
+    image: "/images/blog3.avif",
     author: "David Martinez",
     readTime: "7 min read"
   },
@@ -72,7 +72,7 @@ const blogPosts = [
     • Seniors: Leave a legacy and cover final expenses
     
     The earlier you start, the more affordable and beneficial your coverage can be.`,
-    image: "https://images.unsplash.com/photo-1516733725897-1aa73b87c8e8?auto=format&fit=crop&w=800",
+    image: "/images/blog4.avif",
     author: "Emily Thompson",
     readTime: "5 min read"
   }
