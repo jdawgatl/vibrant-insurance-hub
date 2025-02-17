@@ -21,7 +21,7 @@ const benefits = [
   {
     title: "Local Service",
     description: "We're your neighbors, providing friendly, face-to-face service when you need it most.",
-    image: "public/images/local-service-card.avif"
+    image: "/images/local-service-card.avif"
   },
 ];
 
