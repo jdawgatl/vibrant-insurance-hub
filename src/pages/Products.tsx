@@ -14,7 +14,7 @@ const products = [
     icon: Car,
     description: "Comprehensive coverage for your vehicles with competitive rates and flexible payment options.",
     features: ["Liability Coverage", "Collision Coverage", "Comprehensive Coverage", "Personal Injury Protection"],
-    image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=800",
+    image: "/images/products-auto-card.avif",
     link: "/products/auto"
   },
   {
@@ -23,7 +23,7 @@ const products = [
     icon: Home,
     description: "Protect your home and belongings with our comprehensive homeowners insurance policies.",
     features: ["Dwelling Coverage", "Personal Property", "Liability Protection", "Additional Living Expenses"],
-    image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800",
+    image: "/images/products-home-card.avif",
     link: "/products/home"
   },
   {
@@ -32,7 +32,7 @@ const products = [
     icon: Building2,
     description: "Business insurance solutions tailored to your specific industry needs.",
     features: ["Property Coverage", "General Liability", "Workers Compensation", "Business Interruption"],
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800",
+    image: "/images/products-commercial-card.avif",
     link: "/products/commercial"
   },
   {
@@ -41,7 +41,7 @@ const products = [
     icon: Key,
     description: "Various bond types to meet your business requirements and obligations.",
     features: ["Contract Bonds", "License Bonds", "Court Bonds", "Fidelity Bonds"],
-    image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800",
+    image: "public/images/products-surety-card.avif",
     link: "/products/bonds"
   },
 ];

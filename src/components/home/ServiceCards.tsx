@@ -7,25 +7,25 @@ const services = [{
   description: "Comprehensive coverage for your vehicles",
   icon: Car,
   href: "/products/auto",
-  image: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80"
+  image: "/images/service-auto-card.avif"
 }, {
   title: "Home Insurance",
   description: "Protect your most valuable asset",
   icon: Home,
   href: "/products/home",
-  image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&q=80"
+  image: "/images/service-home-card.avif"
 }, {
   title: "Commercial Insurance",
   description: "Tailored solutions for your business",
   icon: Building,
   href: "/products/commercial",
-  image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80"
+  image: "/images/service-commercial-card.avif"
 }, {
   title: "Surety Bonds",
   description: "Guarantee your contractual obligations",
   icon: Shield,
   href: "/products/bonds",
-  image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80"
+  image: "/images/service-surety-card.avif"
 }];
 const ServiceCards = () => {
   return <div className="py-16 bg-gradient-to-b from-gray-50 to-white">
