@@ -1,6 +1,6 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { Accessibility, Eye, Moon, Sun, Type, Volume2, Grid, Keyboard, VolumeX } from "lucide-react";
+import { Accessibility, Eye, Moon, Sun, Type, Volume2, Grid, Keyboard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -67,7 +67,8 @@ export function AccessibilityProvider({ children }: { children: React.ReactNode 
   );
 }
 
-function AccessibilityControls({ 
+// Changed to export the AccessibilityControls component
+export function AccessibilityControls({ 
   isOpen, 
   setIsOpen 
 }: { 
