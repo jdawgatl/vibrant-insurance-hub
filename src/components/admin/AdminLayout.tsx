@@ -1,16 +1,18 @@
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, Link, Outlet } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 import { 
   LogOut, 
   Users, 
   FileText, 
   DollarSign, 
   BookOpen,
-  FileText as QuoteIcon
+  FileText as QuoteIcon,
+  Loader2
 } from "lucide-react";
 
 const menuItems = [
@@ -42,22 +44,82 @@ const menuItems = [
 
 export const AdminLayout = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     checkAuth();
   }, []);
 
   const checkAuth = async () => {
-    const { data: { session } } = await supabase.auth.getSession();
-    if (!session) {
+    try {
+      const { data: { session }, error } = await supabase.auth.getSession();
+      
+      if (error) {
+        throw error;
+      }
+
+      if (!session) {
+        toast({
+          variant: "destructive",
+          title: "Session expired",
+          description: "Please log in again to continue.",
+        });
+        navigate("/agent-login");
+        return;
+      }
+
+      // Set up real-time session monitoring
+      supabase.auth.onAuthStateChange((event, session) => {
+        if (event === 'SIGNED_OUT' || !session) {
+          navigate("/agent-login");
+        }
+      });
+
+    } catch (error: any) {
+      console.error('Auth error:', error);
+      toast({
+        variant: "destructive",
+        title: "Authentication error",
+        description: error.message || "Please try logging in again.",
+      });
       navigate("/agent-login");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
-    navigate("/agent-login");
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      
+      toast({
+        title: "Logged out successfully",
+        description: "You have been safely logged out.",
+      });
+      
+      navigate("/agent-login");
+    } catch (error: any) {
+      console.error('Logout error:', error);
+      toast({
+        variant: "destructive",
+        title: "Logout error",
+        description: error.message || "An error occurred during logout.",
+      });
+    }
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="flex items-center gap-2">
+          <Loader2 className="h-6 w-6 animate-spin text-sky-600" />
+          <span className="text-lg text-gray-600">Loading...</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
