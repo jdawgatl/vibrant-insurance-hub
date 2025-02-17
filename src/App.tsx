@@ -5,7 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AccessibilityProvider, AccessibilityControls } from "@/components/providers/AccessibilityProvider";
+import { AccessibilityProvider } from "@/components/providers/AccessibilityProvider";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Service from "./pages/Service";
@@ -54,7 +54,6 @@ const App = () => (
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>
-            <AccessibilityControls />
           </TooltipProvider>
         </AccessibilityProvider>
       </QueryClientProvider>
