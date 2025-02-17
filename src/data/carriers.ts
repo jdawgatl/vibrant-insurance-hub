@@ -94,7 +94,7 @@ export const carriers: Carrier[] = [
   },
   {
     name: "Openly",
-    logo: "/images/next-insurance.png",
+    logo: "/images/openly.png",
     customerService: "1-844-526-0995",
     claims: "1-844-526-0995",
     website: "https://www.openly.com",
