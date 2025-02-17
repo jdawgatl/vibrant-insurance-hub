@@ -11,7 +11,7 @@ const Bonds = () => {
       <main className="flex-grow">
         <div className="relative h-[400px]">
           <img
-            src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80"
+            src="/images/products-surety-cover.avif"
             alt="Surety Bonds"
             className="w-full h-full object-cover"
           />
@@ -62,7 +62,7 @@ const Bonds = () => {
             </div>
             <div className="space-y-6">
               <img
-                src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80"
+                src="/images/products-surety-surety-bonds.avif"
                 alt="Surety Bonds"
                 className="rounded-lg shadow-lg"
               />

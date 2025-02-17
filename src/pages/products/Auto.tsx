@@ -11,7 +11,7 @@ const Auto = () => {
       <main className="flex-grow">
         <div className="relative h-[400px]">
           <img
-            src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80"
+            src="/images/products-auto-cover.avif"
             alt="Auto Insurance"
             className="w-full h-full object-cover"
           />
@@ -62,7 +62,7 @@ const Auto = () => {
             </div>
             <div className="space-y-6">
               <img
-                src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80"
+                src="/images/prodcuts-auto-car-insurance.avif"
                 alt="Car Insurance"
                 className="rounded-lg shadow-lg"
               />

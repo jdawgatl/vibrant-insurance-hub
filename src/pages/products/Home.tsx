@@ -12,7 +12,7 @@ const Home = () => {
       <main className="flex-grow">
         <div className="relative h-[400px]">
           <img
-            src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&q=80"
+            src="/images/products-home-cover.avif"
             alt="Home Insurance"
             className="w-full h-full object-cover"
           />
@@ -74,7 +74,7 @@ const Home = () => {
             </div>
             <div className="space-y-6">
               <img
-                src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80"
+                src="/images/products-home-home-insurance.avif"
                 alt="Home Insurance Coverage"
                 className="rounded-lg shadow-lg"
               />

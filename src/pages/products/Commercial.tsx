@@ -11,7 +11,7 @@ const Commercial = () => {
       <main className="flex-grow">
         <div className="relative h-[400px]">
           <img
-            src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80"
+            src="/images/products-commercial-cover.avif"
             alt="Commercial Insurance"
             className="w-full h-full object-cover"
           />
@@ -62,7 +62,7 @@ const Commercial = () => {
             </div>
             <div className="space-y-6">
               <img
-                src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80"
+                src="/images/products-commercial-commercial-insurance.avif"
                 alt="Commercial Insurance"
                 className="rounded-lg shadow-lg"
               />
