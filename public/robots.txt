@@ -1,0 +1,7 @@
+
+User-agent: *
+Disallow: /admin
+Disallow: /agent-login
+Allow: /
+
+Sitemap: https://standardfinancialgroup.com/sitemap.xml

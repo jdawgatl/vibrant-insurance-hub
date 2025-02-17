@@ -3,8 +3,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { HelmetProvider } from "react-helmet-async";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HelmetProvider, Helmet } from "react-helmet-async";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AccessibilityProvider } from "@/components/providers/accessibility";
 import Index from "./pages/Index";
 import About from "./pages/About";
@@ -24,12 +24,62 @@ import Admin from "./pages/Admin";
 
 const queryClient = new QueryClient();
 
+const SEOWrapper = () => {
+  const location = useLocation();
+  const baseUrl = "https://standardfinancialgroup.com";
+  const currentUrl = `${baseUrl}${location.pathname}`;
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "InsuranceAgency",
+    "name": "Standard Financial Group",
+    "image": `${baseUrl}/og-image.png`,
+    "url": baseUrl,
+    "telephone": "(770) 997-7999",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "490 Bradley Dr Ste A",
+      "addressLocality": "Fayetteville",
+      "addressRegion": "GA",
+      "postalCode": "30214",
+      "addressCountry": "US"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "33.4469444",
+      "longitude": "-84.4548893"
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday"
+      ],
+      "opens": "09:00",
+      "closes": "16:00"
+    }
+  };
+
+  return (
+    <Helmet>
+      <link rel="canonical" href={currentUrl} />
+      <script type="application/ld+json">
+        {JSON.stringify(structuredData)}
+      </script>
+    </Helmet>
+  );
+};
+
 const App = () => (
   <BrowserRouter>
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
         <AccessibilityProvider>
           <TooltipProvider>
+            <SEOWrapper />
             <a href="#main-content" className="skip-to-main">
               Skip to main content
             </a>
