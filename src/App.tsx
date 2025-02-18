@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HelmetProvider, Helmet } from "react-helmet-async";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Service from "./pages/Service";
@@ -72,6 +73,32 @@ const SEOWrapper = () => {
   );
 };
 
+const AnimatedRoutes = () => {
+  const location = useLocation();
+  
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<Index />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/service" element={<Service />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/products/auto" element={<Auto />} />
+        <Route path="/products/home" element={<Home />} />
+        <Route path="/products/commercial" element={<Commercial />} />
+        <Route path="/products/bonds" element={<Bonds />} />
+        <Route path="/quote" element={<Quote />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/agent-login" element={<AgentLogin />} />
+        <Route path="/admin/*" element={<Admin />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </AnimatePresence>
+  );
+};
+
 const App = () => (
   <BrowserRouter>
     <HelmetProvider>
@@ -81,23 +108,7 @@ const App = () => (
           <main>
             <Toaster />
             <Sonner />
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/service" element={<Service />} />
-              <Route path="/products" element={<Products />} />
-              <Route path="/products/auto" element={<Auto />} />
-              <Route path="/products/home" element={<Home />} />
-              <Route path="/products/commercial" element={<Commercial />} />
-              <Route path="/products/bonds" element={<Bonds />} />
-              <Route path="/quote" element={<Quote />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/privacy" element={<Privacy />} />
-              <Route path="/agent-login" element={<AgentLogin />} />
-              <Route path="/admin/*" element={<Admin />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <AnimatedRoutes />
           </main>
         </TooltipProvider>
       </QueryClientProvider>
