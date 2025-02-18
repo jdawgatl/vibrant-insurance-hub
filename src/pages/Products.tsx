@@ -13,7 +13,7 @@ const products = [
     title: "Auto Insurance",
     icon: Car,
     description: "Comprehensive coverage for your vehicles with competitive rates and flexible payment options.",
-    features: ["Liability Coverage", "Collision Coverage", "Comprehensive Coverage", "Personal Injury Protection"],
+    features: ["Liability Coverage", "Collision Coverage", "Comprehensive Coverage", "Uninsured Motorist Coverage"],
     image: "/images/camaro.avif",
     link: "/products/auto"
   },
