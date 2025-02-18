@@ -41,8 +41,8 @@ const CarrierLogos = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="hidden sm:flex" />
-            <CarouselNext className="hidden sm:flex" />
+            <CarouselPrevious className="sm:flex" />
+            <CarouselNext className="sm:flex" />
           </Carousel>
         </div>
       </div>
