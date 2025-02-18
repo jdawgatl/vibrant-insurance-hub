@@ -9,6 +9,7 @@ const teamMembers = [
     name: "Jason Standard",
     role: "Owner/Agent",
     experience: "26+ years experience",
+    image: "/images/Jason_Standard.png"
   },
   {
     name: "Jessica Dover",
@@ -39,9 +40,17 @@ const About = () => {
             {teamMembers.map((member) => (
               <Card key={member.name} className="p-6 hover:shadow-lg transition-shadow">
                 <div className="flex flex-col items-center text-center">
-                  <div className="w-24 h-24 bg-sky-100 rounded-full flex items-center justify-center mb-4">
-                    <UserCircle className="w-16 h-16 text-sky-600" />
-                  </div>
+                  {member.image ? (
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="w-24 h-24 rounded-full mb-4 object-cover border border-gray-300"
+                    />
+                  ) : (
+                    <div className="w-24 h-24 bg-sky-100 rounded-full flex items-center justify-center mb-4">
+                      <UserCircle className="w-16 h-16 text-sky-600" />
+                    </div>
+                  )}
                   <h3 className="text-xl font-semibold mb-2">{member.name}</h3>
                   <p className="text-gray-600 mb-1">{member.role}</p>
                   <p className="text-sm text-gray-500">{member.experience}</p>
