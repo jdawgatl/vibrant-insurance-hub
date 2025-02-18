@@ -5,7 +5,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HelmetProvider, Helmet } from "react-helmet-async";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import { AccessibilityProvider } from "@/components/providers/accessibility";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Service from "./pages/Service";
@@ -77,35 +76,30 @@ const App = () => (
   <BrowserRouter>
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
-        <AccessibilityProvider>
-          <TooltipProvider>
-            <SEOWrapper />
-            <a href="#main-content" className="skip-to-main">
-              Skip to main content
-            </a>
-            <main id="main-content">
-              <Toaster />
-              <Sonner />
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/service" element={<Service />} />
-                <Route path="/products" element={<Products />} />
-                <Route path="/products/auto" element={<Auto />} />
-                <Route path="/products/home" element={<Home />} />
-                <Route path="/products/commercial" element={<Commercial />} />
-                <Route path="/products/bonds" element={<Bonds />} />
-                <Route path="/quote" element={<Quote />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/blog" element={<Blog />} />
-                <Route path="/privacy" element={<Privacy />} />
-                <Route path="/agent-login" element={<AgentLogin />} />
-                <Route path="/admin/*" element={<Admin />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </main>
-          </TooltipProvider>
-        </AccessibilityProvider>
+        <TooltipProvider>
+          <SEOWrapper />
+          <main>
+            <Toaster />
+            <Sonner />
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/service" element={<Service />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/products/auto" element={<Auto />} />
+              <Route path="/products/home" element={<Home />} />
+              <Route path="/products/commercial" element={<Commercial />} />
+              <Route path="/products/bonds" element={<Bonds />} />
+              <Route path="/quote" element={<Quote />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/agent-login" element={<AgentLogin />} />
+              <Route path="/admin/*" element={<Admin />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </main>
+        </TooltipProvider>
       </QueryClientProvider>
     </HelmetProvider>
   </BrowserRouter>
