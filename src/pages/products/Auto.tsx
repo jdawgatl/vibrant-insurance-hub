@@ -51,10 +51,6 @@ const Auto = () => {
                   <div className="h-2 w-2 rounded-full bg-primary" />
                   Comprehensive Coverage
                 </li>
-                <li className="flex items-center gap-2">
-                  <div className="h-2 w-2 rounded-full bg-primary" />
-                  Personal Injury Protection
-                </li>
               </ul>
               <Button asChild size="lg" className="mt-6">
                 <Link to="/quote">Get a Quote</Link>
