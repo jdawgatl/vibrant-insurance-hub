@@ -77,7 +77,11 @@ const Products = () => {
                       <img
                         src={product.image}
                         alt={product.title}
+                        loading="lazy"
+                        decoding="async"
                         className="absolute inset-0 w-full h-full object-cover transform transition-transform duration-500 hover:scale-110"
+                        width="800"
+                        height="600"
                       />
                       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/50" />
                     </div>

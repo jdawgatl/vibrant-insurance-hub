@@ -33,7 +33,11 @@ const CarrierLogos = () => {
                         <img
                           src={carrier.logo}
                           alt={carrier.name}
+                          loading="lazy"
+                          decoding="async"
                           className="object-contain max-w-full max-h-full"
+                          width="200"
+                          height="200"
                         />
                       </div>
                     </Card>
