@@ -58,7 +58,7 @@ const Auto = () => {
             </div>
             <div className="space-y-6">
               <img
-                src="/images/camaro-resized.avif"
+                src="/images/camaro-resized.jpg"
                 alt="Car Insurance"
                 className="rounded-lg shadow-lg"
               />

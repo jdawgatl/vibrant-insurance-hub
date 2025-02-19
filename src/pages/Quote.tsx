@@ -33,7 +33,7 @@ const Quote = () => {
                 <div className="flex flex-col h-full">
                   <div className="mb-4">
                     <img 
-                      src="/images/safeway-insurance.avif"
+                      src="/images/safeway-insurance.png"
                       alt="Safeway Insurance"
                       className="h-12 w-auto mb-4 mx-auto"
                     />
@@ -64,7 +64,7 @@ const Quote = () => {
                 <div className="flex flex-col h-full">
                   <div className="mb-4">
                     <img 
-                      src="/images/next-insurance.avif"
+                      src="/images/next-insurance.png"
                       alt="Next Insurance"
                       className="h-12 w-auto mb-4 mx-auto"
                     />
@@ -95,7 +95,7 @@ const Quote = () => {
                 <div className="flex flex-col h-full">
                   <div className="mb-4">
                     <img
-                      src="/images/rli-surety.avif"
+                      src="/images/rli-surety.png"
                       alt="RLI Surety"
                       className="h-12 w-auto mb-4 mx-auto"
                     />
