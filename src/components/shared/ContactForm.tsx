@@ -155,7 +155,10 @@ const ContactForm = () => {
 
       <div className="flex items-center space-x-2">
         <Checkbox id="consent" onCheckedChange={checked => setValue("consent", checked as boolean)} required />
-        <label htmlFor="consent" className="text-sm text-gray-600 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">I consent to receive calls, emails, and/or SMS/MMS for insurance products, services and related marketing purposes, including the use of automated technology, artificial voice messages, or pre-recorded calls. Consent is not required to obtain any service or product from Standard Financial Group, LLC. Message and data rates may apply. Reply STOP to opt-out.</label>
+        <label htmlFor="consent" className="text-sm text-gray-600 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">I consent to receive calls, emails, and/or SMS/MMS for insurance products, services and related marketing purposes, including the use of automated technology, artificial voice messages, or pre-recorded calls. Consent is not required to obtain any service or product from Standard Financial Group, LLC. Message and data rates may apply. Reply STOP to opt-out. <a href="/privacy" className="text-sky-600 hover:underline ml-1" target="_blank" rel="noopener noreferrer">
+      Privacy Policy
+        </a>.
+      </label>
       </div>
 
       <Button type="submit" className="w-full bg-sky-600 hover:bg-sky-700" disabled={isSubmitting}>
