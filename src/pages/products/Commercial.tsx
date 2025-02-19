@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -40,23 +41,23 @@ const Commercial = () => {
               </p>
               <ul className="space-y-4">
                 <li className="flex items-center gap-2">
-                  <div className="h-2 w-2 rounded-full bg-primary" />
+                  <div className="h-2 w-2 rounded-full bg-sky-600" />
                   Property Coverage
                 </li>
                 <li className="flex items-center gap-2">
-                  <div className="h-2 w-2 rounded-full bg-primary" />
+                  <div className="h-2 w-2 rounded-full bg-sky-600" />
                   General Liability
                 </li>
                 <li className="flex items-center gap-2">
-                  <div className="h-2 w-2 rounded-full bg-primary" />
+                  <div className="h-2 w-2 rounded-full bg-sky-600" />
                   Workers Compensation
                 </li>
                 <li className="flex items-center gap-2">
-                  <div className="h-2 w-2 rounded-full bg-primary" />
+                  <div className="h-2 w-2 rounded-full bg-sky-600" />
                   Business Interruption
                 </li>
               </ul>
-              <Button asChild size="lg" className="mt-6">
+              <Button asChild size="lg" className="mt-6 bg-sky-600 hover:bg-sky-700">
                 <Link to="/quote">Get a Quote</Link>
               </Button>
             </div>
