@@ -3,8 +3,8 @@ import { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { HelmetProvider, Helmet } from "react-helmet-async";
+import { QueryClientProvider, QueryClientProviderProps } from "@tanstack/react-query";
+import { HelmetProvider as Provider, Helmet as ReactHelmet } from "react-helmet-async";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import ScrollToTop from "@/components/utils/ScrollToTop";
@@ -26,16 +26,8 @@ const AgentLogin = lazy(() => import("./pages/AgentLogin"));
 const Admin = lazy(() => import("./pages/Admin"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 60 * 1000, // 1 minute
-      gcTime: 5 * 60 * 1000, // 5 minutes (formerly cacheTime)
-      retry: 1,
-      refetchOnWindowFocus: false,
-    },
-  },
-});
+// Move QueryClient to a separate provider component
+import { QueryProvider } from "@/components/providers/QueryProvider";
 
 const SEOWrapper = () => {
   const location = useLocation();
@@ -77,12 +69,12 @@ const SEOWrapper = () => {
   };
 
   return (
-    <Helmet>
+    <ReactHelmet>
       <link rel="canonical" href={currentUrl} />
       <script type="application/ld+json">
         {JSON.stringify(structuredData)}
       </script>
-    </Helmet>
+    </ReactHelmet>
   );
 };
 
@@ -122,8 +114,8 @@ const AnimatedRoutes = () => {
 
 const App = () => (
   <BrowserRouter>
-    <HelmetProvider>
-      <QueryClientProvider client={queryClient}>
+    <Provider>
+      <QueryProvider>
         <TooltipProvider>
           <ScrollToTop />
           <SEOWrapper />
@@ -133,8 +125,8 @@ const App = () => (
             <AnimatedRoutes />
           </main>
         </TooltipProvider>
-      </QueryClientProvider>
-    </HelmetProvider>
+      </QueryProvider>
+    </Provider>
   </BrowserRouter>
 );
 
