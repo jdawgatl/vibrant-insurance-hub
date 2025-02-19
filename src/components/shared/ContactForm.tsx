@@ -8,11 +8,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+
 type FormData = {
   firstName: string;
   lastName: string;
   email: string;
-  phone: string;
+  phone?: string;
   address: string;
   city: string;
   state: string;
@@ -21,6 +22,7 @@ type FormData = {
   message: string;
   consent: boolean;
 };
+
 const ContactForm = () => {
   const {
     toast
@@ -37,6 +39,7 @@ const ContactForm = () => {
     watch
   } = useForm<FormData>();
   const insuranceType = watch("insuranceType");
+
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     try {
@@ -92,6 +95,7 @@ const ContactForm = () => {
       setIsSubmitting(false);
     }
   };
+
   return <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
@@ -116,10 +120,12 @@ const ContactForm = () => {
           {errors.email && <span className="text-red-500 text-sm">This field is required</span>}
         </div>
         <div>
-          <Input type="tel" placeholder="Phone" {...register("phone", {
-          required: true
-        })} />
-          {errors.phone && <span className="text-red-500 text-sm">This field is required</span>}
+          <Input 
+            type="tel" 
+            placeholder="Phone (Optional)" 
+            {...register("phone")} 
+            aria-label="Phone number (Optional)"
+          />
         </div>
       </div>
 
@@ -156,10 +162,9 @@ const ContactForm = () => {
 
       <div className="flex items-center space-x-2">
         <Checkbox id="consent" onCheckedChange={checked => setValue("consent", checked as boolean)} required />
-        <label htmlFor="consent" className="text-sm text-gray-600 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">I consent to receive calls, emails, and/or SMS/MMS for insurance products, services and related marketing purposes, including the use of automated technology, artificial voice messages, or pre-recorded calls. Consent is not required to obtain any service or product from Standard Financial Group, LLC. Message and data rates may apply. Reply STOP to opt-out. <Link to="/privacy" className="text-sky-600 hover:underline ml-1">
-      Privacy Policy
-        </Link>.
-      </label>
+        <label htmlFor="consent" className="text-sm text-gray-600 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+          I consent to receive emails and direct mail for insurance products, services and related marketing purposes. Consent is not required to obtain any service or product from Standard Financial Group, LLC. <Link to="/privacy" className="text-sky-600 hover:underline ml-1">Privacy Policy</Link>.
+        </label>
       </div>
 
       <Button type="submit" className="w-full bg-sky-600 hover:bg-sky-700" disabled={isSubmitting}>
@@ -167,4 +172,5 @@ const ContactForm = () => {
       </Button>
     </form>;
 };
+
 export default ContactForm;
