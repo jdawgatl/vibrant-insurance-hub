@@ -9,7 +9,7 @@ const teamMembers = [
     name: "Jason Standard",
     role: "Owner/Agent",
     experience: "26+ years experience",
-    image: "/images/Jason_Standard.png"
+    image: "/images/Jason_Standard.avif"
   },
   {
     name: "Jessica Dover",
