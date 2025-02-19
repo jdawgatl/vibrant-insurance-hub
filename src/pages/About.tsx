@@ -15,6 +15,7 @@ const teamMembers = [
     name: "Jessica Dover",
     role: "Licensed Agent",
     experience: "5+ years experience",
+    image: "/images/Jessica_Dover.avif"
   },
 ];
 
