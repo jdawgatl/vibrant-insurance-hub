@@ -1,4 +1,5 @@
 
+import { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -8,22 +9,33 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import ScrollToTop from "@/components/utils/ScrollToTop";
 import Index from "./pages/Index";
-import About from "./pages/About";
-import Service from "./pages/Service";
-import Products from "./pages/Products";
-import Auto from "./pages/products/Auto";
-import Commercial from "./pages/products/Commercial";
-import Bonds from "./pages/products/Bonds";
-import Home from "./pages/products/Home";
-import Quote from "./pages/Quote";
-import Contact from "./pages/Contact";
-import NotFound from "./pages/NotFound";
-import Blog from "./pages/Blog";
-import Privacy from "./pages/Privacy";
-import AgentLogin from "./pages/AgentLogin";
-import Admin from "./pages/Admin";
 
-const queryClient = new QueryClient();
+// Lazy load non-critical routes
+const About = lazy(() => import("./pages/About"));
+const Service = lazy(() => import("./pages/Service"));
+const Products = lazy(() => import("./pages/Products"));
+const Auto = lazy(() => import("./pages/products/Auto"));
+const Commercial = lazy(() => import("./pages/products/Commercial"));
+const Bonds = lazy(() => import("./pages/products/Bonds"));
+const Home = lazy(() => import("./pages/products/Home"));
+const Quote = lazy(() => import("./pages/Quote"));
+const Contact = lazy(() => import("./pages/Contact"));
+const Blog = lazy(() => import("./pages/Blog"));
+const Privacy = lazy(() => import("./pages/Privacy"));
+const AgentLogin = lazy(() => import("./pages/AgentLogin"));
+const Admin = lazy(() => import("./pages/Admin"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 60 * 1000, // 1 minute
+      cacheTime: 5 * 60 * 1000, // 5 minutes
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const SEOWrapper = () => {
   const location = useLocation();
@@ -74,28 +86,36 @@ const SEOWrapper = () => {
   );
 };
 
+const LoadingFallback = () => (
+  <div className="min-h-screen flex items-center justify-center">
+    <div className="animate-pulse text-gray-600">Loading...</div>
+  </div>
+);
+
 const AnimatedRoutes = () => {
   const location = useLocation();
   
   return (
     <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<Index />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/service" element={<Service />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/products/auto" element={<Auto />} />
-        <Route path="/products/home" element={<Home />} />
-        <Route path="/products/commercial" element={<Commercial />} />
-        <Route path="/products/bonds" element={<Bonds />} />
-        <Route path="/quote" element={<Quote />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/privacy" element={<Privacy />} />
-        <Route path="/agent-login" element={<AgentLogin />} />
-        <Route path="/admin/*" element={<Admin />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <Suspense fallback={<LoadingFallback />}>
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<Index />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/service" element={<Service />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/products/auto" element={<Auto />} />
+          <Route path="/products/home" element={<Home />} />
+          <Route path="/products/commercial" element={<Commercial />} />
+          <Route path="/products/bonds" element={<Bonds />} />
+          <Route path="/quote" element={<Quote />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/agent-login" element={<AgentLogin />} />
+          <Route path="/admin/*" element={<Admin />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
     </AnimatePresence>
   );
 };
