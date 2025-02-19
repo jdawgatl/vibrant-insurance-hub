@@ -33,8 +33,15 @@ export default defineConfig(({ mode }) => ({
       compress: {
         drop_console: true,
         drop_debugger: true,
+        pure_funcs: ['console.log', 'console.info', 'console.debug', 'console.trace'],
       },
+      format: {
+        comments: false,
+      },
+      mangle: true,
     },
     chunkSizeWarningLimit: 1000,
+    sourcemap: false,
+    target: 'es2018',
   },
 }));
