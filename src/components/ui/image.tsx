@@ -26,7 +26,7 @@ export function Image({
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    const img = new Image();
+    const img = document.createElement('img');
     img.src = src;
     img.onload = () => setIsLoaded(true);
     img.onerror = () => setError(true);
