@@ -23,9 +23,22 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom'],
-          ui: ['@radix-ui/react-toast', '@radix-ui/react-tooltip'],
+          // Split vendor chunks more granularly
+          react: ['react', 'react-dom'],
+          router: ['react-router-dom'],
+          motion: ['framer-motion'],
+          radix: [
+            '@radix-ui/react-toast',
+            '@radix-ui/react-tooltip',
+            '@radix-ui/react-slot',
+            '@radix-ui/react-checkbox'
+          ],
+          utils: ['date-fns', 'clsx', 'tailwind-merge'],
         },
+        // Add cache busting
+        entryFileNames: 'assets/[name]-[hash].js',
+        chunkFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash].[ext]',
       },
     },
     minify: 'terser',
@@ -34,14 +47,23 @@ export default defineConfig(({ mode }) => ({
         drop_console: true,
         drop_debugger: true,
         pure_funcs: ['console.log', 'console.info', 'console.debug', 'console.trace'],
+        passes: 2,
+        ecma: 2020,
       },
       format: {
         comments: false,
+        ecma: 2020,
       },
-      mangle: true,
+      mangle: {
+        properties: false,
+      },
+      module: true,
     },
     chunkSizeWarningLimit: 1000,
     sourcemap: false,
-    target: 'es2018',
+    target: 'es2020',
+    cssCodeSplit: true,
+    reportCompressedSize: false,
+    assetsInlineLimit: 4096,
   },
 }));
