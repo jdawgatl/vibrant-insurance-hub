@@ -11,20 +11,20 @@ import { QueryProvider } from "@/components/providers/QueryProvider";
 import { AgentLogin } from "@/pages/AgentLogin"; // Import directly instead of lazy loading
 
 // Lazy load all routes for better initial load performance
-const Index = lazy(() => import("./pages/Index"));
-const About = lazy(() => import("./pages/About"));
-const Service = lazy(() => import("./pages/Service"));
-const Products = lazy(() => import("./pages/Products"));
-const Auto = lazy(() => import("./pages/products/Auto"));
-const Commercial = lazy(() => import("./pages/products/Commercial"));
-const Bonds = lazy(() => import("./pages/products/Bonds"));
-const Home = lazy(() => import("./pages/products/Home"));
-const Quote = lazy(() => import("./pages/Quote"));
-const Contact = lazy(() => import("./pages/Contact"));
-const Blog = lazy(() => import("./pages/Blog"));
-const Privacy = lazy(() => import("./pages/Privacy"));
-const Admin = lazy(() => import("./pages/Admin"));
-const NotFound = lazy(() => import("./pages/NotFound"));
+const Index = lazy(() => import("@/pages/Index"));
+const About = lazy(() => import("@/pages/About"));
+const Service = lazy(() => import("@/pages/Service"));
+const Products = lazy(() => import("@/pages/Products"));
+const Auto = lazy(() => import("@/pages/products/Auto"));
+const Commercial = lazy(() => import("@/pages/products/Commercial"));
+const Bonds = lazy(() => import("@/pages/products/Bonds"));
+const Home = lazy(() => import("@/pages/products/Home"));
+const Quote = lazy(() => import("@/pages/Quote"));
+const Contact = lazy(() => import("@/pages/Contact"));
+const Blog = lazy(() => import("@/pages/Blog"));
+const Privacy = lazy(() => import("@/pages/Privacy"));
+const Admin = lazy(() => import("@/pages/Admin"));
+const NotFound = lazy(() => import("@/pages/NotFound"));
 
 const SEOWrapper = () => {
   const location = useLocation();
@@ -92,25 +92,79 @@ const AnimatedRoutes = () => {
   
   return (
     <AnimatePresence mode="wait">
-      <Suspense fallback={<LoadingFallback />}>
-        <Routes location={location} key={location.pathname}>
-          <Route path="/" element={<Index />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/service" element={<Service />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/products/auto" element={<Auto />} />
-          <Route path="/products/home" element={<Home />} />
-          <Route path="/products/commercial" element={<Commercial />} />
-          <Route path="/products/bonds" element={<Bonds />} />
-          <Route path="/quote" element={<Quote />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/agent-login" element={<AgentLogin />} />
-          <Route path="/admin/*" element={<Admin />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Suspense>
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={
+          <Suspense fallback={<LoadingFallback />}>
+            <Index />
+          </Suspense>
+        } />
+        <Route path="/about" element={
+          <Suspense fallback={<LoadingFallback />}>
+            <About />
+          </Suspense>
+        } />
+        <Route path="/service" element={
+          <Suspense fallback={<LoadingFallback />}>
+            <Service />
+          </Suspense>
+        } />
+        <Route path="/products" element={
+          <Suspense fallback={<LoadingFallback />}>
+            <Products />
+          </Suspense>
+        } />
+        <Route path="/products/auto" element={
+          <Suspense fallback={<LoadingFallback />}>
+            <Auto />
+          </Suspense>
+        } />
+        <Route path="/products/home" element={
+          <Suspense fallback={<LoadingFallback />}>
+            <Home />
+          </Suspense>
+        } />
+        <Route path="/products/commercial" element={
+          <Suspense fallback={<LoadingFallback />}>
+            <Commercial />
+          </Suspense>
+        } />
+        <Route path="/products/bonds" element={
+          <Suspense fallback={<LoadingFallback />}>
+            <Bonds />
+          </Suspense>
+        } />
+        <Route path="/quote" element={
+          <Suspense fallback={<LoadingFallback />}>
+            <Quote />
+          </Suspense>
+        } />
+        <Route path="/contact" element={
+          <Suspense fallback={<LoadingFallback />}>
+            <Contact />
+          </Suspense>
+        } />
+        <Route path="/blog" element={
+          <Suspense fallback={<LoadingFallback />}>
+            <Blog />
+          </Suspense>
+        } />
+        <Route path="/privacy" element={
+          <Suspense fallback={<LoadingFallback />}>
+            <Privacy />
+          </Suspense>
+        } />
+        <Route path="/agent-login" element={<AgentLogin />} />
+        <Route path="/admin/*" element={
+          <Suspense fallback={<LoadingFallback />}>
+            <Admin />
+          </Suspense>
+        } />
+        <Route path="*" element={
+          <Suspense fallback={<LoadingFallback />}>
+            <NotFound />
+          </Suspense>
+        } />
+      </Routes>
     </AnimatePresence>
   );
 };
