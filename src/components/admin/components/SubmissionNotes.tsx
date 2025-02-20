@@ -27,16 +27,16 @@ export const SubmissionNotes = ({
   return (
     <div className="grid grid-cols-2 gap-2">
       <div className="bg-white rounded-lg shadow-sm p-2 border">
-        <h4 className="font-medium text-sky-700 mb-2 flex items-center gap-2 text-sm">
+        <h4 className="font-medium text-sky-700 mb-4 flex items-center gap-2 text-sm">
           <FileText className="h-4 w-4" />
           Notes History
         </h4>
-        <ScrollArea className="h-[180px] w-full">
+        <ScrollArea className="h-[180px] w-full pt-2">
           <div className="space-y-1.5">
             {[...notes].reverse().map((note, index) => (
               <div 
                 key={index} 
-                className="bg-gray-50 p-1.5 rounded-md border-l-2 border-sky-500 group relative"
+                className="bg-gray-50 p-1.5 rounded-md border-l-2 border-sky-500 group relative mt-2"
               >
                 <p className="text-xs text-gray-700">{note.content}</p>
                 <div className="text-xs text-gray-500">
@@ -56,11 +56,11 @@ export const SubmissionNotes = ({
       </div>
 
       <div className="bg-white rounded-lg shadow-sm p-2 border">
-        <h4 className="font-medium text-sky-700 mb-2 flex items-center gap-2 text-sm">
+        <h4 className="font-medium text-sky-700 mb-4 flex items-center gap-2 text-sm">
           <Loader2 className="h-4 w-4" />
           Add New Note
         </h4>
-        <div className="space-y-1.5">
+        <div className="space-y-1.5 pt-2">
           <Textarea
             placeholder="Type your note here..."
             value={notesDraft}
