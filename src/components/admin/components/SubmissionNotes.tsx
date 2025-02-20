@@ -31,8 +31,8 @@ export const SubmissionNotes = ({
           <FileText className="h-4 w-4" />
           Notes History
         </h4>
-        <ScrollArea className="h-[180px] w-full pt-2">
-          <div className="space-y-1.5">
+        <ScrollArea className="h-[180px] w-full">
+          <div className="pt-8 space-y-1.5">
             {[...notes].reverse().map((note, index) => (
               <div 
                 key={index} 
