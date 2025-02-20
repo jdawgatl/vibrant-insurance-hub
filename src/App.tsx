@@ -1,3 +1,4 @@
+
 import { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -7,6 +8,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import ScrollToTop from "@/components/utils/ScrollToTop";
 import { QueryProvider } from "@/components/providers/QueryProvider";
+import { AgentLogin } from "@/pages/AgentLogin"; // Import directly instead of lazy loading
 
 // Lazy load all routes for better initial load performance
 const Index = lazy(() => import("./pages/Index"));
@@ -21,7 +23,6 @@ const Quote = lazy(() => import("./pages/Quote"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Blog = lazy(() => import("./pages/Blog"));
 const Privacy = lazy(() => import("./pages/Privacy"));
-const AgentLogin = lazy(() => import("./pages/AgentLogin"));
 const Admin = lazy(() => import("./pages/Admin"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 

@@ -110,6 +110,3 @@ export const AgentLogin = () => {
     </div>
   );
 };
-
-// Default export is required for lazy loading to work properly
-export default AgentLogin;
