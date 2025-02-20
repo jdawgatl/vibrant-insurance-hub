@@ -12,8 +12,11 @@ import {
   DollarSign, 
   BookOpen,
   FileText as QuoteIcon,
-  Loader2
+  Loader2,
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const menuItems = [
   { 
@@ -46,6 +49,7 @@ export const AdminLayout = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(true);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   useEffect(() => {
     checkAuth();
@@ -130,35 +134,59 @@ export const AdminLayout = () => {
 
       <div className="flex h-screen">
         {/* Sidebar */}
-        <div className="w-64 bg-white shadow-lg">
-          <div className="p-6">
-            <Link to="/admin" className="text-xl font-bold text-gray-800 hover:text-sky-600 transition-colors">
-              Admin Dashboard
-            </Link>
+        <div 
+          className={cn(
+            "bg-white shadow-lg transition-all duration-300 flex flex-col",
+            isSidebarCollapsed ? "w-20" : "w-64"
+          )}
+        >
+          <div className={cn(
+            "p-6 flex items-center",
+            isSidebarCollapsed ? "justify-center" : "justify-between"
+          )}>
+            {!isSidebarCollapsed && (
+              <Link to="/admin" className="text-xl font-bold text-gray-800 hover:text-sky-600 transition-colors">
+                Admin
+              </Link>
+            )}
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+              className="shrink-0"
+            >
+              {isSidebarCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
+            </Button>
           </div>
-          <nav className="mt-6">
+          <nav className="mt-6 flex-1">
             {menuItems.map((item) => (
               <Button
                 key={item.label}
                 variant="ghost"
-                className="w-full justify-start px-6 py-3 text-left"
+                className={cn(
+                  "w-full justify-start px-6 py-3 text-left",
+                  isSidebarCollapsed && "justify-center px-2"
+                )}
                 asChild
               >
                 <Link to={item.path}>
-                  <item.icon className="mr-2 h-4 w-4" />
-                  {item.label}
+                  <item.icon className={cn("h-4 w-4", !isSidebarCollapsed && "mr-2")} />
+                  {!isSidebarCollapsed && item.label}
                 </Link>
               </Button>
             ))}
-            <Button
-              variant="ghost"
-              className="w-full justify-start px-6 py-3 text-left text-red-600 hover:text-red-700 hover:bg-red-50"
-              onClick={handleLogout}
-            >
-              <LogOut className="mr-2 h-4 w-4" />
-              Logout
-            </Button>
           </nav>
+          <Button
+            variant="ghost"
+            className={cn(
+              "justify-start px-6 py-3 text-left text-red-600 hover:text-red-700 hover:bg-red-50 mb-4",
+              isSidebarCollapsed && "justify-center px-2"
+            )}
+            onClick={handleLogout}
+          >
+            <LogOut className={cn("h-4 w-4", !isSidebarCollapsed && "mr-2")} />
+            {!isSidebarCollapsed && "Logout"}
+          </Button>
         </div>
 
         {/* Main content */}
