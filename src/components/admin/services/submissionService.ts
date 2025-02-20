@@ -1,6 +1,6 @@
 
 import { supabase } from "@/integrations/supabase/client";
-import { ActionStatus, Submission, SubmissionBase } from "../types/submission";
+import { ActionStatus, Submission } from "../types/submission";
 
 export const fetchSubmissions = async (): Promise<Submission[]> => {
   const { data } = await supabase.auth.getSession();
@@ -51,11 +51,12 @@ export const updateSubmissionStatus = async (
     updatedBy: session.user.email || 'unknown'
   };
 
-  // Use a type assertion to allow the action_status column
   const { error } = await supabase
     .from('contact_submissions')
     .update({ 
-      action_status: updatedStatus 
+      data: {
+        action_status: updatedStatus
+      }
     } as any)
     .eq('id', submissionId);
 
