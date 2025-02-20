@@ -55,10 +55,17 @@ export const AdminDashboard = () => {
 
       const currentSubmission = submissions.find(s => s.id === submissionId);
       const newActionStatus: ActionStatus = {
-        ...(currentSubmission?.action_status || { contacted: false, quoted: false, unreachable: false, notes: '' }),
+        ...(currentSubmission?.action_status || { 
+          contacted: false, 
+          quoted: false, 
+          unreachable: false, 
+          notes: '',
+          notesLog: [] 
+        }),
         [field]: checked === true,
         lastUpdated: new Date().toISOString(),
-        updatedBy: user?.email || undefined
+        updatedBy: user.email,
+        notesLog: currentSubmission?.action_status?.notesLog || []
       };
 
       const { error } = await supabase

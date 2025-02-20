@@ -1,6 +1,6 @@
 
 import { supabase } from "@/integrations/supabase/client";
-import { ActionStatus, Submission } from "../types/submission";
+import { ActionStatus, Submission, Note } from "../types/submission";
 import { Database } from "@/integrations/supabase/types";
 
 export const fetchSubmissions = async (): Promise<Submission[]> => {
@@ -47,6 +47,7 @@ export const updateSubmissionStatus = async (
     quoted: false,
     unreachable: false,
     notes: "",
+    notesLog: [],
     ...status,
     lastUpdated: timestamp,
     updatedBy: session.user.email || 'unknown'
