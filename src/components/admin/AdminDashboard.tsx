@@ -1,17 +1,18 @@
+
 import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
-import { Loader2, Users, FileText, CreditCard, AlertTriangle } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import type { CheckedState } from "@radix-ui/react-checkbox";
 import type { Submission, ActionStatus, Note } from "./types/submission";
-import { Database } from "@/integrations/supabase/types";
+import type { Database } from "@/integrations/supabase/types";
+import { DashboardStats } from "./components/DashboardStats";
+import { SubmissionNotes } from "./components/SubmissionNotes";
+import { StatusActions } from "./components/StatusActions";
+import { Loader2 } from "lucide-react";
 
 const formatDate = (dateString: string) => {
   return new Date(dateString).toLocaleDateString('en-US', {
@@ -184,29 +185,7 @@ export const AdminDashboard = () => {
         </p>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {[
-          { title: "Total Clients", value: stats.totalClients, icon: Users, color: "text-blue-600" },
-          { title: "Active Quotes", value: stats.activeQuotes, icon: FileText, color: "text-green-600" },
-          { title: "Pending Payments", value: stats.pendingPayments, icon: CreditCard, color: "text-yellow-600" },
-          { title: "Expiring Policies", value: stats.expiringPolicies, icon: AlertTriangle, color: "text-red-600" }
-        ].map((stat, index) => (
-          <motion.div
-            key={stat.title}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-          >
-            <Card className="p-6 hover:shadow-lg transition-shadow">
-              <div className="flex items-center justify-between mb-4">
-                <stat.icon className={`h-8 w-8 ${stat.color}`} />
-                <span className="text-2xl font-bold">{stat.value}</span>
-              </div>
-              <h3 className="text-gray-600 font-medium">{stat.title}</h3>
-            </Card>
-          </motion.div>
-        ))}
-      </div>
+      <DashboardStats {...stats} />
 
       <div className="mt-8">
         <Card className="p-6 border-l-4 border-sky-600">
@@ -255,98 +234,23 @@ export const AdminDashboard = () => {
                       {formatDate(submission.created_at)}
                     </td>
                     <td className="px-4 py-4">
-                      <div className="grid grid-cols-2 gap-6">
-                        <div className="bg-white rounded-lg shadow-sm p-4 border">
-                          <h4 className="font-medium text-sky-700 mb-4 flex items-center gap-2">
-                            <FileText className="h-4 w-4" />
-                            Notes History
-                          </h4>
-                          <ScrollArea className="h-[250px] w-full">
-                            <div className="space-y-3">
-                              {[...(submission.action_status?.notesLog || [])].reverse().map((note, index) => (
-                                <div 
-                                  key={index} 
-                                  className="bg-gray-50 p-3 rounded-md border-l-2 border-sky-500"
-                                >
-                                  <p className="text-sm text-gray-700">{note.content}</p>
-                                  <div className="mt-2 text-xs text-gray-500 flex items-center gap-2">
-                                    <span className="font-medium">{note.author}</span>
-                                    <span>•</span>
-                                    <span>{formatDate(note.timestamp)}</span>
-                                  </div>
-                                </div>
-                              ))}
-                            </div>
-                          </ScrollArea>
-                        </div>
-
-                        <div className="bg-white rounded-lg shadow-sm p-4 border">
-                          <h4 className="font-medium text-sky-700 mb-4 flex items-center gap-2">
-                            <Loader2 className="h-4 w-4" />
-                            Add New Note
-                          </h4>
-                          <div className="space-y-4">
-                            <Textarea
-                              placeholder="Type your note here..."
-                              value={notesDraft[submission.id] || ''}
-                              onChange={(e) => handleNoteDraftChange(submission.id, e.target.value)}
-                              className="min-h-[150px] bg-gray-50 border resize-none"
-                            />
-                            {isEditing[submission.id] && (
-                              <div className="flex space-x-2">
-                                <Button
-                                  size="sm"
-                                  className="w-full"
-                                  onClick={() => handleNotesChange(submission.id, notesDraft[submission.id] || '')}
-                                >
-                                  Save Note
-                                </Button>
-                                <Button
-                                  size="sm"
-                                  variant="outline"
-                                  className="w-full"
-                                  onClick={() => handleCancelNote(submission.id)}
-                                >
-                                  Cancel
-                                </Button>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </div>
+                      <SubmissionNotes
+                        notes={submission.action_status?.notesLog || []}
+                        notesDraft={notesDraft[submission.id] || ''}
+                        isEditing={isEditing[submission.id] || false}
+                        onNoteDraftChange={(value) => handleNoteDraftChange(submission.id, value)}
+                        onSaveNote={() => handleNotesChange(submission.id, notesDraft[submission.id] || '')}
+                        onCancelNote={() => handleCancelNote(submission.id)}
+                        formatDate={formatDate}
+                      />
                     </td>
                     <td className="px-4 py-4">
-                      <div className="space-y-2">
-                        {[
-                          { id: 'contacted', label: 'Contacted' },
-                          { id: 'quoted', label: 'Quoted' },
-                          { id: 'unreachable', label: 'Unable to reach' }
-                        ].map(({ id, label }) => (
-                          <div key={id} className="flex items-center space-x-2 group relative">
-                            <Checkbox
-                              id={`${id}-${submission.id}`}
-                              checked={Boolean(submission.action_status?.[id as keyof ActionStatus])}
-                              onCheckedChange={(checked) => 
-                                handleStatusChange(submission.id, id as keyof Pick<ActionStatus, 'contacted' | 'quoted' | 'unreachable'>, checked)
-                              }
-                            />
-                            <label
-                              htmlFor={`${id}-${submission.id}`}
-                              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                            >
-                              {label}
-                            </label>
-                            {submission.action_status?.[id as keyof ActionStatus] && (
-                              <div className="absolute left-0 -top-8 bg-black text-white text-xs rounded p-2 hidden group-hover:block z-50">
-                                Updated on {formatDate(submission.action_status.lastUpdated || '')}
-                                {submission.action_status.updatedBy && (
-                                  <span className="block">{submission.action_status.updatedBy}</span>
-                                )}
-                              </div>
-                            )}
-                          </div>
-                        ))}
-                      </div>
+                      <StatusActions
+                        submissionId={submission.id}
+                        actionStatus={submission.action_status}
+                        onStatusChange={handleStatusChange}
+                        formatDate={formatDate}
+                      />
                     </td>
                   </tr>
                 ))}
