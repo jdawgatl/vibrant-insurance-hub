@@ -25,24 +25,23 @@ export const SubmissionNotes = ({
   formatDate,
 }: NotesProps) => {
   return (
-    <div className="grid grid-cols-2 gap-3">
-      <div className="bg-white rounded-lg shadow-sm p-3 border">
-        <h4 className="font-medium text-sky-700 mb-3 flex items-center gap-2 text-sm">
+    <div className="grid grid-cols-2 gap-2">
+      <div className="bg-white rounded-lg shadow-sm p-2 border">
+        <h4 className="font-medium text-sky-700 mb-2 flex items-center gap-2 text-sm">
           <FileText className="h-4 w-4" />
           Notes History
         </h4>
-        <ScrollArea className="h-[200px] w-full">
-          <div className="space-y-2">
+        <ScrollArea className="h-[180px] w-full">
+          <div className="space-y-1.5">
             {[...notes].reverse().map((note, index) => (
               <div 
                 key={index} 
-                className="bg-gray-50 p-2 rounded-md border-l-2 border-sky-500 group relative"
+                className="bg-gray-50 p-1.5 rounded-md border-l-2 border-sky-500 group relative"
               >
                 <p className="text-xs text-gray-700">{note.content}</p>
                 <div className="text-xs text-gray-500">
-                  {formatDate(note.timestamp).split(',')[0]} {/* Only show the date part */}
+                  {formatDate(note.timestamp).split(',')[0]}
                 </div>
-                {/* Hover tooltip */}
                 <div className="absolute invisible group-hover:visible -translate-y-full -top-2 left-0 bg-black text-white text-xs rounded p-2 z-50 whitespace-nowrap">
                   Added by {note.author}
                   <br />
@@ -54,12 +53,12 @@ export const SubmissionNotes = ({
         </ScrollArea>
       </div>
 
-      <div className="bg-white rounded-lg shadow-sm p-3 border">
-        <h4 className="font-medium text-sky-700 mb-3 flex items-center gap-2 text-sm">
+      <div className="bg-white rounded-lg shadow-sm p-2 border">
+        <h4 className="font-medium text-sky-700 mb-2 flex items-center gap-2 text-sm">
           <Loader2 className="h-4 w-4" />
           Add New Note
         </h4>
-        <div className="space-y-2">
+        <div className="space-y-1.5">
           <Textarea
             placeholder="Type your note here..."
             value={notesDraft}
