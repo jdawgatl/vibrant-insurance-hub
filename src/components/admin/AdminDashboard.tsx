@@ -56,14 +56,13 @@ export const AdminDashboard = () => {
         updatedBy: user?.email || undefined
       };
 
-      // Using JSON type for action_status
       const { error } = await supabase
         .from('contact_submissions')
         .update({
           data: {
             action_status: newActionStatus
           }
-        } as any) // Type assertion needed due to Supabase typing limitations
+        } as any)
         .eq('id', submissionId);
 
       if (error) throw error;
@@ -86,14 +85,13 @@ export const AdminDashboard = () => {
         updatedBy: user?.email || undefined
       };
 
-      // Using JSON type for action_status
       const { error } = await supabase
         .from('contact_submissions')
         .update({
           data: {
             action_status: newActionStatus
           }
-        } as any) // Type assertion needed due to Supabase typing limitations
+        } as any)
         .eq('id', submissionId);
 
       if (error) throw error;
@@ -217,14 +215,23 @@ export const AdminDashboard = () => {
                       {formatDate(submission.created_at)}
                     </td>
                     <td className="px-4 py-4">
-                      <ScrollArea className="h-[100px] w-[200px] rounded-md border bg-gray-50 p-2">
-                        <Textarea
-                          placeholder="Add notes..."
-                          value={submission.action_status?.notes || ''}
-                          onChange={(e) => handleNotesChange(submission.id, e.target.value)}
-                          className="min-h-[80px] bg-transparent border-0 focus-visible:ring-0 resize-none p-0"
-                        />
-                      </ScrollArea>
+                      <div className="space-y-2">
+                        <ScrollArea className="h-[100px] w-[200px] rounded-md border bg-gray-50 p-2">
+                          <Textarea
+                            placeholder="Add notes..."
+                            value={submission.action_status?.notes || ''}
+                            onChange={(e) => handleNotesChange(submission.id, e.target.value)}
+                            className="min-h-[80px] bg-transparent border-0 focus-visible:ring-0 resize-none p-0"
+                          />
+                        </ScrollArea>
+                        <Button
+                          size="sm"
+                          onClick={() => handleNotesChange(submission.id, submission.action_status?.notes || '')}
+                          className="w-full"
+                        >
+                          Save Notes
+                        </Button>
+                      </div>
                     </td>
                     <td className="px-4 py-4">
                       <div className="space-y-2">
