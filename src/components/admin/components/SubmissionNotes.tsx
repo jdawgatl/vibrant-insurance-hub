@@ -32,7 +32,7 @@ export const SubmissionNotes = ({
           Notes History
         </h4>
         <ScrollArea className="h-[180px] w-full">
-          <div className="pt-8 space-y-1.5">
+          <div className="pt-6 space-y-1.5">
             {[...notes].reverse().map((note, index) => (
               <div 
                 key={index} 
