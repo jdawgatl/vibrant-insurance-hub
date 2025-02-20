@@ -11,7 +11,7 @@ import { Lock } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 
-const AgentLogin = () => {
+export const AgentLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -111,5 +111,5 @@ const AgentLogin = () => {
   );
 };
 
-// Make sure to export the component as default
+// Default export is required for lazy loading to work properly
 export default AgentLogin;

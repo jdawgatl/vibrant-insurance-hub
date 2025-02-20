@@ -1,4 +1,3 @@
-
 import { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -7,6 +6,7 @@ import { HelmetProvider as Provider, Helmet as ReactHelmet } from "react-helmet-
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import ScrollToTop from "@/components/utils/ScrollToTop";
+import { QueryProvider } from "@/components/providers/QueryProvider";
 
 // Lazy load all routes for better initial load performance
 const Index = lazy(() => import("./pages/Index"));
@@ -24,8 +24,6 @@ const Privacy = lazy(() => import("./pages/Privacy"));
 const AgentLogin = lazy(() => import("./pages/AgentLogin"));
 const Admin = lazy(() => import("./pages/Admin"));
 const NotFound = lazy(() => import("./pages/NotFound"));
-
-import { QueryProvider } from "@/components/providers/QueryProvider";
 
 const SEOWrapper = () => {
   const location = useLocation();
