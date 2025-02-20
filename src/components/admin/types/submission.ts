@@ -8,7 +8,7 @@ export type ActionStatus = {
   updatedBy?: string;
 };
 
-export type SubmissionBase = {
+export type Submission = {
   id: string;
   first_name: string;
   last_name: string;
@@ -22,14 +22,5 @@ export type SubmissionBase = {
   message: string | null;
   created_at: string;
   consent: boolean;
-  action_status?: ActionStatus; // Add this to match the database schema
-};
-
-export type Submission = SubmissionBase & {
-  action_status?: ActionStatus;
-};
-
-export type UpdateSubmissionStatusParams = {
-  submission_id: string;
-  status: ActionStatus;
+  action_status: ActionStatus | null;
 };

@@ -1,3 +1,4 @@
+
 import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
@@ -55,9 +56,14 @@ export const AdminDashboard = () => {
         updatedBy: user?.email || undefined
       };
 
+      // Using JSON type for action_status
       const { error } = await supabase
         .from('contact_submissions')
-        .update({ action_status: newActionStatus })
+        .update({
+          data: {
+            action_status: newActionStatus
+          }
+        } as any) // Type assertion needed due to Supabase typing limitations
         .eq('id', submissionId);
 
       if (error) throw error;
@@ -80,9 +86,14 @@ export const AdminDashboard = () => {
         updatedBy: user?.email || undefined
       };
 
+      // Using JSON type for action_status
       const { error } = await supabase
         .from('contact_submissions')
-        .update({ action_status: newActionStatus })
+        .update({
+          data: {
+            action_status: newActionStatus
+          }
+        } as any) // Type assertion needed due to Supabase typing limitations
         .eq('id', submissionId);
 
       if (error) throw error;
