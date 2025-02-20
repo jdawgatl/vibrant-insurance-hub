@@ -1,3 +1,4 @@
+
 import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
@@ -11,6 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import type { CheckedState } from "@radix-ui/react-checkbox";
 import type { Submission, ActionStatus } from "./types/submission";
+import { Database } from "@/integrations/supabase/types";
 
 const formatDate = (dateString: string) => {
   return new Date(dateString).toLocaleDateString('en-US', {
@@ -59,7 +61,7 @@ export const AdminDashboard = () => {
         .from('contact_submissions')
         .update({
           action_status: newActionStatus
-        })
+        } as Database['public']['Tables']['contact_submissions']['Update'])
         .eq('id', submissionId);
 
       if (error) throw error;
@@ -86,7 +88,7 @@ export const AdminDashboard = () => {
         .from('contact_submissions')
         .update({
           action_status: newActionStatus
-        })
+        } as Database['public']['Tables']['contact_submissions']['Update'])
         .eq('id', submissionId);
 
       if (error) throw error;
