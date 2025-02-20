@@ -256,34 +256,11 @@ export const AdminDashboard = () => {
                     </td>
                     <td className="px-4 py-4">
                       <div className="space-y-2">
-                        <ScrollArea className="h-[200px] w-[300px] rounded-md border bg-gray-50 p-4">
-                          <div className="space-y-4">
-                            <Textarea
-                              placeholder="Add a new note..."
-                              value={notesDraft[submission.id] || ''}
-                              onChange={(e) => handleNoteDraftChange(submission.id, e.target.value)}
-                              className="min-h-[80px] bg-white border resize-none mb-2"
-                            />
-                            {isEditing[submission.id] && (
-                              <div className="flex space-x-2">
-                                <Button
-                                  size="sm"
-                                  onClick={() => handleNotesChange(submission.id, notesDraft[submission.id] || '')}
-                                >
-                                  Save Note
-                                </Button>
-                                <Button
-                                  size="sm"
-                                  variant="outline"
-                                  onClick={() => handleCancelNote(submission.id)}
-                                >
-                                  Cancel
-                                </Button>
-                              </div>
-                            )}
-                            
-                            <div className="space-y-3 mt-4">
-                              {submission.action_status?.notesLog?.map((note, index) => (
+                        <ScrollArea className="h-[200px] w-[600px] rounded-md border bg-gray-50 p-4">
+                          <div className="flex gap-4">
+                            <div className="w-1/2 space-y-3">
+                              <h4 className="font-medium text-sm text-gray-700 mb-2">Notes History</h4>
+                              {[...(submission.action_status?.notesLog || [])].reverse().map((note, index) => (
                                 <div key={index} className="bg-white p-3 rounded-md shadow-sm">
                                   <p className="text-sm text-gray-700">{note.content}</p>
                                   <div className="mt-2 text-xs text-gray-500">
@@ -291,6 +268,32 @@ export const AdminDashboard = () => {
                                   </div>
                                 </div>
                               ))}
+                            </div>
+                            <div className="w-1/2">
+                              <h4 className="font-medium text-sm text-gray-700 mb-2">Add New Note</h4>
+                              <Textarea
+                                placeholder="Add a new note..."
+                                value={notesDraft[submission.id] || ''}
+                                onChange={(e) => handleNoteDraftChange(submission.id, e.target.value)}
+                                className="min-h-[80px] bg-white border resize-none mb-2"
+                              />
+                              {isEditing[submission.id] && (
+                                <div className="flex space-x-2">
+                                  <Button
+                                    size="sm"
+                                    onClick={() => handleNotesChange(submission.id, notesDraft[submission.id] || '')}
+                                  >
+                                    Save Note
+                                  </Button>
+                                  <Button
+                                    size="sm"
+                                    variant="outline"
+                                    onClick={() => handleCancelNote(submission.id)}
+                                  >
+                                    Cancel
+                                  </Button>
+                                </div>
+                              )}
                             </div>
                           </div>
                         </ScrollArea>
