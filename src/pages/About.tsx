@@ -32,7 +32,8 @@ const About = () => {
             transition={{ duration: 0.5 }}
             className="text-center mb-12"
           >
-            <h1 className="text-4xl font-bold text-gray-900 mb-6">About Us</h1>
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">About Us</h1>
+            <div className="w-20 h-1 bg-sky-600 mx-auto rounded-full mb-6"></div>
             <div className="max-w-3xl mx-auto">
               <div className="bg-white rounded-lg shadow-sm p-8 mb-12 border border-gray-100">
                 <p className="text-lg text-gray-600 mb-6 leading-relaxed">
@@ -49,8 +50,13 @@ const About = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
+            className="text-center mb-12"
           >
-            <h2 className="text-3xl font-bold text-center mb-8">Our Team</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Team</h2>
+            <div className="w-20 h-1 bg-sky-600 mx-auto rounded-full mb-6"></div>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
+              Meet our experienced insurance professionals dedicated to serving your needs.
+            </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
               {teamMembers.map((member, index) => (
                 <motion.div
@@ -85,6 +91,24 @@ const About = () => {
               ))}
             </div>
           </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="text-center"
+          >
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Values</h2>
+            <div className="w-20 h-1 bg-sky-600 mx-auto rounded-full mb-6"></div>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
+              Built on trust, driven by excellence, and committed to our community.
+            </p>
+            <div className="bg-white rounded-lg shadow-sm p-8 border border-gray-100">
+              <p className="text-lg text-gray-600 leading-relaxed">
+                At Standard Financial Group, we believe in providing personalized attention and expert guidance to every client. Our commitment to excellence and integrity has made us a trusted name in insurance for over three decades.
+              </p>
+            </div>
+          </motion.div>
         </div>
       </main>
       <Footer />
@@ -93,4 +117,3 @@ const About = () => {
 };
 
 export default About;
-
