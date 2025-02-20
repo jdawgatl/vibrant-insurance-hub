@@ -1,3 +1,6 @@
+
+import { motion } from "framer-motion";
+
 export const PaymentsSection = () => {
   return (
     <div className="p-8">

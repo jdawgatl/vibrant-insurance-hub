@@ -1,11 +1,12 @@
+
 import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { Loader2, Users, FileText, CreditCard, AlertTriangle } from "lucide-react";
-import { fetchDashboardStats } from "@/lib/api";
+import { fetchDashboardStats, type DashboardStats } from "@/lib/api";
 
 export const AdminDashboard = () => {
-  const { data: stats, isLoading, error } = useQuery({
+  const { data: stats, isLoading, error } = useQuery<DashboardStats>({
     queryKey: ['dashboardStats'],
     queryFn: fetchDashboardStats,
   });
