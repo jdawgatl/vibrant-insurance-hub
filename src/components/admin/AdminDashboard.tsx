@@ -228,11 +228,11 @@ export const AdminDashboard = () => {
             <table className="w-full text-left">
               <thead className="text-sm text-sky-600 uppercase bg-gray-50">
                 <tr>
-                  <th className="px-4 py-3">Contact Info</th>
-                  <th className="px-4 py-3">Insurance Type</th>
-                  <th className="px-4 py-3">Submitted</th>
-                  <th className="px-4 py-3">Notes</th>
-                  <th className="px-4 py-3">Actions</th>
+                  <th className="px-4 py-3 w-[200px]">Contact Info</th>
+                  <th className="px-4 py-3 w-[150px]">Insurance Type</th>
+                  <th className="px-4 py-3 w-[150px]">Submitted</th>
+                  <th className="px-4 py-3 w-[500px]">Notes</th>
+                  <th className="px-4 py-3 w-[200px]">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -254,9 +254,9 @@ export const AdminDashboard = () => {
                     <td className="px-4 py-4 text-sm text-gray-500">
                       {formatDate(submission.created_at)}
                     </td>
-                    <td className="px-4 py-4 min-w-[600px]">
+                    <td className="px-4 py-4">
                       <div className="space-y-2">
-                        <ScrollArea className="h-[200px] w-[600px] rounded-md border bg-gray-50 p-4">
+                        <ScrollArea className="h-[200px] w-[500px] rounded-md border bg-gray-50 p-4">
                           <div className="flex gap-4">
                             <div className="w-1/2 space-y-3">
                               <h4 className="font-medium text-sm text-gray-700 mb-2">Notes History</h4>
@@ -299,7 +299,7 @@ export const AdminDashboard = () => {
                         </ScrollArea>
                       </div>
                     </td>
-                    <td className="px-4 py-4 min-w-[200px]">
+                    <td className="px-4 py-4">
                       <div className="space-y-2">
                         {[
                           { id: 'contacted', label: 'Contacted' },
