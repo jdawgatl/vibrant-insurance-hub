@@ -60,7 +60,7 @@ export default defineConfig(({ mode }) => ({
       module: true,
     },
     chunkSizeWarningLimit: 1000,
-    sourcemap: false,
+    sourcemap: true, // Enable sourcemaps for better debugging
     target: 'es2020',
     cssCodeSplit: true,
     reportCompressedSize: false,

@@ -111,4 +111,5 @@ const AgentLogin = () => {
   );
 };
 
+// Make sure to export the component as default
 export default AgentLogin;
