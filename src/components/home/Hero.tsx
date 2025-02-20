@@ -103,7 +103,7 @@ const Hero = () => {
             <Button
               asChild
               size="lg"
-              className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-8 py-6 text-lg md:text-xl rounded-xl shadow-lg hover:shadow-2xl transform transition-all duration-300 border-2 border-orange-400/20"
+              className="bg-sky-600 hover:bg-sky-700 text-white px-8 py-6 text-lg md:text-xl rounded-xl shadow-lg hover:shadow-2xl transform transition-all duration-300"
               aria-label="Get an insurance quote"
             >
               <Link to="/quote" className="flex items-center gap-2">
