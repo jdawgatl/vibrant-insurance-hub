@@ -1,4 +1,3 @@
-
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { motion } from "framer-motion";
@@ -7,17 +6,20 @@ const Privacy = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main className="flex-grow py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-gray-50">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="max-w-4xl mx-auto"
-        >
-          <div className="text-center mb-12">
+      <main className="flex-grow py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-12"
+          >
             <h1 className="text-4xl font-bold text-gray-900 mb-4">Privacy Policy</h1>
-            <p className="text-sm text-gray-500">Last Updated: {new Date().toLocaleDateString()}</p>
-          </div>
+            <div className="w-20 h-1 bg-sky-600 mx-auto rounded-full mb-6"></div>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
+              Learn about how we protect and handle your personal information.
+            </p>
+          </motion.div>
 
           <div className="space-y-8">
             <section className="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
@@ -133,7 +135,7 @@ const Privacy = () => {
               </p>
             </section>
           </div>
-        </motion.div>
+        </div>
       </main>
       <Footer />
     </div>

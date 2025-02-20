@@ -18,9 +18,10 @@ const Commercial = () => {
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-white text-center">
-              Commercial Insurance
-            </h1>
+            <div className="text-center">
+              <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Commercial Insurance</h1>
+              <div className="w-20 h-1 bg-sky-600 mx-auto rounded-full"></div>
+            </div>
           </div>
         </div>
 

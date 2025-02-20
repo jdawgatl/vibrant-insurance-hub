@@ -1,4 +1,3 @@
-
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ContactForm from "@/components/shared/ContactForm";
@@ -13,14 +12,18 @@ const Quote = () => {
       <Navbar />
       <main className="flex-grow py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <motion.h1 
+          <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-4xl font-bold text-center mb-12"
+            className="text-center mb-12"
           >
-            Get Your Insurance Quote
-          </motion.h1>
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">Get Your Insurance Quote</h1>
+            <div className="w-20 h-1 bg-sky-600 mx-auto rounded-full mb-6"></div>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
+              Choose from our range of quoting options or fill out our form for a personalized quote.
+            </p>
+          </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
             {/* Auto Insurance Card */}

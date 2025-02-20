@@ -4,6 +4,7 @@ import ContactForm from "@/components/shared/ContactForm";
 import { Card } from "@/components/ui/card";
 import { MapPin, Clock, Phone, Mail } from "lucide-react";
 import { Helmet } from "react-helmet-async";
+import { motion } from "framer-motion";
 
 const Contact = () => {
   return (
@@ -20,7 +21,18 @@ const Contact = () => {
       <Navbar />
       <main className="flex-grow py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl font-bold text-center mb-12">Contact Us</h1>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-12"
+          >
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">Contact Us</h1>
+            <div className="w-20 h-1 bg-sky-600 mx-auto rounded-full mb-6"></div>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
+              Get in touch with our team of insurance experts. We're here to help you find the right coverage.
+            </p>
+          </motion.div>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div className="space-y-8">
