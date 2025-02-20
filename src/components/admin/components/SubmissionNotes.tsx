@@ -36,21 +36,18 @@ export const SubmissionNotes = ({
             {[...notes].reverse().map((note, index) => (
               <div 
                 key={index} 
-                className="bg-gray-50 p-1.5 rounded-md border-l-2 border-sky-500 group"
+                className="bg-gray-50 p-1.5 rounded-md border-l-2 border-sky-500 group relative"
               >
-                <div className="relative">
-                  <p className="text-xs text-gray-700">{note.content}</p>
-                  <div className="text-xs text-gray-500">
-                    {formatDate(note.timestamp).split(',')[0]}
-                  </div>
-                  <div 
-                    className="absolute invisible group-hover:visible -translate-y-full -top-1 left-0 bg-black text-white text-xs rounded p-2 z-[60] whitespace-nowrap pointer-events-none"
-                    style={{ marginTop: '-5px' }}
-                  >
-                    Added by {note.author}
-                    <br />
-                    {formatDate(note.timestamp)}
-                  </div>
+                <p className="text-xs text-gray-700">{note.content}</p>
+                <div className="text-xs text-gray-500">
+                  {formatDate(note.timestamp).split(',')[0]}
+                </div>
+                <div 
+                  className="absolute opacity-0 group-hover:opacity-100 transition-opacity bg-black text-white text-xs rounded py-1 px-2 -top-8 left-0 whitespace-nowrap z-50 pointer-events-none"
+                >
+                  Added by {note.author}
+                  <br />
+                  {formatDate(note.timestamp)}
                 </div>
               </div>
             ))}

@@ -48,9 +48,9 @@ export const SubmissionsTable = ({
         <table className="w-full text-left">
           <thead className="text-sm text-sky-600 uppercase bg-gray-50">
             <tr>
-              <th className="px-3 py-2 w-[300px]">Contact Info</th>
-              <th className="px-3 py-2 w-[120px]">Submitted</th>
-              <th className="px-3 py-2">Notes</th>
+              <th className="px-3 py-2 w-[250px]">Contact Info</th>
+              <th className="px-3 py-2 w-[100px]">Submitted</th>
+              <th className="px-3 py-2 text-center">Notes</th>
               <th className="px-3 py-2 w-[150px]">Actions</th>
             </tr>
           </thead>
