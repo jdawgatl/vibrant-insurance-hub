@@ -52,14 +52,18 @@ const Products = () => {
       <Navbar />
       <main className="flex-grow py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <motion.h1 
+          <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-4xl font-bold text-center mb-12"
+            className="text-center mb-12"
           >
-            Our Insurance Products
-          </motion.h1>
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">Our Insurance Products</h1>
+            <div className="w-20 h-1 bg-sky-600 mx-auto rounded-full mb-6"></div>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Comprehensive insurance solutions tailored to protect what matters most to you.
+            </p>
+          </motion.div>
           
           <div className="space-y-16">
             {products.map((product, index) => (
