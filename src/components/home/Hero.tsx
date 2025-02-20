@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { ArrowRight } from "lucide-react";
 
 const backgroundImages = [
   "/images/hero-background1.avif",
@@ -81,7 +82,7 @@ const Hero = () => {
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 1, duration: 0.8 }}
-            className="text-lg md:text-xl mb-6 max-w-2xl mx-auto text-gray-200 font-normal"
+            className="text-lg md:text-xl mb-8 max-w-2xl mx-auto text-gray-200 font-normal"
           >
             Setting the STANDARD in affordable insurance and bonds.
           </motion.p>
@@ -97,14 +98,18 @@ const Hero = () => {
             }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            className="mb-12"
           >
             <Button
               asChild
               size="lg"
-              className="bg-sky-600 hover:bg-sky-700 text-white transition-all duration-300 shadow-lg hover:shadow-xl"
+              className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-8 py-6 text-lg md:text-xl rounded-xl shadow-lg hover:shadow-2xl transform transition-all duration-300 border-2 border-orange-400/20"
               aria-label="Get an insurance quote"
             >
-              <Link to="/quote">Get A Quote</Link>
+              <Link to="/quote" className="flex items-center gap-2">
+                Get A Quote
+                <ArrowRight className="w-5 h-5" />
+              </Link>
             </Button>
           </motion.div>
         </motion.div>
