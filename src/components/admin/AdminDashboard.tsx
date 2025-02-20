@@ -231,7 +231,7 @@ export const AdminDashboard = () => {
                   <th className="px-4 py-3 w-[200px]">Contact Info</th>
                   <th className="px-4 py-3 w-[150px]">Insurance Type</th>
                   <th className="px-4 py-3 w-[150px]">Submitted</th>
-                  <th className="px-4 py-3 w-[500px]">Notes</th>
+                  <th className="px-4 py-3 w-[800px]">Notes</th>
                   <th className="px-4 py-3 w-[200px]">Actions</th>
                 </tr>
               </thead>
@@ -255,48 +255,64 @@ export const AdminDashboard = () => {
                       {formatDate(submission.created_at)}
                     </td>
                     <td className="px-4 py-4">
-                      <div className="space-y-2">
-                        <ScrollArea className="h-[200px] w-[500px] rounded-md border bg-gray-50 p-4">
-                          <div className="flex gap-4">
-                            <div className="w-1/2 space-y-3">
-                              <h4 className="font-medium text-sm text-gray-700 mb-2">Notes History</h4>
+                      <div className="grid grid-cols-2 gap-6">
+                        <div className="bg-white rounded-lg shadow-sm p-4 border">
+                          <h4 className="font-medium text-sky-700 mb-4 flex items-center gap-2">
+                            <FileText className="h-4 w-4" />
+                            Notes History
+                          </h4>
+                          <ScrollArea className="h-[250px] w-full">
+                            <div className="space-y-3">
                               {[...(submission.action_status?.notesLog || [])].reverse().map((note, index) => (
-                                <div key={index} className="bg-white p-3 rounded-md shadow-sm">
+                                <div 
+                                  key={index} 
+                                  className="bg-gray-50 p-3 rounded-md border-l-2 border-sky-500"
+                                >
                                   <p className="text-sm text-gray-700">{note.content}</p>
-                                  <div className="mt-2 text-xs text-gray-500">
-                                    Added by {note.author} on {formatDate(note.timestamp)}
+                                  <div className="mt-2 text-xs text-gray-500 flex items-center gap-2">
+                                    <span className="font-medium">{note.author}</span>
+                                    <span>•</span>
+                                    <span>{formatDate(note.timestamp)}</span>
                                   </div>
                                 </div>
                               ))}
                             </div>
-                            <div className="w-1/2">
-                              <h4 className="font-medium text-sm text-gray-700 mb-2">Add New Note</h4>
-                              <Textarea
-                                placeholder="Add a new note..."
-                                value={notesDraft[submission.id] || ''}
-                                onChange={(e) => handleNoteDraftChange(submission.id, e.target.value)}
-                                className="min-h-[80px] bg-white border resize-none mb-2"
-                              />
-                              {isEditing[submission.id] && (
-                                <div className="flex space-x-2">
-                                  <Button
-                                    size="sm"
-                                    onClick={() => handleNotesChange(submission.id, notesDraft[submission.id] || '')}
-                                  >
-                                    Save Note
-                                  </Button>
-                                  <Button
-                                    size="sm"
-                                    variant="outline"
-                                    onClick={() => handleCancelNote(submission.id)}
-                                  >
-                                    Cancel
-                                  </Button>
-                                </div>
-                              )}
-                            </div>
+                          </ScrollArea>
+                        </div>
+
+                        <div className="bg-white rounded-lg shadow-sm p-4 border">
+                          <h4 className="font-medium text-sky-700 mb-4 flex items-center gap-2">
+                            <Loader2 className="h-4 w-4" />
+                            Add New Note
+                          </h4>
+                          <div className="space-y-4">
+                            <Textarea
+                              placeholder="Type your note here..."
+                              value={notesDraft[submission.id] || ''}
+                              onChange={(e) => handleNoteDraftChange(submission.id, e.target.value)}
+                              className="min-h-[150px] bg-gray-50 border resize-none"
+                            />
+                            {isEditing[submission.id] && (
+                              <div className="flex space-x-2">
+                                <Button
+                                  size="sm"
+                                  className="w-full"
+                                  onClick={() => handleNotesChange(submission.id, notesDraft[submission.id] || '')}
+                                >
+                                  Save Note
+                                </Button>
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  className="w-full"
+                                  onClick={() => handleCancelNote(submission.id)}
+                                >
+                                  Cancel
+                                </Button>
+                              </div>
+                            )}
                           </div>
-                        </ScrollArea>
+                        </div>
                       </div>
                     </td>
                     <td className="px-4 py-4">
