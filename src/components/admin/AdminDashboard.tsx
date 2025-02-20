@@ -254,7 +254,7 @@ export const AdminDashboard = () => {
                     <td className="px-4 py-4 text-sm text-gray-500">
                       {formatDate(submission.created_at)}
                     </td>
-                    <td className="px-4 py-4">
+                    <td className="px-4 py-4 min-w-[600px]">
                       <div className="space-y-2">
                         <ScrollArea className="h-[200px] w-[600px] rounded-md border bg-gray-50 p-4">
                           <div className="flex gap-4">
@@ -299,7 +299,7 @@ export const AdminDashboard = () => {
                         </ScrollArea>
                       </div>
                     </td>
-                    <td className="px-4 py-4">
+                    <td className="px-4 py-4 min-w-[200px]">
                       <div className="space-y-2">
                         {[
                           { id: 'contacted', label: 'Contacted' },
