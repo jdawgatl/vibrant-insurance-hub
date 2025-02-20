@@ -1,4 +1,3 @@
-
 import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
@@ -59,10 +58,8 @@ export const AdminDashboard = () => {
       const { error } = await supabase
         .from('contact_submissions')
         .update({
-          data: {
-            action_status: newActionStatus
-          }
-        } as any)
+          action_status: newActionStatus
+        })
         .eq('id', submissionId);
 
       if (error) throw error;
@@ -88,10 +85,8 @@ export const AdminDashboard = () => {
       const { error } = await supabase
         .from('contact_submissions')
         .update({
-          data: {
-            action_status: newActionStatus
-          }
-        } as any)
+          action_status: newActionStatus
+        })
         .eq('id', submissionId);
 
       if (error) throw error;

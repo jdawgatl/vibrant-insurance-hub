@@ -54,10 +54,8 @@ export const updateSubmissionStatus = async (
   const { error } = await supabase
     .from('contact_submissions')
     .update({ 
-      data: {
-        action_status: updatedStatus
-      }
-    } as any)
+      action_status: updatedStatus
+    })
     .eq('id', submissionId);
 
   if (error) throw error;
