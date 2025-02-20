@@ -1,4 +1,3 @@
-
 import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
@@ -11,7 +10,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import type { CheckedState } from "@radix-ui/react-checkbox";
-import type { Submission, ActionStatus } from "./types/submission";
+import type { Submission, ActionStatus, Note } from "./types/submission";
 import { Database } from "@/integrations/supabase/types";
 
 const formatDate = (dateString: string) => {
@@ -32,6 +31,9 @@ export const AdminDashboard = () => {
     expiringPolicies: 0
   });
 
+  const [notesDraft, setNotesDraft] = useState<{ [key: string]: string }>({});
+  const [isEditing, setIsEditing] = useState<{ [key: string]: boolean }>({});
+
   const { data: submissions = [], isLoading, error, refetch } = useQuery({
     queryKey: ['contactSubmissions'],
     queryFn: async () => {
@@ -49,6 +51,8 @@ export const AdminDashboard = () => {
   const handleStatusChange = async (submissionId: string, field: keyof Pick<ActionStatus, 'contacted' | 'quoted' | 'unreachable'>, checked: CheckedState) => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
+      if (!user?.email) throw new Error("User not authenticated");
+
       const currentSubmission = submissions.find(s => s.id === submissionId);
       const newActionStatus: ActionStatus = {
         ...(currentSubmission?.action_status || { contacted: false, quoted: false, unreachable: false, notes: '' }),
@@ -76,12 +80,29 @@ export const AdminDashboard = () => {
   const handleNotesChange = async (submissionId: string, notes: string) => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
+      if (!user?.email) throw new Error("User not authenticated");
+
       const currentSubmission = submissions.find(s => s.id === submissionId);
+      const currentNotes = currentSubmission?.action_status?.notesLog || [];
+      
+      const newNote: Note = {
+        content: notes,
+        timestamp: new Date().toISOString(),
+        author: user.email
+      };
+
       const newActionStatus: ActionStatus = {
-        ...(currentSubmission?.action_status || { contacted: false, quoted: false, unreachable: false, notes: '' }),
+        ...(currentSubmission?.action_status || { 
+          contacted: false, 
+          quoted: false, 
+          unreachable: false, 
+          notes: '', 
+          notesLog: []
+        }),
         notes,
+        notesLog: [...currentNotes, newNote],
         lastUpdated: new Date().toISOString(),
-        updatedBy: user?.email || undefined
+        updatedBy: user.email
       };
 
       const { error } = await supabase
@@ -92,12 +113,27 @@ export const AdminDashboard = () => {
         .eq('id', submissionId);
 
       if (error) throw error;
+      
+      setNotesDraft(prev => ({ ...prev, [submissionId]: '' }));
+      setIsEditing(prev => ({ ...prev, [submissionId]: false }));
       toast.success('Notes saved successfully');
       refetch();
     } catch (error) {
       console.error('Error saving notes:', error);
       toast.error('Failed to save notes');
     }
+  };
+
+  const handleNoteDraftChange = (submissionId: string, value: string) => {
+    setNotesDraft(prev => ({ ...prev, [submissionId]: value }));
+    if (!isEditing[submissionId]) {
+      setIsEditing(prev => ({ ...prev, [submissionId]: true }));
+    }
+  };
+
+  const handleCancelNote = (submissionId: string) => {
+    setNotesDraft(prev => ({ ...prev, [submissionId]: '' }));
+    setIsEditing(prev => ({ ...prev, [submissionId]: false }));
   };
 
   useEffect(() => {
@@ -213,21 +249,44 @@ export const AdminDashboard = () => {
                     </td>
                     <td className="px-4 py-4">
                       <div className="space-y-2">
-                        <ScrollArea className="h-[100px] w-[200px] rounded-md border bg-gray-50 p-2">
-                          <Textarea
-                            placeholder="Add notes..."
-                            value={submission.action_status?.notes || ''}
-                            onChange={(e) => handleNotesChange(submission.id, e.target.value)}
-                            className="min-h-[80px] bg-transparent border-0 focus-visible:ring-0 resize-none p-0"
-                          />
+                        <ScrollArea className="h-[200px] w-[300px] rounded-md border bg-gray-50 p-4">
+                          <div className="space-y-4">
+                            <Textarea
+                              placeholder="Add a new note..."
+                              value={notesDraft[submission.id] || ''}
+                              onChange={(e) => handleNoteDraftChange(submission.id, e.target.value)}
+                              className="min-h-[80px] bg-white border resize-none mb-2"
+                            />
+                            {isEditing[submission.id] && (
+                              <div className="flex space-x-2">
+                                <Button
+                                  size="sm"
+                                  onClick={() => handleNotesChange(submission.id, notesDraft[submission.id] || '')}
+                                >
+                                  Save Note
+                                </Button>
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  onClick={() => handleCancelNote(submission.id)}
+                                >
+                                  Cancel
+                                </Button>
+                              </div>
+                            )}
+                            
+                            <div className="space-y-3 mt-4">
+                              {submission.action_status?.notesLog?.map((note, index) => (
+                                <div key={index} className="bg-white p-3 rounded-md shadow-sm">
+                                  <p className="text-sm text-gray-700">{note.content}</p>
+                                  <div className="mt-2 text-xs text-gray-500">
+                                    Added by {note.author} on {formatDate(note.timestamp)}
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
                         </ScrollArea>
-                        <Button
-                          size="sm"
-                          onClick={() => handleNotesChange(submission.id, submission.action_status?.notes || '')}
-                          className="w-full"
-                        >
-                          Save Notes
-                        </Button>
                       </div>
                     </td>
                     <td className="px-4 py-4">

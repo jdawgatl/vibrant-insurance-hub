@@ -1,9 +1,16 @@
 
+export type Note = {
+  content: string;
+  timestamp: string;
+  author: string;
+};
+
 export type ActionStatus = {
   contacted: boolean;
   quoted: boolean;
   unreachable: boolean;
   notes: string;
+  notesLog: Note[];
   lastUpdated?: string;
   updatedBy?: string;
 };
