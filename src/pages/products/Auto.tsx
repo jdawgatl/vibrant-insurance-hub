@@ -111,4 +111,5 @@ const Auto = () => {
   );
 };
 
+// Make sure to export the component as default
 export default Auto;
