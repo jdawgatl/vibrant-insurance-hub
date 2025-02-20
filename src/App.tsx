@@ -3,14 +3,13 @@ import { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClientProvider, QueryClientProviderProps } from "@tanstack/react-query";
 import { HelmetProvider as Provider, Helmet as ReactHelmet } from "react-helmet-async";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import ScrollToTop from "@/components/utils/ScrollToTop";
-import Index from "./pages/Index";
 
-// Lazy load non-critical routes
+// Lazy load all routes for better initial load performance
+const Index = lazy(() => import("./pages/Index"));
 const About = lazy(() => import("./pages/About"));
 const Service = lazy(() => import("./pages/Service"));
 const Products = lazy(() => import("./pages/Products"));
@@ -26,7 +25,6 @@ const AgentLogin = lazy(() => import("./pages/AgentLogin"));
 const Admin = lazy(() => import("./pages/Admin"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
-// Move QueryClient to a separate provider component
 import { QueryProvider } from "@/components/providers/QueryProvider";
 
 const SEOWrapper = () => {
@@ -65,12 +63,18 @@ const SEOWrapper = () => {
       ],
       "opens": "09:00",
       "closes": "16:00"
-    }
+    },
+    "sameAs": [
+      "https://www.facebook.com/standardfinancialgroup",
+      "https://www.linkedin.com/company/standard-financial-group"
+    ]
   };
 
   return (
     <ReactHelmet>
       <link rel="canonical" href={currentUrl} />
+      <meta name="robots" content="index, follow" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
       <script type="application/ld+json">
         {JSON.stringify(structuredData)}
       </script>
