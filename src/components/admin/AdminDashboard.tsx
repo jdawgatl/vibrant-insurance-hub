@@ -70,7 +70,7 @@ export const AdminDashboard = () => {
       const { error } = await supabase
         .from('contact_submissions')
         .update({ 
-          data: { action_status: newActionStatus } 
+          action_status: newActionStatus  // Remove the 'data' wrapper
         })
         .eq('id', submissionId);
 
@@ -97,7 +97,7 @@ export const AdminDashboard = () => {
       const { error } = await supabase
         .from('contact_submissions')
         .update({ 
-          data: { action_status: newActionStatus } 
+          action_status: newActionStatus  // Remove the 'data' wrapper
         })
         .eq('id', submissionId);
 
@@ -242,7 +242,7 @@ export const AdminDashboard = () => {
                           <div key={id} className="flex items-center space-x-2 group relative">
                             <Checkbox
                               id={`${id}-${submission.id}`}
-                              checked={submission.action_status?.[id as keyof typeof submission.action_status] || false}
+                              checked={Boolean(submission.action_status?.[id as keyof typeof submission.action_status])}
                               onCheckedChange={(checked) => 
                                 handleStatusChange(submission.id, id as 'contacted' | 'quoted' | 'unreachable', checked)
                               }
