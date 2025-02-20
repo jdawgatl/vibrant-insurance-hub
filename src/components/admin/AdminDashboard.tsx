@@ -2,7 +2,7 @@
 import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
-import { Loader2, Users, FileText, CreditCard, AlertTriangle, Check } from "lucide-react";
+import { Loader2, Users, FileText, CreditCard, AlertTriangle } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
@@ -11,15 +11,9 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import type { CheckedState } from "@radix-ui/react-checkbox";
+import type { Database } from "@/integrations/supabase/types";
 
-interface Submission {
-  id: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone: string;
-  insurance_type: string;
-  created_at: string;
+type ContactSubmission = Database['public']['Tables']['contact_submissions']['Row'] & {
   action_status?: {
     contacted: boolean;
     quoted: boolean;
@@ -28,7 +22,7 @@ interface Submission {
     lastUpdated?: string;
     updatedBy?: string;
   };
-}
+};
 
 const formatDate = (dateString: string) => {
   return new Date(dateString).toLocaleDateString('en-US', {
@@ -58,22 +52,25 @@ export const AdminDashboard = () => {
         .limit(10);
 
       if (error) throw error;
-      return data as Submission[];
+      return (data || []) as ContactSubmission[];
     }
   });
 
   const handleStatusChange = async (submissionId: string, field: 'contacted' | 'quoted' | 'unreachable', checked: CheckedState) => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
+      const currentSubmission = submissions.find(s => s.id === submissionId);
+      const newActionStatus = {
+        ...(currentSubmission?.action_status || {}),
+        [field]: checked === true, // Convert CheckedState to boolean
+        lastUpdated: new Date().toISOString(),
+        updatedBy: user?.email
+      };
+
       const { error } = await supabase
         .from('contact_submissions')
-        .update({
-          action_status: {
-            ...(submissions.find(s => s.id === submissionId)?.action_status || {}),
-            [field]: checked,
-            lastUpdated: new Date().toISOString(),
-            updatedBy: user?.email
-          }
+        .update({ 
+          data: { action_status: newActionStatus } 
         })
         .eq('id', submissionId);
 
@@ -89,15 +86,18 @@ export const AdminDashboard = () => {
   const handleNotesChange = async (submissionId: string, notes: string) => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
+      const currentSubmission = submissions.find(s => s.id === submissionId);
+      const newActionStatus = {
+        ...(currentSubmission?.action_status || {}),
+        notes,
+        lastUpdated: new Date().toISOString(),
+        updatedBy: user?.email
+      };
+
       const { error } = await supabase
         .from('contact_submissions')
-        .update({
-          action_status: {
-            ...(submissions.find(s => s.id === submissionId)?.action_status || {}),
-            notes,
-            lastUpdated: new Date().toISOString(),
-            updatedBy: user?.email
-          }
+        .update({ 
+          data: { action_status: newActionStatus } 
         })
         .eq('id', submissionId);
 
