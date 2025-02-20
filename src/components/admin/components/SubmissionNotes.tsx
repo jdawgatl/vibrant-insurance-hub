@@ -39,11 +39,11 @@ export const SubmissionNotes = ({
                 className="bg-gray-50 p-2 rounded-md border-l-2 border-sky-500 group relative"
               >
                 <p className="text-xs text-gray-700">{note.content}</p>
-                <div className="mt-1 text-xs text-gray-500">
+                <div className="text-xs text-gray-500">
                   {formatDate(note.timestamp).split(',')[0]} {/* Only show the date part */}
                 </div>
                 {/* Hover tooltip */}
-                <div className="absolute left-0 -top-8 bg-black text-white text-xs rounded p-2 hidden group-hover:block z-50 whitespace-nowrap">
+                <div className="absolute invisible group-hover:visible -translate-y-full -top-2 left-0 bg-black text-white text-xs rounded p-2 z-50 whitespace-nowrap">
                   Added by {note.author}
                   <br />
                   {formatDate(note.timestamp)}
@@ -59,7 +59,7 @@ export const SubmissionNotes = ({
           <Loader2 className="h-4 w-4" />
           Add New Note
         </h4>
-        <div className="space-y-3">
+        <div className="space-y-2">
           <Textarea
             placeholder="Type your note here..."
             value={notesDraft}
