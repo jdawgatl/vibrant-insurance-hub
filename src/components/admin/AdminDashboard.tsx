@@ -1,4 +1,3 @@
-
 import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
@@ -11,18 +10,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import type { CheckedState } from "@radix-ui/react-checkbox";
-import type { Database } from "@/integrations/supabase/types";
-
-type ContactSubmission = Database['public']['Tables']['contact_submissions']['Row'] & {
-  action_status?: {
-    contacted: boolean;
-    quoted: boolean;
-    unreachable: boolean;
-    notes?: string;
-    lastUpdated?: string;
-    updatedBy?: string;
-  };
-};
+import type { Submission, ActionStatus } from "./types/submission";
 
 const formatDate = (dateString: string) => {
   return new Date(dateString).toLocaleDateString('en-US', {
@@ -52,26 +40,24 @@ export const AdminDashboard = () => {
         .limit(10);
 
       if (error) throw error;
-      return (data || []) as ContactSubmission[];
+      return (data || []) as Submission[];
     }
   });
 
-  const handleStatusChange = async (submissionId: string, field: 'contacted' | 'quoted' | 'unreachable', checked: CheckedState) => {
+  const handleStatusChange = async (submissionId: string, field: keyof Pick<ActionStatus, 'contacted' | 'quoted' | 'unreachable'>, checked: CheckedState) => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       const currentSubmission = submissions.find(s => s.id === submissionId);
-      const newActionStatus = {
-        ...(currentSubmission?.action_status || {}),
-        [field]: checked === true, // Convert CheckedState to boolean
+      const newActionStatus: ActionStatus = {
+        ...(currentSubmission?.action_status || { contacted: false, quoted: false, unreachable: false, notes: '' }),
+        [field]: checked === true,
         lastUpdated: new Date().toISOString(),
-        updatedBy: user?.email
+        updatedBy: user?.email || undefined
       };
 
       const { error } = await supabase
         .from('contact_submissions')
-        .update({ 
-          action_status: newActionStatus  // Remove the 'data' wrapper
-        })
+        .update({ action_status: newActionStatus })
         .eq('id', submissionId);
 
       if (error) throw error;
@@ -87,18 +73,16 @@ export const AdminDashboard = () => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       const currentSubmission = submissions.find(s => s.id === submissionId);
-      const newActionStatus = {
-        ...(currentSubmission?.action_status || {}),
+      const newActionStatus: ActionStatus = {
+        ...(currentSubmission?.action_status || { contacted: false, quoted: false, unreachable: false, notes: '' }),
         notes,
         lastUpdated: new Date().toISOString(),
-        updatedBy: user?.email
+        updatedBy: user?.email || undefined
       };
 
       const { error } = await supabase
         .from('contact_submissions')
-        .update({ 
-          action_status: newActionStatus  // Remove the 'data' wrapper
-        })
+        .update({ action_status: newActionStatus })
         .eq('id', submissionId);
 
       if (error) throw error;
@@ -111,7 +95,6 @@ export const AdminDashboard = () => {
   };
 
   useEffect(() => {
-    // Update stats based on submissions
     const newStats = {
       totalClients: submissions.length,
       activeQuotes: submissions.filter(s => s.action_status?.quoted).length,
@@ -242,9 +225,9 @@ export const AdminDashboard = () => {
                           <div key={id} className="flex items-center space-x-2 group relative">
                             <Checkbox
                               id={`${id}-${submission.id}`}
-                              checked={Boolean(submission.action_status?.[id as keyof typeof submission.action_status])}
+                              checked={Boolean(submission.action_status?.[id as keyof ActionStatus])}
                               onCheckedChange={(checked) => 
-                                handleStatusChange(submission.id, id as 'contacted' | 'quoted' | 'unreachable', checked)
+                                handleStatusChange(submission.id, id as keyof Pick<ActionStatus, 'contacted' | 'quoted' | 'unreachable'>, checked)
                               }
                             />
                             <label
@@ -253,7 +236,7 @@ export const AdminDashboard = () => {
                             >
                               {label}
                             </label>
-                            {submission.action_status?.[id as keyof typeof submission.action_status] && (
+                            {submission.action_status?.[id as keyof ActionStatus] && (
                               <div className="absolute left-0 -top-8 bg-black text-white text-xs rounded p-2 hidden group-hover:block z-50">
                                 Updated on {formatDate(submission.action_status.lastUpdated || '')}
                                 {submission.action_status.updatedBy && (
