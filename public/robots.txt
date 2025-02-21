@@ -4,11 +4,9 @@ Disallow: /admin
 Disallow: /admin/*
 Disallow: /agent-login
 Disallow: /agent-login/*
+Allow: /assets/
+Allow: /*.js
+Allow: /*.css
 Allow: /
 
 Sitemap: https://sfg-ins.com/sitemap.xml
-
-# Prevent crawling of development assets
-Disallow: /*.js$
-Disallow: /*.css$
-Disallow: /assets/
