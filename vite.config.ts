@@ -22,20 +22,29 @@ export default defineConfig(({ mode }) => ({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-          // Split vendor chunks more granularly
-          react: ['react', 'react-dom'],
-          router: ['react-router-dom'],
-          motion: ['framer-motion'],
-          radix: [
-            '@radix-ui/react-toast',
-            '@radix-ui/react-tooltip',
-            '@radix-ui/react-slot',
-            '@radix-ui/react-checkbox'
-          ],
-          utils: ['date-fns', 'clsx', 'tailwind-merge'],
+        manualChunks: (id) => {
+          // Create separate chunks for major dependencies
+          if (id.includes('node_modules')) {
+            if (id.includes('react/') || id.includes('react-dom/')) {
+              return 'react-vendor';
+            }
+            if (id.includes('framer-motion')) {
+              return 'motion-vendor';
+            }
+            if (id.includes('@supabase')) {
+              return 'supabase-vendor';
+            }
+            if (id.includes('@radix-ui')) {
+              return 'radix-vendor';
+            }
+            return 'vendor'; // Other dependencies
+          }
+          // Split admin-related code into a separate chunk
+          if (id.includes('/admin/')) {
+            return 'admin';
+          }
         },
-        // Add cache busting
+        // Add cache busting and optimize chunk names
         entryFileNames: 'assets/[name]-[hash].js',
         chunkFileNames: 'assets/[name]-[hash].js',
         assetFileNames: 'assets/[name]-[hash].[ext]',
@@ -54,16 +63,13 @@ export default defineConfig(({ mode }) => ({
         comments: false,
         ecma: 2020,
       },
-      mangle: {
-        properties: false,
-      },
-      module: true,
+      mangle: true,
     },
-    chunkSizeWarningLimit: 1000,
-    sourcemap: true, // Enable sourcemaps for better debugging
     target: 'es2020',
     cssCodeSplit: true,
     reportCompressedSize: false,
     assetsInlineLimit: 4096,
+    chunkSizeWarningLimit: 1000,
+    sourcemap: mode === 'development',
   },
 }));
