@@ -1,4 +1,3 @@
-
 import { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -8,7 +7,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import ScrollToTop from "@/components/utils/ScrollToTop";
 import { QueryProvider } from "@/components/providers/QueryProvider";
-import { AgentLogin } from "@/pages/AgentLogin"; // Import directly instead of lazy loading
+import { AgentLogin } from "@/pages/AgentLogin";
 
 // Lazy load all routes for better initial load performance
 const Index = lazy(() => import("@/pages/Index"));
@@ -25,6 +24,9 @@ const Blog = lazy(() => import("@/pages/Blog"));
 const Privacy = lazy(() => import("@/pages/Privacy"));
 const Admin = lazy(() => import("@/pages/Admin"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
+const GeorgiaInsurance = lazy(() => import("@/pages/GeorgiaInsurance"));
+const TennesseeAutoInsurance = lazy(() => import("@/pages/TennesseeAutoInsurance"));
+const MississippiHomeInsurance = lazy(() => import("@/pages/MississippiHomeInsurance"));
 
 const SEOWrapper = () => {
   const location = useLocation();
@@ -157,6 +159,21 @@ const AnimatedRoutes = () => {
         <Route path="/admin/*" element={
           <Suspense fallback={<LoadingFallback />}>
             <Admin />
+          </Suspense>
+        } />
+        <Route path="/georgia-insurance" element={
+          <Suspense fallback={<LoadingFallback />}>
+            <GeorgiaInsurance />
+          </Suspense>
+        } />
+        <Route path="/tennessee-auto-insurance" element={
+          <Suspense fallback={<LoadingFallback />}>
+            <TennesseeAutoInsurance />
+          </Suspense>
+        } />
+        <Route path="/mississippi-home-insurance" element={
+          <Suspense fallback={<LoadingFallback />}>
+            <MississippiHomeInsurance />
           </Suspense>
         } />
         <Route path="*" element={
