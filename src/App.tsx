@@ -1,8 +1,9 @@
+
 import { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { HelmetProvider as Provider, Helmet as ReactHelmet } from "react-helmet-async";
+import { HelmetProvider, Helmet } from "react-helmet-async";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import ScrollToTop from "@/components/utils/ScrollToTop";
@@ -37,7 +38,7 @@ const SEOWrapper = () => {
     "@context": "https://schema.org",
     "@type": "InsuranceAgency",
     "name": "Standard Financial Group",
-    "image": `${baseUrl}/og-image.png`,
+    "image": `${baseUrl}/images/logo.png`,
     "url": baseUrl,
     "telephone": "(770) 997-7999",
     "address": {
@@ -72,14 +73,14 @@ const SEOWrapper = () => {
   };
 
   return (
-    <ReactHelmet>
+    <Helmet>
       <link rel="canonical" href={currentUrl} />
       <meta name="robots" content="index, follow" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <script type="application/ld+json">
         {JSON.stringify(structuredData)}
       </script>
-    </ReactHelmet>
+    </Helmet>
   );
 };
 
@@ -188,7 +189,7 @@ const AnimatedRoutes = () => {
 
 const App = () => (
   <BrowserRouter>
-    <Provider>
+    <HelmetProvider>
       <QueryProvider>
         <TooltipProvider>
           <ScrollToTop />
@@ -200,7 +201,7 @@ const App = () => (
           </main>
         </TooltipProvider>
       </QueryProvider>
-    </Provider>
+    </HelmetProvider>
   </BrowserRouter>
 );
 
