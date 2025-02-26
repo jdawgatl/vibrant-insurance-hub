@@ -1,4 +1,3 @@
-
 import { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -25,9 +24,11 @@ const Blog = lazy(() => import("@/pages/Blog"));
 const Privacy = lazy(() => import("@/pages/Privacy"));
 const Admin = lazy(() => import("@/pages/Admin"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
-const GeorgiaInsurance = lazy(() => import("@/pages/GeorgiaInsurance"));
-const TennesseeAutoInsurance = lazy(() => import("@/pages/TennesseeAutoInsurance"));
-const MississippiHomeInsurance = lazy(() => import("@/pages/MississippiHomeInsurance"));
+
+// State landing pages
+const GeorgiaInsurance = lazy(() => import("@/pages/landing/GeorgiaInsurance"));
+const TennesseeAutoInsurance = lazy(() => import("@/pages/landing/TennesseeAutoInsurance"));
+const MississippiHomeInsurance = lazy(() => import("@/pages/landing/MississippiHomeInsurance"));
 
 const SEOWrapper = () => {
   const location = useLocation();
